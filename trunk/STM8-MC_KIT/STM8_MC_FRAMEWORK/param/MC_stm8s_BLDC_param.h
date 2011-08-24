@@ -28,18 +28,18 @@
 #include "MC_stm8s_port_param.h"
 
 // bemf adc rimappati
-#define PHASE_A_BEMF_ADC_CHAN 			ADC2_CHANNEL_4
-#define PHASE_B_BEMF_ADC_CHAN 			ADC2_CHANNEL_5
-#define PHASE_C_BEMF_ADC_CHAN 			ADC2_CHANNEL_6
+#define PHASE_A_BEMF_ADC_CHAN 			ADC2_CHANNEL_4	// PB4
+#define PHASE_B_BEMF_ADC_CHAN 			ADC2_CHANNEL_5	// PB5
+#define PHASE_C_BEMF_ADC_CHAN 			ADC2_CHANNEL_6	// PB6
 
 // tensione batteria
-#define ADC_BUS_CHANNEL							ADC2_CHANNEL_3	// BUS Voltage channel
+#define ADC_BUS_CHANNEL							ADC2_CHANNEL_3	// BUS Voltage channel - PB3
 
-// anche questo lo mettiamo sul 3 ...
-#define ADC_NEUTRAL_POINT_CHANNEL		ADC2_CHANNEL_3 // Neutral point channel
+// anche questo lo mettiamo sul 3 ... da controllare
+#define ADC_NEUTRAL_POINT_CHANNEL		ADC2_CHANNEL_3 // Neutral point channel (???)
 
 // corrente sul motore
-#define ADC_CURRENT_CHANNEL					ADC2_CHANNEL_7	// Current Feedback channel
+#define ADC_CURRENT_CHANNEL					ADC2_CHANNEL_7	// Current Feedback channel - PB7
 
 // questi non ci sono ....
 // bisogna disabilitare la loro gestione da qualche parte
