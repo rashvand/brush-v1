@@ -25,9 +25,5 @@
 
 #include "MC_BLDC_conf.h"
 
-#ifdef HALL
-#include "MC_stm8s_hall_param.h"
-#endif
-
 #endif /*__MC_STM8S_BLDC_CONF_H*/
 /******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/

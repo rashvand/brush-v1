@@ -38,9 +38,6 @@
 #include "MC_ControlStage_Param.h" 	
 
 #include "MC_BLDC_conf.h"  // Include sensor configuration
-#ifdef HALL
-	#include "MC_stm8s_hall_param.h"
-#endif
 
 #ifdef DAC_FUNCTIONALITY
 	#include "MC_dev_DAC.h"
@@ -116,9 +113,6 @@ static StartUpStatus_t StartUpStatus = STARTUP_IDLE;
 
 #ifdef SENSORLESS
 	#define ARR_CURRENT_REF_TIM ARRTIM2
-#endif
-#ifdef HALL
-	#define ARR_CURRENT_REF_TIM hArrPwmVal
 #endif
 
 #define MILLIAMP_TOCNT(ma) (((((u32)ma * RS_M)/1000) * AOP * (u32)ARR_CURRENT_REF_TIM)/5000)
@@ -569,34 +563,6 @@ u16 Motor_Frequency;
 u8 Motor_Stall_Count;
 #define MOTOR_STALL_THRESHOLD 6
 
-#ifdef HALL
-	u8 bHallStartStep;
-
-	const u8 bHallSteps_CW[8] = {
-		HALL_SENSOR_STEPS_CW_000,
-		HALL_SENSOR_STEPS_CW_001,
-		HALL_SENSOR_STEPS_CW_010,
-		HALL_SENSOR_STEPS_CW_011,
-		HALL_SENSOR_STEPS_CW_100,
-		HALL_SENSOR_STEPS_CW_101,
-		HALL_SENSOR_STEPS_CW_110,
-		HALL_SENSOR_STEPS_CW_111
-	};
-
-	const u8 bHallSteps_CCW[8] = {
-		HALL_SENSOR_STEPS_CCW_000,
-		HALL_SENSOR_STEPS_CCW_001,
-		HALL_SENSOR_STEPS_CCW_010,
-		HALL_SENSOR_STEPS_CCW_011,
-		HALL_SENSOR_STEPS_CCW_100,
-		HALL_SENSOR_STEPS_CCW_101,
-		HALL_SENSOR_STEPS_CCW_110,
-		HALL_SENSOR_STEPS_CCW_111
-	};
-
-	u8* bHallSteps = bHallSteps_CW;
-#endif
-
 #define MAX_BUS_VOLTAGE16 (u16)((MAX_BUS_VOLTAGE*(u32)1024)/BUSV_CONVERSION)
 #define MIN_BUS_VOLTAGE16 (u16)((MIN_BUS_VOLTAGE*(u32)1024)/BUSV_CONVERSION)
 #define BRAKE_HYSTERESIS  (u16)((MAX_BUS_VOLTAGE16/16)*15)
@@ -633,9 +599,6 @@ void dev_driveInit(pvdev_device_t pdevice)
 
 #ifdef SENSORLESS
 	pcounter_reg = &(pdevice->regs.r16[VDEV_REG16_BEMF_COUNTS]);
-#endif
-#ifdef HALL
-	pcounter_reg = &(pdevice->regs.r16[VDEV_REG16_HALL_COUNTS]);
 #endif
 	
 	pDutyCycleCounts_reg = &(pdevice->regs.r16[VDEV_REG16_BLDC_DUTY_CYCLE_COUNTS]);
@@ -697,10 +660,6 @@ MC_FuncRetVal_t dev_driveStartUpInit(void)
 			LS_Steps = LS_Steps_CW;
 			LS_Steps_SW = LS_Steps_SW_CW;
 		#endif
-		
-		#ifdef HALL
-			bHallSteps = bHallSteps_CW;
-		#endif
 	}
 	else
 	{
@@ -711,11 +670,7 @@ MC_FuncRetVal_t dev_driveStartUpInit(void)
 		#ifdef LS_GPIO_CONTROL
 			LS_Steps = LS_Steps_CCW;
 			LS_Steps_SW = LS_Steps_SW_CCW;
-		#endif
-		
-		#ifdef HALL
-			bHallSteps = bHallSteps_CCW;
-		#endif
+		#endif		
 	}
 
 	StartUpStatus = STARTUP_BOOTSTRAP;
@@ -741,22 +696,6 @@ MC_FuncRetVal_t dev_driveStartUp(void)
 			#ifdef SENSORLESS
 				StartUpStatus = STARTUP_ALIGN;
 			#endif
-			#ifdef HALL
-				TIM2_InitCapturePolarity();
-
-				//preload next step
-				Current_Step = bHallStartStep;
-				TIM1->CCMR1 = PhaseSteps[Current_Step].CCMR_1;
-				TIM1->CCMR2 = PhaseSteps[Current_Step].CCMR_2;
-				TIM1->CCMR3 = PhaseSteps[Current_Step].CCMR_3;
-				TIM1->CCER1 = PhaseSteps[Current_Step].CCER_1;
-				TIM1->CCER2 = PhaseSteps[Current_Step].CCER_2;
-
-				Previous_Zero_Cross_Time = 0;
-				Z_Detection_Type = Z_DETECT_PWM_ON;
-
-				StartUpStatus = STARTUP_START;
-			#endif
 			first_cap = 0;
 		}
 		break;
@@ -770,9 +709,6 @@ MC_FuncRetVal_t dev_driveStartUp(void)
 
 	case STARTUP_START:
 		#ifdef SENSORLESS
-			MTC_Status |= MTC_STEP_MODE;
-		#endif
-		#ifdef HALL
 			MTC_Status |= MTC_STEP_MODE;
 		#endif
 		MTC_Status &= (u8)(~(MTC_STARTUP_FAILED|MTC_OVER_CURRENT_FAIL|MTC_LAST_FORCED_STEP|MTC_MOTOR_STALLED));
@@ -790,11 +726,6 @@ MC_FuncRetVal_t dev_driveStartUp(void)
 
 		#ifdef SENSORLESS
 			StartUpStatus = STARTUP_RAMPING;
-		#endif
-		#ifdef HALL
-			vtimer_SetTimer(DEV_DUTY_UPDATE_TIMER,SPEED_PID_SAMPLING_TIME,&dev_BLDC_driveUpdate);
-			StartUpStatus = STARTUP_IDLE;
-			return FUNCTION_ENDED;
 		#endif
 		break;
 
@@ -1461,81 +1392,6 @@ void SpeedMeasurement(void)
 	}
 #endif
 
-#ifdef HALL
-	@near @interrupt @svlreg void ADC2_IRQHandler (void)
-	{
-		u16 data;
-		
-		data = ADC1->DRH;
-		data <<= 2;
-		data |= (ADC1->DRL & 0x03);
-
-		//clear interrupt flag
-		ADC1->CSR &= (u8)(~BIT7);
-
-		// Manage async sampling
-		switch (ADC_Async_State)
-		{
-			default:
-			case ADC_BUS_SAMPLE:
-				ADC_Buffer[ ADC_BUS_INDEX ] = data;
-				ADC_Async_State = ADC_TEMP_INIT;
-			break;
-
-			case ADC_TEMP_SAMPLE:
-				ADC_Buffer[ ADC_TEMP_INDEX ] = data;
-				ADC_Async_State = ADC_NEUTRAL_POINT_INIT;
-			break;
-
-			case ADC_NEUTRAL_POINT_SAMPLE:
-				ADC_Buffer[ ADC_NEUTRAL_POINT_INDEX ] = data;
-				ADC_Async_State = ADC_USER_ASYNC_INIT;
-			break;
-
-			case ADC_USER_ASYNC_SAMPLE:
-				ADC_Buffer[ ADC_USER_ASYNC_INDEX ] = data;
-				ADC_Async_State = ADC_BUS_INIT;
-			break;
-		}
-
-		// Set the Async sampling channel
-		switch (ADC_Async_State)
-		{
-			default:
-			case ADC_BUS_INIT:
-				ADC1->CSR = (ADC_BUS_CHANNEL|BIT5); 
-				ADC_Async_State = ADC_BUS_SAMPLE;
-			break;
-			
-			case ADC_TEMP_INIT:
-				ADC1->CSR = (ADC_TEMP_CHANNEL|BIT5); 
-				ADC_Async_State = ADC_TEMP_SAMPLE;
-			break;
-
-			case ADC_NEUTRAL_POINT_INIT:
-				ADC1->CSR = (ADC_NEUTRAL_POINT_CHANNEL|BIT5); 
-				ADC_Async_State = ADC_NEUTRAL_POINT_SAMPLE;
-			break;
-			
-			case ADC_USER_ASYNC_INIT:
-				ADC1->CSR = (ADC_USER_ASYNC_CHANNEL|BIT5); 
-				ADC_Async_State = ADC_USER_ASYNC_SAMPLE;
-			break;
-		}
-
-		// Configure syncronous sampling
-		#ifdef DEV_CUT_1
-			// Enable ext. trigger
-			ADC1->CR2 |= BIT6;
-			//turn on ADC fix bug on cut1 device
-			ADC1->CR1 |= BIT0;  
-		#else
-			// Enable ext. trigger
-			ADC1->CR2 |= BIT6;
-		#endif		
-	}
-#endif
-
 void DebugPinsOff(void)
 {
 #ifdef DEBUG_PINS
@@ -1611,11 +1467,7 @@ void Init_TIM1(void)
 		ToCMPxH( TIM1->CCR4H, (hArrPwmVal-SAMPLING_POINT_DURING_TOFF_CNT) );
 		ToCMPxL( TIM1->CCR4L, (hArrPwmVal-SAMPLING_POINT_DURING_TOFF_CNT) );
 	#endif
-	#ifdef HALL
-		ToCMPxH( TIM1->CCR4H, hArrPwmVal - MILLIAMP_TOCNT (STARTUP_CURRENT_LIMITATION) );
-		ToCMPxL( TIM1->CCR4L, hArrPwmVal - MILLIAMP_TOCNT (STARTUP_CURRENT_LIMITATION) );
-	#endif
-
+	
 	//set dead time to 6us (with 62.5ns/count)
 	TIM1->DTR = (u8)(hCntDeadDtime); 
 
@@ -1706,110 +1558,7 @@ void Init_TIM2(void)
 	//force timer update
 	TIM2->EGR = (BIT5|BIT0);
 #endif
-#ifdef HALL
-	// Configure the TIM2 to manage the Hall sensorssignals
-	// Set channel 1,2 and 3 as input capture
-
-	//counter disabled, ARR preload register disabled, up counting, edge aligned mode
-	TIM2->CR1 = BIT2;
-
-	//disable all interrupts
-	TIM2->IER = 0;
-
-	TIM2->CCER1 = 0;
-	TIM2->CCER2 = 0;
-
-	//select channel 1,2 and 3 as input, channel prescaler 0
-	TIM2->CCMR1 = BIT0;
-	TIM2->CCMR2 = BIT0;
-	TIM2->CCMR3 = BIT0;
-
-	#define IC_FILTER (u8)(HALL_FILTER << 4)
-
-	TIM2->CCMR1 |= IC_FILTER;
-	TIM2->CCMR2 |= IC_FILTER;
-	TIM2->CCMR3 |= IC_FILTER;
-
-	//prescale = div3 @ 16MHz -> 0.5us/count * 24MHz -> 0.33us/count
-	TIM2->PSCR = 0; 
-
-	ToCMPxH( TIM2->ARRH, 0xFFFF );
-	ToCMPxL( TIM2->ARRL, 0xFFFF );
-
-	//Enable capture
-	TIM2->CCER1 |= BIT0;
-	TIM2->CCER1 |= BIT4;
-	TIM2->CCER2 |= BIT0;
-
-	//counter enabled
-	TIM2->CR1 |= BIT0;
-#endif
 }
-
-#ifdef HALL
-	void TIM2_InitCapturePolarity(void)
-	{
-		u8 bHStatus = 0;
-		GPIOD->DDR &= (u8)(~(BIT3|BIT4));
-		GPIOA->DDR &= (u8)(~(BIT3));
-		
-		// Read status of H1 and set the expected polarity
-		if (H1_PORT & H1_PIN)
-		{
-			TIM2->CCER1 |= BIT5;
-			bHStatus |= BIT2;
-		}
-		else
-		{
-			TIM2->CCER1 &= (u8)(~(BIT5));
-		}
-		
-		// Read status of H2 and set the expected polarity
-		if (H2_PORT & H2_PIN)
-		{
-			TIM2->CCER1 |= BIT1;
-			bHStatus |= BIT1;
-		}
-		else
-		{
-			TIM2->CCER1 &= (u8)(~(BIT1));
-		}
-		
-		// Read status of H3 and set the expected polarity
-		if (H3_PORT & H3_PIN)
-		{
-			TIM2->CCER2 |= BIT1;
-			bHStatus |= BIT0;
-		}
-		else
-		{
-			TIM2->CCER2 &= (u8)(~(BIT1));
-		}
-
-		bHallStartStep = bHallSteps[bHStatus];
-
-		if (bHallStartStep == NOT_VALID)
-		{
-			MTC_Status |= MTC_STARTUP_FAILED;
-		}
-		
-		TIM2_ClearITPendingBit(TIM2_IT_CC1);
-		TIM2_ClearITPendingBit(TIM2_IT_CC2);
-		TIM2_ClearITPendingBit(TIM2_IT_CC3);
-		
-		// Enable Input Capture Interrupt
-		TIM2->IER = BIT1|BIT2|BIT3;
-	}
-#endif
-
-#ifdef HALL
-	void Hall_Timeout(void)
-	{
-		// Set zero speed
-		*pcounter_reg = 0;
-		first_cap = 0;
-	}
-#endif
 
 #ifdef TIMER2_HANDLES_HALL
 @near @interrupt @svlreg void TIM2_CAP_COM_IRQHandler (void)
@@ -1912,9 +1661,6 @@ void ComHandler(void)
 		#ifdef SENSORLESS
 			Phase_State = PHASE_DEMAG; 
 		#endif	
-		#ifdef HALL
-			Phase_State = PHASE_ZERO;
-		#endif
 		Enable_ADC_User_Sync_Sampling();
 	break;
 
@@ -1997,12 +1743,6 @@ void ComHandler(void)
 		Enable_ADC_Current_Sampling();
 		if( Zero_Cross_Count != Last_Zero_Cross_Count )
 		{
-			#ifdef HALL
-				#ifdef DEBUG_PINS
-					C_D_DEBUG_PORT &= (u8)(~C_D_DEBUG_PIN);
-				#endif
-			#endif
-			
 			if( (MTC_Status & MTC_STEP_MODE) != MTC_STEP_MODE )
 			{
 				// Autoswitch mode
@@ -2077,14 +1817,7 @@ void ComHandler(void)
 						Previous_Zero_Cross_Time = Commutation_Time;
 						Zero_Cross_Time = Commutation_Time;
 					}
-				#endif
-				#ifdef HALL
-					MTC_Status &= (u8)(~MTC_STEP_MODE);
-					
-					// Force the commutation after first edge
-					Phase_State = PHASE_COMM;
-					ComHandler();
-				#endif
+				#endif				
 			}
 			
 			Average_Zero_Cross_Time = (Previous_Zero_Cross_Time + Zero_Cross_Time) >> 1;
@@ -2116,10 +1849,7 @@ void ComHandler(void)
 			Zero_Cross_Count=0;
 			#ifdef SENSORLESS
 				Phase_State = PHASE_DEMAG; 
-			#endif
-			#ifdef HALL
-				Phase_State = PHASE_ZERO;
-			#endif
+			#endif			
 		#endif
 		}
 		Last_Zero_Cross_Count = Zero_Cross_Count;
@@ -2361,85 +2091,11 @@ void ComHandler(void)
 }
 #endif
 
-#ifdef HALL
-	void Commutate_Motor( void )
-	{
-		//commutate the motor
-		TIM1->EGR |= BIT5;
-		
-		#ifdef LS_GPIO_CONTROL
-			LS_Conf = LS_Steps[Current_Step];
-
-			if (LS_Conf == LS_A)
-			{	// Activate   A
-				#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_A_PORT->ODR |= LS_A_PIN;
-				#else
-					LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-				#endif
-			}
-			else
-			{
-				// Deactivate A
-				#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-				#else
-					LS_A_PORT->ODR |= LS_A_PIN;
-				#endif
-			}
-
-			if (LS_Conf == LS_B)
-			{
-				// Activate   B
-				#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_B_PORT->ODR |= LS_B_PIN;
-				#else
-					LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-				#endif
-			}
-			else
-			{
-				// Deactivate B
-				#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-				#else
-					LS_B_PORT->ODR |= LS_B_PIN;
-				#endif
-			}
-
-			if (LS_Conf == LS_C)
-			{
-				// Activate   C
-				#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_C_PORT->ODR |= LS_C_PIN;
-				#else
-					LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-				#endif
-			}
-			else
-			{
-				// Deactivate C
-				#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-				#else
-					LS_C_PORT->ODR |= LS_C_PIN;
-				#endif
-			}
-			#endif
-	}
-#endif
-
-
 void StopMotor( void )
 {	
 	//Disable update interrupt
 	TIM1->IER &= (u8)(~BIT0);
 
-	#ifdef HALL
-		// Disable Input Capture Interrupt
-		TIM2->IER = 0;
-	#endif
-	
 	TIM1->CCMR1 = CCMR_PWM;
 	TIM1->CCMR2 = CCMR_PWM;
 	TIM1->CCMR3 = CCMR_PWM;
@@ -2657,10 +2313,6 @@ void StartMotor( void )
 	ToCMPxH( TIM2->CCR2H, MILLIAMP_TOCNT (STARTUP_CURRENT_LIMITATION) );
 	ToCMPxL( TIM2->CCR2L, MILLIAMP_TOCNT (STARTUP_CURRENT_LIMITATION) );
 #endif
-#ifdef HALL
-	ToCMPxH( TIM1->CCR4H, hArrPwmVal - MILLIAMP_TOCNT (STARTUP_CURRENT_LIMITATION) );
-	ToCMPxL( TIM1->CCR4L, hArrPwmVal - MILLIAMP_TOCNT (STARTUP_CURRENT_LIMITATION) );
-#endif
 
 	Phase_State = PHASE_ZERO; 
 }
@@ -2732,11 +2384,7 @@ u16 Set_Duty(u16 duty)
 		ToCMPxH( TIM2->CCR2H, CurrentLimitCnt );
 		ToCMPxL( TIM2->CCR2L, CurrentLimitCnt );
 	#endif
-	#ifdef HALL
-		ToCMPxH( TIM1->CCR4H, hArrPwmVal - CurrentLimitCnt );
-		ToCMPxL( TIM1->CCR4L, hArrPwmVal - CurrentLimitCnt );
-	#endif
-
+	
 	*pDutyCycleCounts_reg = duty;
 	return duty;
 }    
@@ -2814,10 +2462,6 @@ u16 Set_Current(u16 current)
 	#ifdef SENSORLESS
 		ToCMPxH( TIM2->CCR2H, current );
 		ToCMPxL( TIM2->CCR2L, current );
-	#endif
-	#ifdef HALL
-		ToCMPxH( TIM1->CCR4H, hArrPwmVal - current );
-		ToCMPxL( TIM1->CCR4L, hArrPwmVal - current );
 	#endif
 
 	return temp;
