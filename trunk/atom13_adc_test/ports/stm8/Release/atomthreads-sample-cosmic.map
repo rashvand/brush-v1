@@ -1,0 +1,795 @@
+
+Map of Release\atomthreads-sample-cosmic.sm8 from link file Release\atomthreads-sample-cosmic.lkf - Thu Apr 28 11:17:57 2011
+
+
+                               --------
+                               Segments
+                               --------
+
+start 00008080 end 000080b2 length    50 segment .const
+start 000080c7 end 00008d30 length  3177 segment .text
+start 00004000 end 00004000 length     0 segment .eeprom
+start 00000000 end 00000000 length     0 segment .bsct
+start 00000000 end 0000000a length    10 segment .ubsct
+start 0000000a end 0000000a length     0 segment .bit
+start 0000000a end 0000000a length     0 segment .share
+start 00000100 end 0000010d length    13 segment .data, initialized
+start 000080ba end 000080c7 length    13 segment .data, from
+start 0000010d end 000002c0 length   435 segment .bss
+start 00000000 end 0000105f length  4191 segment .info.
+start 00008000 end 00008080 length   128 segment .const
+start 000080b2 end 000080ba length     8 segment .init
+
+
+                               -------
+                               Modules
+                               -------
+
+C:\Programmi\COSMIC\CXSTM8_16K\Lib\crtsi0.sm8:
+start 000080c7 end 00008112 length    75 section .text
+start 0000010d end 0000010d length     0 section .bss
+start 00000000 end 00000000 length     0 section .ubsct
+
+Release\atomkernel.o:
+start 00000100 end 00000107 length     7 section .data
+start 0000010d end 00000124 length    23 section .bss
+start 00000000 end 000000a8 length   168 section .info.
+start 00008112 end 00008178 length   102 section .text
+start 00008178 end 0000818f length    23 section .text
+start 0000818f end 00008252 length   195 section .text
+start 00008252 end 000082bf length   109 section .text
+start 000082bf end 000082c7 length     8 section .text
+start 000082c7 end 000082d1 length    10 section .text
+start 000082d1 end 000082dc length    11 section .text
+start 000082dc end 00008304 length    40 section .text
+start 00008304 end 0000831e length    26 section .text
+start 0000831e end 00008327 length     9 section .text
+start 00008327 end 0000838e length   103 section .text
+start 0000838e end 000083c4 length    54 section .text
+start ******** end ******** length     0 section .text *** removed ***
+start 000083c4 end 000083ff length    59 section .text
+
+Release\atommutex.o:
+start 000000a8 end 0000014f length   167 section .info.
+start 000083ff end 00008415 length    22 section .text
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+
+Release\atomqueue.o:
+start 0000014f end 000001f6 length   167 section .info.
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+
+Release\atomsem.o:
+start 000001f6 end 0000029b length   165 section .info.
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+
+Release\atomtimer.o:
+start 00000107 end 0000010d length     6 section .data
+start 0000029b end 00000342 length   167 section .info.
+start 00008415 end 00008450 length    59 section .text
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start 00008450 end 00008461 length    17 section .text
+start 00008461 end 000084c9 length   104 section .text
+start 000084c9 end 00008518 length    79 section .text
+start 00008518 end 00008537 length    31 section .text
+
+Release\lcd.o:
+start 00000342 end 000003e3 length   161 section .info.
+start 00008537 end 00008550 length    25 section .text
+start 00008550 end 000085b6 length   102 section .text
+start 000085b6 end 000085d4 length    30 section .text
+start 000085d4 end 0000861a length    70 section .text
+start 0000861a end 00008630 length    22 section .text
+start 00008630 end 00008648 length    24 section .text
+
+Release\stm8s_clk.o:
+start 000003e3 end 0000048a length   167 section .info.
+start 00008080 end 0000808c length    12 section .const
+start 00008648 end 000086b0 length   104 section .text
+
+Release\stm8s_uart2.o:
+start 0000048a end 00000533 length   169 section .info.
+start 000086b0 end 000086d7 length    39 section .text
+start 0000808c end 00008090 length     4 section .const
+start 000086d7 end 00008804 length   301 section .text
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+
+Release\stm8s_gpio.o:
+start 00000533 end 000005db length   168 section .info.
+start 00008804 end 0000880c length     8 section .text
+start 0000880c end 0000885a length    78 section .text
+start 0000885a end 00008862 length     8 section .text
+start 00008862 end 00008869 length     7 section .text
+start 00008869 end 00008871 length     8 section .text
+start 00008871 end 00008878 length     7 section .text
+
+Release\stm8s_tim1.o:
+start 000005db end 00000683 length   168 section .info.
+start 00008878 end 00008911 length   153 section .text
+start 00008911 end 00008935 length    36 section .text
+start 00008935 end 00008942 length    13 section .text
+start 00008942 end 00008958 length    22 section .text
+
+Release\sem1.o:
+start ******** end ******** length     0 section .bss *** removed ***
+start 00000683 end 00000725 length   162 section .info.
+start ******** end ******** length     0 section .const *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+
+Release\uart.o:
+start 00000124 end 00000129 length     5 section .bss
+start 00000725 end 000007c7 length   162 section .info.
+start 00008958 end 00008983 length    43 section .text
+start ******** end ******** length     0 section .text *** removed ***
+start ******** end ******** length     0 section .text *** removed ***
+
+Release\tests-main.o:
+start 00000129 end 000002c0 length   407 section .bss
+start 000007c7 end 0000086f length   168 section .info.
+start 00008983 end 000089bd length    58 section .text
+start 000089bd end 00008a6b length   174 section .text
+start 00008090 end 000080b2 length    34 section .const
+
+Release\atomport.o:
+start 0000086f end 00000915 length   166 section .info.
+start 00008a6b end 00008a8c length    33 section .text
+start 00008a8c end 00008aa9 length    29 section .text
+start 00008aa9 end 00008aca length    33 section .text
+start 00008aca end 00008afe length    52 section .text
+
+Release\atomport-asm-cosmic.o:
+start 00008afe end 00008b09 length    11 section .text
+start 00000915 end 00000957 length    66 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)memcpy0.o:
+start ******** end ******** length     0 section .text *** removed ***
+start 00000957 end 00000985 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)printf.o:
+start ******** end ******** length     0 section .text *** removed ***
+start 00000985 end 000009fa length   117 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)cprint.o:
+start ******** end ******** length     0 section .text *** removed ***
+start 000009fa end 00000a6f length   117 section .info.
+start ******** end ******** length     0 section .const *** removed ***
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)itob.o:
+start ******** end ******** length     0 section .text *** removed ***
+start 00000a6f end 00000ae2 length   115 section .info.
+start ******** end ******** length     0 section .const *** removed ***
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)idiv0.o:
+start ******** end ******** length     0 section .text *** removed ***
+start 00000ae2 end 00000b0e length    44 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)ildiv0.o:
+start ******** end ******** length     0 section .text *** removed ***
+start 00000b0e end 00000b3b length    45 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)strlen0.o:
+start ******** end ******** length     0 section .text *** removed ***
+start 00000b3b end 00000b69 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)toup0.o:
+start ******** end ******** length     0 section .text *** removed ***
+start 00000b69 end 00000b95 length    44 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ldiv.o:
+start 00008b09 end 00008bf4 length   235 section .text
+start 00000b95 end 00000bc3 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)imul.o:
+start ******** end ******** length     0 section .text *** removed ***
+start 00000bc3 end 00000bf1 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)itolx.o:
+start 00008bf4 end 00008c02 length    14 section .text
+start 00000bf1 end 00000c20 length    47 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lcmp.o:
+start 00008c02 end 00008c22 length    32 section .text
+start 00000c20 end 00000c4e length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lgadc.o:
+start 00008c22 end 00008c32 length    16 section .text
+start 00000c4e end 00000c7d length    47 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lgadd.o:
+start ******** end ******** length     0 section .text *** removed ***
+start 00000c7d end 00000cac length    47 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lgneg.o:
+start 00008c32 end 00008c45 length    19 section .text
+start 00000cac end 00000cdb length    47 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lgsbc.o:
+start 00008c45 end 00008c5b length    22 section .text
+start 00000cdb end 00000d0a length    47 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)llsh.o:
+start 00008c5b end 00008c6a length    15 section .text
+start 00000d0a end 00000d38 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lmul.o:
+start ******** end ******** length     0 section .text *** removed ***
+start 00000d38 end 00000d66 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lneg.o:
+start 00008c6a end 00008c7f length    21 section .text
+start 00000d66 end 00000d94 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lreg.o:
+start 00000000 end 00000004 length     4 section .ubsct
+start 00000d94 end 00000dc2 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lsub.o:
+start 00008c7f end 00008c97 length    24 section .text
+start 00000dc2 end 00000df0 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ltor.o:
+start 00008c97 end 00008ca9 length    18 section .text
+start 00000df0 end 00000e1e length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ludiv.o:
+start 00008ca9 end 00008cbd length    20 section .text
+start 00000e1e end 00000e4d length    47 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lursh.o:
+start 00008cbd end 00008ccc length    15 section .text
+start 00000e4d end 00000e7c length    47 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lzmp.o:
+start 00008ccc end 00008cde length    18 section .text
+start 00000e7c end 00000eaa length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)rtol.o:
+start 00008cde end 00008cf0 length    18 section .text
+start 00000eaa end 00000ed8 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)smul.o:
+start 00008cf0 end 00008d2f length    63 section .text
+start 00000ed8 end 00000f06 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)xreg.o:
+start 00000004 end 00000007 length     3 section .ubsct
+start 00000f06 end 00000f34 length    46 section .info.
+
+(C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)yreg.o:
+start 00000007 end 0000000a length     3 section .ubsct
+start 00000f34 end 00000f62 length    46 section .info.
+
+Release\stm8_interrupt_vector.o:
+start 00000f62 end 00001015 length   179 section .info.
+start 00008d2f end 00008d30 length     1 section .text
+start 00008000 end 00008080 length   128 section .const
+
+
+                             -----------
+                             Stack usage
+                             -----------
+
+Release\atomkernel.o:
+L11_atomThreadSwitch             6   (6)
+L31_atomIdleThread               8   (6)
+_atomCurrentContext              2   (2)
+_atomIntEnter                    2   (2)
+_atomIntExit                    19   (2)
+_atomOSInit                     47   (9)
+_atomOSStart                    11   (4)
+_atomSched                      17   (6)
+_atomThreadCreate               38   (21)
+_atomThreadStackCheck           20   (17)
+_tcbDequeueHead                  6   (6)
+_tcbDequeuePriority              7   (7)
+_tcbEnqueuePriority             11   (11)
+
+Release\atommutex.o:
+_atomMutexCreate                 5   (5)
+
+Release\atomport.o:
+L3_thread_shell                 82   (4) *** Recursive *** *** pointer() ***
+_archInitSystemTickTimer        10   (2)
+_archThreadContextInit          14   (14)
+f_TIM1_SystemTickISR        >  105   (15) *** Recursive ***
+
+Release\atomtimer.o:
+L11_atomTimerDelayCallback      16   (5)
+L7_atomTimerCallbacks           88   (6) *** Recursive *** *** pointer() ***
+_atomTimerDelay                 39   (22)
+_atomTimerRegister               8   (6)
+_atomTimerTick                  90   (2) *** Recursive ***
+
+Release\lcd.o:
+_DelayMS                         6   (6)
+_LCD_DATA                       15   (4)
+_LCD_LINE                       17   (2)
+_LCD_NYB                        11   (5)
+_LCD_STR                        19   (4)
+_initLCD                        17   (2)
+
+Release\stm8_interrupt_vector.o:
+f_NonHandledInterrupt       >    5   (5)
+
+Release\stm8s_clk.o:
+_CLK_GetClockFreq               25   (11)
+
+Release\stm8s_gpio.o:
+_GPIO_DeInit                     2   (2)
+_GPIO_Init                       6   (6)
+_GPIO_Write                      5   (5)
+_GPIO_WriteHigh                  5   (5)
+_GPIO_WriteLow                   5   (5)
+_GPIO_WriteReverse               5   (5)
+
+Release\stm8s_tim1.o:
+_TIM1_Cmd                        2   (2)
+_TIM1_DeInit                     2   (2)
+_TIM1_ITConfig                   4   (4)
+_TIM1_TimeBaseInit               8   (8)
+
+Release\stm8s_uart2.o:
+_UART2_DeInit                    3   (3)
+_UART2_Init                     50   (25)
+
+Release\tests-main.o:
+L11_main_thread_func            78   (20)
+_main                       >   50   (3)
+
+Release\uart.o:
+_uart_init                      58   (8)
+
+Stack size: 155
+
+
+                              ---------
+                              Call tree
+                              ---------
+   1 > __stext: (0)
+
+   2 > _main: (3)
+   3      + _archInitSystemTickTimer: (2)
+   4      |    + _TIM1_Cmd: (2)
+   5      |    + _TIM1_DeInit: (2)
+   6      |    + _TIM1_ITConfig: (4)
+   7      |    + _TIM1_TimeBaseInit: (8)
+          | 
+   8      + _atomOSInit: (9)
+   9      |    + _atomThreadCreate: (21)
+  10      |    |    + _archThreadContextInit: (14)
+  11      |    |    + _atomCurrentContext: (2)
+  12      |    |    + _atomSched: (6)
+  13      |    |    |    + L11_atomThreadSwitch: (6)
+  14      |    |    |    + _tcbDequeueHead: (6)
+  15      |    |    |    + _tcbDequeuePriority: (7)
+  16      |    |    |    + _tcbEnqueuePriority: (11)
+          |    |    | 
+  17      |    |    + _tcbEnqueuePriority --> 16
+          |    | 
+          | 
+  18      + _atomOSStart: (4)
+  19      |    + _tcbDequeuePriority --> 15
+          | 
+  20      + _atomThreadCreate --> 9
+       
+  21 > f_NonHandledInterrupt: (5)
+
+  22 > f_TIM1_SystemTickISR: (15)
+  23      + _atomIntEnter: (2)
+  24      + _atomIntExit: (2)
+  25      |    + _atomSched --> 12
+          | 
+  26      + _atomTimerTick: (2)
+  27      |    + L7_atomTimerCallbacks: (6)
+  28      |    |    + (L11_atomTimerDelayCallback) ...
+  29      |    |    + (L11_main_thread_func) ...
+  30      |    |    + (L31_atomIdleThread) ...
+  31      |    |    + (L3_thread_shell) ...
+          |    | 
+          | 
+       
+  32   L11_atomThreadSwitch --> 13
+
+  33   L11_atomTimerDelayCallback: (5)
+  34      + _tcbEnqueuePriority --> 16
+       
+  35   L11_main_thread_func: (20)
+  36      + _DelayMS: (6)
+  37      + _GPIO_DeInit: (2)
+  38      + _GPIO_Init: (6)
+  39      + _GPIO_WriteReverse: (5)
+  40      + _LCD_LINE: (2)
+  41      |    + _LCD_DATA: (4)
+  42      |    |    + _DelayMS --> 36
+  43      |    |    + _LCD_NYB: (5)
+  44      |    |    |    + _DelayMS --> 36
+  45      |    |    |    + _GPIO_Write: (5)
+  46      |    |    |    + _GPIO_WriteHigh: (5)
+  47      |    |    |    + _GPIO_WriteLow: (5)
+          |    |    | 
+          |    | 
+          | 
+  48      + _LCD_STR: (4)
+  49      |    + _LCD_DATA --> 41
+          | 
+  50      + _atomThreadStackCheck: (17)
+  51      + _atomTimerDelay: (22)
+  52      |    + _atomCurrentContext --> 11
+  53      |    + _atomSched --> 12
+  54      |    + _atomTimerRegister: (6)
+          | 
+  55      + _initLCD: (2)
+  56      |    + _DelayMS --> 36
+  57      |    + _GPIO_DeInit --> 37
+  58      |    + _GPIO_Init --> 38
+  59      |    + _GPIO_WriteLow --> 47
+  60      |    + _LCD_DATA --> 41
+  61      |    + _LCD_NYB --> 43
+          | 
+  62      + _uart_init: (8)
+  63      |    + _UART2_DeInit: (3)
+  64      |    + _UART2_Init: (25)
+  65      |    |    + _CLK_GetClockFreq: (11)
+          |    | 
+  66      |    + _atomMutexCreate: (5)
+          | 
+       
+  67   L31_atomIdleThread: (6)
+
+  68   L3_thread_shell: (4)
+  69      + (L11_atomTimerDelayCallback) --> 33
+  70      + (L11_main_thread_func) --> 35
+  71      + (L31_atomIdleThread) --> 67
+  72      + (L3_thread_shell) --> 68
+  73      + _atomCurrentContext --> 11
+       
+  74   L7_atomTimerCallbacks --> 27
+
+  75   _CLK_GetClockFreq --> 65
+
+  76   _DelayMS --> 36
+
+  77   _GPIO_DeInit --> 37
+
+  78   _GPIO_Init --> 38
+
+  79   _GPIO_Write --> 45
+
+  80   _GPIO_WriteHigh --> 46
+
+  81   _GPIO_WriteLow --> 47
+
+  82   _GPIO_WriteReverse --> 39
+
+  83   _LCD_DATA --> 41
+
+  84   _LCD_LINE --> 40
+
+  85   _LCD_NYB --> 43
+
+  86   _LCD_STR --> 48
+
+  87   _TIM1_Cmd --> 4
+
+  88   _TIM1_DeInit --> 5
+
+  89   _TIM1_ITConfig --> 6
+
+  90   _TIM1_TimeBaseInit --> 7
+
+  91   _UART2_DeInit --> 63
+
+  92   _UART2_Init --> 64
+
+  93   _archInitSystemTickTimer --> 3
+
+  94   _archThreadContextInit --> 10
+
+  95   _atomCurrentContext --> 11
+
+  96   _atomIntEnter --> 23
+
+  97   _atomIntExit --> 24
+
+  98   _atomMutexCreate --> 66
+
+  99   _atomOSInit --> 8
+
+ 100   _atomOSStart --> 18
+
+ 101   _atomSched --> 12
+
+ 102   _atomThreadCreate --> 9
+
+ 103   _atomThreadStackCheck --> 50
+
+ 104   _atomTimerDelay --> 51
+
+ 105   _atomTimerRegister --> 54
+
+ 106   _atomTimerTick --> 26
+
+ 107   _initLCD --> 55
+
+ 108   _tcbDequeueHead --> 14
+
+ 109   _tcbDequeuePriority --> 15
+
+ 110   _tcbEnqueuePriority --> 16
+
+ 111   _uart_init --> 62
+
+
+
+                               -------
+                               Symbols
+                               -------
+
+_CLKPrescTable             00008084   defined in Release\stm8s_clk.o section .const
+                                      *** not used ***
+_CLK_GetClockFreq          00008648   defined in Release\stm8s_clk.o section .text
+                                      used in Release\stm8s_uart2.o
+_DelayMS                   00008630   defined in Release\lcd.o section .text
+                                      used in Release\tests-main.o
+_GPIO_DeInit               00008804   defined in Release\stm8s_gpio.o section .text
+                                      used in Release\lcd.o Release\tests-main.o
+_GPIO_Init                 0000880c   defined in Release\stm8s_gpio.o section .text
+                                      used in Release\lcd.o Release\tests-main.o
+_GPIO_Write                0000885a   defined in Release\stm8s_gpio.o section .text
+                                      used in Release\lcd.o
+_GPIO_WriteHigh            00008862   defined in Release\stm8s_gpio.o section .text
+                                      used in Release\lcd.o
+_GPIO_WriteLow             00008869   defined in Release\stm8s_gpio.o section .text
+                                      used in Release\lcd.o
+_GPIO_WriteReverse         00008871   defined in Release\stm8s_gpio.o section .text
+                                      used in Release\tests-main.o
+_HSIDivFactor              00008080   defined in Release\stm8s_clk.o section .const
+_LCD_DATA                  000085b6   defined in Release\lcd.o section .text
+_LCD_LINE                  0000861a   defined in Release\lcd.o section .text
+                                      used in Release\tests-main.o
+_LCD_NYB                   000085d4   defined in Release\lcd.o section .text
+_LCD_STR                   00008537   defined in Release\lcd.o section .text
+                                      used in Release\tests-main.o
+_TIM1_Cmd                  00008935   defined in Release\stm8s_tim1.o section .text
+                                      used in Release\atomport.o
+_TIM1_DeInit               00008878   defined in Release\stm8s_tim1.o section .text
+                                      used in Release\atomport.o
+_TIM1_ITConfig             00008942   defined in Release\stm8s_tim1.o section .text
+                                      used in Release\atomport.o
+_TIM1_TimeBaseInit         00008911   defined in Release\stm8s_tim1.o section .text
+                                      used in Release\atomport.o
+_UART2_DeInit              000086b0   defined in Release\stm8s_uart2.o section .text
+                                      used in Release\uart.o
+_UART2_GetFlagStatus       ********   *** removed from Release\stm8s_uart2.o ***
+_UART2_Init                000086d7   defined in Release\stm8s_uart2.o section .text
+                                      used in Release\uart.o
+_UART2_ReceiveData8        ********   *** removed from Release\stm8s_uart2.o ***
+_UART2_SendData8           ********   *** removed from Release\stm8s_uart2.o ***
+__endmem                   000013ff   defined in command file
+                                      *** not used ***
+__endzp                    0000000a   defined in command file section .ubsct
+                                      used in C:\Programmi\COSMIC\CXSTM8_16K\Lib\crtsi0.sm8
+__idesc__                  000080b2   defined in linker section .init
+                                      used in C:\Programmi\COSMIC\CXSTM8_16K\Lib\crtsi0.sm8
+__itob                     ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)itob.o ***
+__ltob                     ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)itob.o ***
+__memory                   000002c0   defined in command file section .bss
+                                      used in C:\Programmi\COSMIC\CXSTM8_16K\Lib\crtsi0.sm8
+__print                    ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)cprint.o ***
+__stack                    000017ff   defined in command file
+                                      used in C:\Programmi\COSMIC\CXSTM8_16K\Lib\crtsi0.sm8
+__startmem                 000002c0   defined in command file section .bss
+                                      *** not used ***
+__stext                    000080c7   defined in C:\Programmi\COSMIC\CXSTM8_16K\Lib\crtsi0.sm8 section .text
+                                      used in Release\stm8_interrupt_vector.o
+__udiv                     ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)idiv0.o ***
+__uldiv                    ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)ildiv0.o ***
+__vectab                   00008000   defined in Release\stm8_interrupt_vector.o section .const
+                                      *** not used ***
+_archContextSwitch         00008afe   defined in Release\atomport-asm-cosmic.o section .text
+                                      used in Release\atomkernel.o
+_archFirstThreadRestore    00008b06   defined in Release\atomport-asm-cosmic.o section .text
+                                      used in Release\atomkernel.o
+_archInitSystemTickTimer   00008aa9   defined in Release\atomport.o section .text
+                                      used in Release\tests-main.o
+_archThreadContextInit     00008a8c   defined in Release\atomport.o section .text
+                                      used in Release\atomkernel.o
+_atomCurrentContext        000082d1   defined in Release\atomkernel.o section .text
+                                      used in Release\atommutex.o
+                                              Release\atomqueue.o
+                                              Release\atomsem.o
+                                              Release\atomtimer.o
+                                              Release\atomport.o
+_atomIntEnter              000082bf   defined in Release\atomkernel.o section .text
+                                      used in Release\atomport.o
+_atomIntExit               000082c7   defined in Release\atomkernel.o section .text
+                                      used in Release\atomport.o
+_atomMutexCreate           000083ff   defined in Release\atommutex.o section .text
+                                      used in Release\uart.o
+_atomMutexDelete           ********   *** removed from Release\atommutex.o ***
+_atomMutexGet              ********   *** removed from Release\atommutex.o ***
+_atomMutexPut              ********   *** removed from Release\atommutex.o ***
+_atomOSInit                000082dc   defined in Release\atomkernel.o section .text
+                                      used in Release\tests-main.o
+_atomOSStart               00008304   defined in Release\atomkernel.o section .text
+                                      used in Release\tests-main.o
+_atomOSStarted             00000102   defined in Release\atomkernel.o section .data, initialized
+                                      used in Release\atomtimer.o
+_atomQueueCreate           ********   *** removed from Release\atomqueue.o ***
+_atomQueueDelete           ********   *** removed from Release\atomqueue.o ***
+_atomQueueGet              ********   *** removed from Release\atomqueue.o ***
+_atomQueuePut              ********   *** removed from Release\atomqueue.o ***
+_atomSched                 00008112   defined in Release\atomkernel.o section .text
+                                      used in Release\atommutex.o
+                                              Release\atomqueue.o
+                                              Release\atomsem.o
+                                              Release\atomtimer.o
+_atomSemCreate             ********   *** removed from Release\atomsem.o ***
+_atomSemDelete             ********   *** removed from Release\atomsem.o ***
+_atomSemGet                ********   *** removed from Release\atomsem.o ***
+_atomSemPut                ********   *** removed from Release\atomsem.o ***
+_atomSemResetCount         ********   *** removed from Release\atomsem.o ***
+_atomThreadCreate          0000818f   defined in Release\atomkernel.o section .text
+                                      used in Release\sem1.o Release\tests-main.o
+_atomThreadStackCheck      00008252   defined in Release\atomkernel.o section .text
+                                      used in Release\sem1.o Release\tests-main.o
+_atomTimeGet               ********   *** removed from Release\atomtimer.o ***
+_atomTimeSet               ********   *** removed from Release\atomtimer.o ***
+_atomTimerCancel           ********   *** removed from Release\atomtimer.o ***
+_atomTimerDelay            00008461   defined in Release\atomtimer.o section .text
+                                      used in Release\sem1.o Release\tests-main.o
+_atomTimerRegister         00008415   defined in Release\atomtimer.o section .text
+                                      used in Release\atommutex.o
+                                              Release\atomqueue.o
+                                              Release\atomsem.o
+_atomTimerTick             00008450   defined in Release\atomtimer.o section .text
+                                      used in Release\atomport.o
+_exit                      00008110   defined in C:\Programmi\COSMIC\CXSTM8_16K\Lib\crtsi0.sm8 section .text
+_initLCD                   00008550   defined in Release\lcd.o section .text
+                                      used in Release\tests-main.o
+_main                      00008983   defined in Release\tests-main.o section .text
+                                      used in C:\Programmi\COSMIC\CXSTM8_16K\Lib\crtsi0.sm8
+_memcpy                    ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)memcpy0.o ***
+_printf                    ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)printf.o ***
+_putchar                   ********   *** removed from Release\uart.o ***
+_strlen                    ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)strlen0.o ***
+_tcbDequeueEntry           ********   *** removed from Release\atomkernel.o ***
+_tcbDequeueHead            0000838e   defined in Release\atomkernel.o section .text
+                                      used in Release\atommutex.o
+                                              Release\atomqueue.o
+                                              Release\atomsem.o
+_tcbDequeuePriority        000083c4   defined in Release\atomkernel.o section .text
+_tcbEnqueuePriority        00008327   defined in Release\atomkernel.o section .text
+                                      used in Release\atommutex.o
+                                              Release\atomqueue.o
+                                              Release\atomsem.o
+                                              Release\atomtimer.o
+_tcbReadyQ                 00000100   defined in Release\atomkernel.o section .data, initialized
+                                      used in Release\atommutex.o
+                                              Release\atomqueue.o
+                                              Release\atomsem.o
+                                              Release\atomtimer.o
+_test_start                ********   *** removed from Release\sem1.o ***
+_toupper                   ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)toup0.o ***
+_uart_init                 00008958   defined in Release\uart.o section .text
+                                      used in Release\tests-main.o
+_uart_putchar              ********   *** removed from Release\uart.o ***
+c_divsl                    00008b09   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ldiv.o section .text
+                                      *** not used ***
+c_divul                    00008b20   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ldiv.o section .text
+                                      used in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)ildiv0.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ludiv.o
+c_imul                     ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)imul.o ***
+c_itolx                    00008bf4   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)itolx.o section .text
+                                      used in Release\atomkernel.o Release\sem1.o
+                                              Release\tests-main.o
+c_lcmp                     00008c02   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lcmp.o section .text
+                                      used in Release\atomkernel.o
+                                              Release\atomqueue.o Release\sem1.o
+c_lgadc                    00008c22   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lgadc.o section .text
+                                      used in Release\atomqueue.o
+                                              Release\atomtimer.o Release\sem1.o
+                                              Release\tests-main.o
+c_lgadd                    ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lgadd.o ***
+c_lgneg                    00008c32   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lgneg.o section .text
+                                      used in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ldiv.o
+c_lgsbc                    00008c45   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lgsbc.o section .text
+                                      used in Release\atomkernel.o
+                                              Release\atomqueue.o
+                                              Release\atomtimer.o
+c_llsh                     00008c5b   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)llsh.o section .text
+                                      used in Release\stm8s_uart2.o
+c_lmul                     ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lmul.o ***
+c_lmulc                    ********   *** removed from (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lmul.o ***
+c_lneg                     00008c6a   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lneg.o section .text
+                                      used in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)itob.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ldiv.o
+c_lreg                     00000000   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lreg.o section .ubsct
+                                      used in Release\atomqueue.o
+                                              Release\stm8s_clk.o
+                                              Release\stm8s_uart2.o
+                                              Release\tests-main.o
+                                              Release\atomport.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)cprint.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ldiv.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)itolx.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lcmp.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lgadd.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)llsh.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lmul.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lneg.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lsub.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ltor.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lursh.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)rtol.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)smul.o
+c_lsub                     00008c7f   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lsub.o section .text
+                                      used in Release\atomkernel.o
+                                              Release\stm8s_uart2.o
+c_ltor                     00008c97   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ltor.o section .text
+                                      used in Release\atomkernel.o
+                                              Release\atomqueue.o
+                                              Release\atomtimer.o
+                                              Release\stm8s_clk.o
+                                              Release\stm8s_uart2.o
+                                              Release\sem1.o Release\tests-main.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)itob.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)ildiv0.o
+c_ludv                     00008ca9   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ludiv.o section .text
+                                      used in Release\stm8s_clk.o
+                                              Release\stm8s_uart2.o
+c_lursh                    00008cbd   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lursh.o section .text
+                                      used in Release\stm8s_uart2.o
+c_lzmp                     00008ccc   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lzmp.o section .text
+                                      used in Release\atomkernel.o
+                                              Release\atommutex.o
+                                              Release\atomqueue.o
+                                              Release\atomsem.o
+                                              Release\atomtimer.o Release\sem1.o
+                                              Release\tests-main.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)itob.o
+c_rtol                     00008cde   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)rtol.o section .text
+                                      used in Release\atomkernel.o
+                                              Release\atomqueue.o
+                                              Release\stm8s_clk.o
+                                              Release\stm8s_uart2.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)cprint.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)itob.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)ildiv0.o
+c_smul                     00008cf0   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)smul.o section .text
+                                      used in Release\stm8s_uart2.o
+c_x                        00000004   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)xreg.o section .ubsct
+                                      used in C:\Programmi\COSMIC\CXSTM8_16K\Lib\crtsi0.sm8
+                                              Release\atomqueue.o
+                                              Release\atomport.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)memcpy0.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libisl0.sm8)strlen0.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)ldiv.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)imul.o
+                                              (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)lmul.o
+c_y                        00000007   defined in (C:\Programmi\COSMIC\CXSTM8_16K\Lib\libm0.sm8)yreg.o section .ubsct
+                                      used in C:\Programmi\COSMIC\CXSTM8_16K\Lib\crtsi0.sm8
+                                              Release\atomqueue.o
+                                              Release\atomport.o
+f_NonHandledInterrupt      00008d2f   defined in Release\stm8_interrupt_vector.o section .text
+f_TIM1_SystemTickISR       00008aca   defined in Release\atomport.o section .text
+                                      used in Release\stm8_interrupt_vector.o
