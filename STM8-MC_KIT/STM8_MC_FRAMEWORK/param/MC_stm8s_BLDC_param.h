@@ -53,6 +53,18 @@
 #define MCI_CONTROL_DDR 	GPIOA->DDR
 #define MCI_CONTROL_DR  	GPIOA->ODR
 
+
+/****************************************************************************************
+*** Debug Pin Info **********************************************************************
+*****************************************************************************************
+board vista dal TOP: quarzo in alto, connessioni al motore a destra
+sequenza di LED:
+D10	UC_DEBUG3 -> AUTO_SWITCH
+D11	UC_DEBUG4 -> PWM_ON_SW
+D8	UC_DEBUG1 -> Z_DEBUG
+D9	UC_DEBUG2 -> C_D_DEBUG
+****************************************************************************************/
+
 // Debug Pin
 #define Z_DEBUG_PORT 			DEBUG0_PORT->ODR
 #define Z_DEBUG_PIN  			DEBUG0_PIN
