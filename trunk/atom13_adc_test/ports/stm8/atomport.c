@@ -317,12 +317,13 @@ extern uint16_t Conversion_Values[10]; //ADC Converted values
 INTERRUPT void ADC1_ISR (void)
 {
     uint8_t i;
+		uint8_t csr_temp;
 		
 		/* Call the interrupt entry routine */
     atomIntEnter();
 
 		/* Get converted value(s) */
-#if 1
+#if 0
 			Conversion_Values[0] = ADC1_GetConversionValue();
 #else
 
@@ -333,7 +334,12 @@ INTERRUPT void ADC1_ISR (void)
 #endif		
 		 //ADC1_ConversionConfig(ADC1_CONVERSIONMODE_CONTINUOUS, ADC1_CHANNEL_9, ADC1_ALIGN_RIGHT);
 		 //ADC1->CSR |= (u8)(ADC1_CHANNEL_9);
-		 ADC1_ClearITPendingBit(ADC1_IT_EOC);
+		 csr_temp = ADC1->CSR;
+		 csr_temp &= (uint8_t)~ADC1_IT_EOC;
+		 csr_temp |= (uint8_t)(ADC1_CHANNEL_9);
+		 ADC1->CSR = csr_temp;
+		 
+		 //ADC1_ClearITPendingBit(ADC1_IT_EOC);
 
 		/*Start Conversion */
 		ADC1_StartConversion();
