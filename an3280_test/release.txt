@@ -1,0 +1,22 @@
+================================================================================
+                          STM8S-Discovery Discover
+                                 Release Notes
+================================================================================
+
+V2.0 / 15-MAR-2011
+------------------
+ - Content:
+	o STM8S Standard Peripherals Library V2.0.0
+	o Discover example is provided with Cosmic, Raisonance and IAR projects.
+	Note: The IAR project is validated with EWSTM8 V1.30 (it will not work with earlier versions)
+
+V1.1 / 01-DEC-2009
+--------------------
+
+ - Content:
+
+   o STM8S Standard Peripherals Library V1.1.1
+   o Discover example is provided only with Cosmic project because STM8 touch sensing library V1.3.0 is not compatible w/ Raisonance yet.
+
+
+   
