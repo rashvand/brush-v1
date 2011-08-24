@@ -1,0 +1,98 @@
+;	STMicroelectronics dependencies file
+
+[Version]
+Keyword=ST7Project
+Number=1.3
+
+[Root.Kernel...\..\kernel\atomkernel.c.Config.0]
+ExternDep= ..\..\kernel\atomkernel.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\stddef.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h
+
+[Root.Kernel...\..\kernel\atomkernel.c.Config.1]
+ExternDep= ..\..\kernel\atomkernel.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\stddef.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h
+
+[Root.Kernel...\..\kernel\atommutex.c.Config.0]
+ExternDep= ..\..\kernel\atommutex.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\stdio.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h  ../../kernel\atommutex.h
+
+[Root.Kernel...\..\kernel\atommutex.c.Config.1]
+ExternDep= ..\..\kernel\atommutex.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\stdio.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h  ../../kernel\atommutex.h
+
+[Root.Kernel...\..\kernel\atomqueue.c.Config.0]
+ExternDep= ..\..\kernel\atomqueue.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\stdio.h  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\string.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h  ../../kernel\atomqueue.h
+
+[Root.Kernel...\..\kernel\atomqueue.c.Config.1]
+ExternDep= ..\..\kernel\atomqueue.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\stdio.h  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\string.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h  ../../kernel\atomqueue.h
+
+[Root.Kernel...\..\kernel\atomsem.c.Config.0]
+ExternDep= ..\..\kernel\atomsem.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\stdio.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h  ../../kernel\atomsem.h
+
+[Root.Kernel...\..\kernel\atomsem.c.Config.1]
+ExternDep= ..\..\kernel\atomsem.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\stdio.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h  ../../kernel\atomsem.h
+
+[Root.Kernel...\..\kernel\atomtimer.c.Config.0]
+ExternDep= ..\..\kernel\atomtimer.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\stdio.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h
+
+[Root.Kernel...\..\kernel\atomtimer.c.Config.1]
+ExternDep= ..\..\kernel\atomtimer.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\stdio.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h
+
+[Root.Lcd.lcd\lcd.c.Config.0]
+ExternDep= lcd\lcd.c C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h  lcd\lcd.h stm8s-periphs\stm8s.h stm8s-periphs\stm8s_type.h stm8s_conf.h  stm8s-periphs\stm8s_clk.h stm8s-periphs\stm8s_gpio.h  stm8s-periphs\stm8s_tim1.h stm8s-periphs\stm8s_uart2.h
+
+[Root.Lcd.lcd\lcd.c.Config.1]
+ExternDep= lcd\lcd.c C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h  lcd\lcd.h stm8s-periphs\stm8s.h stm8s-periphs\stm8s_type.h stm8s_conf.h  stm8s-periphs\stm8s_clk.h stm8s-periphs\stm8s_gpio.h  stm8s-periphs\stm8s_tim1.h stm8s-periphs\stm8s_uart2.h
+
+[Root.Peripherals.stm8s-periphs\stm8s_adc1.c.Config.0]
+ExternDep= stm8s-periphs\stm8s_adc1.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h stm8s-periphs\stm8s_adc1.h  stm8s-periphs\stm8s.h stm8s-periphs\stm8s_type.h stm8s_conf.h  stm8s-periphs\stm8s_clk.h stm8s-periphs\stm8s_gpio.h  stm8s-periphs\stm8s_tim1.h stm8s-periphs\stm8s_uart2.h
+
+[Root.Peripherals.stm8s-periphs\stm8s_clk.c.Config.0]
+ExternDep= stm8s-periphs\stm8s_clk.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h stm8s-periphs\stm8s_clk.h  stm8s-periphs\stm8s.h stm8s-periphs\stm8s_type.h stm8s_conf.h  stm8s-periphs\stm8s_gpio.h stm8s-periphs\stm8s_tim1.h  stm8s-periphs\stm8s_uart2.h
+
+[Root.Peripherals.stm8s-periphs\stm8s_clk.c.Config.1]
+ExternDep= stm8s-periphs\stm8s_clk.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h stm8s-periphs\stm8s_clk.h  stm8s-periphs\stm8s.h stm8s-periphs\stm8s_type.h stm8s_conf.h  stm8s-periphs\stm8s_gpio.h stm8s-periphs\stm8s_tim1.h  stm8s-periphs\stm8s_uart2.h
+
+[Root.Peripherals.stm8s-periphs\stm8s_uart2.c.Config.0]
+ExternDep= stm8s-periphs\stm8s_uart2.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h stm8s-periphs\stm8s_uart2.h  stm8s-periphs\stm8s.h stm8s-periphs\stm8s_type.h stm8s_conf.h  stm8s-periphs\stm8s_clk.h stm8s-periphs\stm8s_gpio.h  stm8s-periphs\stm8s_tim1.h
+
+[Root.Peripherals.stm8s-periphs\stm8s_uart2.c.Config.1]
+ExternDep= stm8s-periphs\stm8s_uart2.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h stm8s-periphs\stm8s_uart2.h  stm8s-periphs\stm8s.h stm8s-periphs\stm8s_type.h stm8s_conf.h  stm8s-periphs\stm8s_clk.h stm8s-periphs\stm8s_gpio.h  stm8s-periphs\stm8s_tim1.h
+
+[Root.Peripherals.stm8s-periphs\stm8s_gpio.c.Config.0]
+ExternDep= stm8s-periphs\stm8s_gpio.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h stm8s-periphs\stm8s_gpio.h  stm8s-periphs\stm8s.h stm8s-periphs\stm8s_type.h stm8s_conf.h  stm8s-periphs\stm8s_clk.h stm8s-periphs\stm8s_tim1.h  stm8s-periphs\stm8s_uart2.h
+
+[Root.Peripherals.stm8s-periphs\stm8s_gpio.c.Config.1]
+ExternDep= stm8s-periphs\stm8s_gpio.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h stm8s-periphs\stm8s_gpio.h  stm8s-periphs\stm8s.h stm8s-periphs\stm8s_type.h stm8s_conf.h  stm8s-periphs\stm8s_clk.h stm8s-periphs\stm8s_tim1.h  stm8s-periphs\stm8s_uart2.h
+
+[Root.Peripherals.stm8s-periphs\stm8s_tim1.c.Config.0]
+ExternDep= stm8s-periphs\stm8s_tim1.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h stm8s-periphs\stm8s_tim1.h  stm8s-periphs\stm8s.h stm8s-periphs\stm8s_type.h stm8s_conf.h  stm8s-periphs\stm8s_clk.h stm8s-periphs\stm8s_gpio.h  stm8s-periphs\stm8s_uart2.h
+
+[Root.Peripherals.stm8s-periphs\stm8s_tim1.c.Config.1]
+ExternDep= stm8s-periphs\stm8s_tim1.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h stm8s-periphs\stm8s_tim1.h  stm8s-periphs\stm8s.h stm8s-periphs\stm8s_type.h stm8s_conf.h  stm8s-periphs\stm8s_clk.h stm8s-periphs\stm8s_gpio.h  stm8s-periphs\stm8s_uart2.h
+
+[Root.Port...\..\tests\sem1.c.Config.0]
+ExternDep= ..\..\tests\sem1.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\stddef.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h  ../../kernel\atomsem.h ../../tests\atomtests.h atomport-tests.h  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\stdio.h
+
+[Root.Port...\..\tests\sem1.c.Config.1]
+ExternDep= ..\..\tests\sem1.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\stddef.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h  ../../kernel\atomsem.h ../../tests\atomtests.h atomport-tests.h  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\stdio.h
+
+[Root.Port.uart.c.Config.0]
+ExternDep= uart.c C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\stdio.h  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\stddef.h stm8s-periphs\stm8s.h  stm8s-periphs\stm8s_type.h stm8s_conf.h stm8s-periphs\stm8s_clk.h  stm8s-periphs\stm8s_gpio.h stm8s-periphs\stm8s_tim1.h  stm8s-periphs\stm8s_uart2.h ../../kernel\atom.h ../../kernel\atomtimer.h  atomport.h ../../kernel\atommutex.h uart.h
+
+[Root.Port.uart.c.Config.1]
+ExternDep= uart.c C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\stdio.h  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\stddef.h stm8s-periphs\stm8s.h  stm8s-periphs\stm8s_type.h stm8s_conf.h stm8s-periphs\stm8s_clk.h  stm8s-periphs\stm8s_gpio.h stm8s-periphs\stm8s_tim1.h  stm8s-periphs\stm8s_uart2.h ../../kernel\atom.h ../../kernel\atomtimer.h  atomport.h ../../kernel\atommutex.h uart.h
+
+[Root.Port.tests-main.c.Config.0]
+ExternDep= tests-main.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\stdio.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h  atomport-private.h atomport-tests.h ../../tests\atomtests.h uart.h  stm8s-periphs\stm8s.h stm8s_conf.h stm8s-periphs\stm8s_adc1.h  stm8s-periphs\stm8s_clk.h stm8s-periphs\stm8s_gpio.h  stm8s-periphs\stm8s_tim1.h stm8s-periphs\stm8s_uart2.h lcd\lcd.h
+
+[Root.Port.tests-main.c.Config.1]
+ExternDep= tests-main.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\stdio.h ../../kernel\atom.h  ../../kernel\atomtimer.h atomport.h stm8s-periphs\stm8s_type.h  atomport-private.h atomport-tests.h ../../tests\atomtests.h uart.h  stm8s-periphs\stm8s.h stm8s_conf.h stm8s-periphs\stm8s_clk.h  stm8s-periphs\stm8s_gpio.h stm8s-periphs\stm8s_tim1.h  stm8s-periphs\stm8s_uart2.h lcd\lcd.h
+
+[Root.Port.atomport.c.Config.0]
+ExternDep= atomport.c C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h  ../../kernel\atom.h ../../kernel\atomtimer.h atomport.h  stm8s-periphs\stm8s_type.h atomport-private.h stm8s-periphs\stm8s_tim1.h  stm8s-periphs\stm8s.h stm8s_conf.h stm8s-periphs\stm8s_adc1.h  stm8s-periphs\stm8s_clk.h stm8s-periphs\stm8s_gpio.h  stm8s-periphs\stm8s_uart2.h
+
+[Root.Port.atomport.c.Config.1]
+ExternDep= atomport.c C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h  ../../kernel\atom.h ../../kernel\atomtimer.h atomport.h  stm8s-periphs\stm8s_type.h atomport-private.h stm8s-periphs\stm8s_tim1.h  stm8s-periphs\stm8s.h stm8s_conf.h stm8s-periphs\stm8s_clk.h  stm8s-periphs\stm8s_gpio.h stm8s-periphs\stm8s_uart2.h
+
+[Root.Port.stm8_interrupt_vector.c.Config.0]
+ExternDep= stm8_interrupt_vector.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\modsl0.h atomport-private.h
+
+[Root.Port.stm8_interrupt_vector.c.Config.1]
+ExternDep= stm8_interrupt_vector.c  C:\Programmi\COSMIC\CXSTM8_16K\Hstm8\modsl0.h atomport-private.h
