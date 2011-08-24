@@ -28,15 +28,10 @@
 // tolto display e anche joystick
 // Configuartion
 //#define DISPLAY
-//#define JOYSTICK
 
 // usare una delle 2 che segue??
 //#define SET_TARGET_SPEED_BY_POTENTIOMETER
 #define AUTO_START_UP
-
-// tolto il DAC, serve solo per DEBUG
-/*Uncomment to enable DAC functionality feature*/
-//#define DAC_FUNCTIONALITY
 
 /*Comment to disable OPTION bite programming*/
 #define ENABLE_OPTION_BYTE_PROGRAMMING
@@ -50,18 +45,7 @@
 //Comment this define statement to disable the emergency input feature
 //#define BKIN
 
-// Optional includes
-#ifdef DISPLAY
-	#include "MC_Display.h"
-	#include "MC_dev_display.h"
-#endif
-
 #include "MC_stm8s_port_param.h"
-
-// Check configuartion
-#if (defined(DAC_FUNCTIONALITY) && defined(DISSIPATIVE_BRAKE))
-	#error "Is not possible to set DAC_FUNCTIONALITY togeter with DISSIPATIVE_BRAKE"
-#endif
 
 #endif /*__MC_CONTROLSTAGE_PARAM_H*/
 /******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/

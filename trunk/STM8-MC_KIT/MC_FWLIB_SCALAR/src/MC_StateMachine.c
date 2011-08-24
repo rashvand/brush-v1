@@ -23,17 +23,12 @@
 #include "MC_StateMachine.h"
 #include "MC_type.h"
 #include "MC_vtimer.h"
-#include "MC_keys.h"
+//#include "MC_keys.h"
 #include "MC_controlstage_param.h"
 #include "MC_dev.h"
 #include "MC_drive.h"
 #include "vdev.h"
 #include "MC_Faults.h"
-#include "MC_display.h"
-
-#if (defined(DISPLAY) || defined(JOYSTICK)|| !defined(AUTO_START_UP))
-	#include "MC_User_Interface.h"
-#endif
 
 /* private typedef **********************************************************/
 typedef enum 
@@ -59,10 +54,6 @@ SM_RetVal_t sm_faultover(void);
 
 static State_t bState = SM_RESET;
 static SM_FaultingState_t FaultingState = SM_NO_FAULT;
-
-#if (defined(DISPLAY) || defined(JOYSTICK) || !defined(AUTO_START_UP))
-	static PUserInterface_t g_pUserInterface ;
-#endif
 
 void StateMachineExec(void)
 {
@@ -153,22 +144,6 @@ void StateMachineExec(void)
       bState = SM_FAULT;
     break;
   }
-  
-#ifdef DISPLAY
-  // Display management
-  if (vtimer_TimerElapsed(VTIM_DISPLAY_REFRESH))
-  {
-    display_flush();
-    vtimer_SetTimer(VTIM_DISPLAY_REFRESH,DISPLAY_REFRESH_TIME,0);
-    
-    // Blinking
-    if (vtimer_TimerElapsed(VTIM_DISPLAY_BLINK))
-    {
-      display_setpoint_blink();
-      vtimer_SetTimer(VTIM_DISPLAY_BLINK,DISPLAY_BLINKING_TIME,0);
-    }
-  }
-#endif
 }
 
 SM_RetVal_t sm_reset(void)
@@ -185,50 +160,19 @@ SM_RetVal_t sm_reset(void)
   
   devInit(pDevice);
   
-  #if (defined(DISPLAY) || defined(JOYSTICK) || !defined(AUTO_START_UP))
-	g_pUserInterface = Get_UserInterface();
-    UserInterface_Init(pDevice,g_pUserInterface);
-  #endif
-  
-  #ifdef DISPLAY
-	displayInit(pDevice,g_pUserInterface);
-  #endif
-  
-  #if (defined(JOYSTICK) || !defined(AUTO_START_UP))
-	keysInit(pDevice,g_pUserInterface);
-  #endif
   driveInit(pDevice);
 	
-  vtimer_SetTimer(VTIM_KEY,DISPLAY_WELCOME_MESSAGE_TIME,0);
-  while (!(vtimer_TimerElapsed(VTIM_KEY)));
-	vtimer_SetTimer(VTIM_DISPLAY_BLINK,DISPLAY_BLINKING_TIME,0); // Used for set point blinking
-
   return NEXT_STATE;
 }
 
 SM_RetVal_t sm_idle(void)
 {
   SM_RetVal_t sm_retVal = STATE_REMAIN;
-  u8 kpRetVal;
   MC_FuncRetVal_t hwRetVal;
   
   // Action to be performed
   driveIdle();
   hwRetVal = devChkHWErr();
-
-  #ifdef AUTO_START_UP
-  {
-	kpRetVal = USER_SEL; // Start to run
-	
-	#ifdef DISPLAY
-		UserInterface_ChangeToTab(g_pUserInterface->bDefaultTab);
-	#endif
-  }
-  #else
-  {
-	kpRetVal = keysProcess();
-  }
-  #endif
   
   // State changes
   if (hwRetVal == FUNCTION_ERROR)
@@ -237,7 +181,7 @@ SM_RetVal_t sm_idle(void)
     
     // Exit actions
   }	
-  else if (kpRetVal == USER_SEL)
+  else
   {
     sm_retVal = NEXT_STATE; 
     
@@ -255,7 +199,7 @@ SM_RetVal_t sm_startinit(void)
   /******** Action to be performed *****************/
   retVal = driveStartUpInit();
   hwRetVal = devChkHWErr();
-  kpRetVal = keysProcess();
+  //kpRetVal = keysProcess();
   
   /******** State change ****************************/
   if (hwRetVal == FUNCTION_ERROR)
@@ -271,14 +215,8 @@ SM_RetVal_t sm_startinit(void)
     // Exit actions
     FaultingState = SM_STARTINIT_FAULT;
 	//Communication to the user interface of actual state errors
-    UserInterface_Fault(MOTOR_IS_RUNNING);    
+  //  UserInterface_Fault(MOTOR_IS_RUNNING);    
   }  
-  else if (kpRetVal == USER_SEL)
-  {
-    sm_retVal = OPTIONAL_JUMP; 
-    
-    // Exit actions
-  }
   else if (retVal == FUNCTION_ENDED)
   {
     sm_retVal = NEXT_STATE;
@@ -299,7 +237,7 @@ SM_RetVal_t sm_start(void)
   /******** Action to be performed *****************/
   retVal = driveStartUp();
   hwRetVal = devChkHWErr();
-  kpRetVal = keysProcess();
+  //kpRetVal = keysProcess();
   
   /******** State change ****************************/
   if (hwRetVal == FUNCTION_ERROR)
@@ -308,12 +246,6 @@ SM_RetVal_t sm_start(void)
     
     // Exit actions
   }		
-  else if (kpRetVal == USER_SEL)
-  {
-    sm_retVal = OPTIONAL_JUMP; 
-    
-    // Exit actions
-  }
   else if (retVal == FUNCTION_ENDED)
   {
     sm_retVal = NEXT_STATE;
@@ -328,7 +260,7 @@ SM_RetVal_t sm_start(void)
     FaultingState = SM_START_FAULT;
     
     //Communication to the user interface of actual state errors
-    UserInterface_Fault(STARTUP_FAILED);
+    //UserInterface_Fault(STARTUP_FAILED);
   }
   
   return sm_retVal;
@@ -343,7 +275,7 @@ SM_RetVal_t sm_run(void)
   /******** Action to be performed *****************/  
   retVal = driveRun(); // Execute the motor control run
   hwRetVal = devChkHWErr();
-  kpRetVal = keysProcess();
+  //kpRetVal = keysProcess();
   
   /******** State change ****************************/
   if (hwRetVal == FUNCTION_ERROR)
@@ -352,12 +284,6 @@ SM_RetVal_t sm_run(void)
     
     // Exit actions
   }	
-  else if (kpRetVal == USER_SEL)
-  {
-    sm_retVal = NEXT_STATE; 
-    
-    // Exit actions
-  }
   else if (retVal == FUNCTION_ERROR)
   {
     sm_retVal = ERROR_CONDITION;
@@ -366,7 +292,7 @@ SM_RetVal_t sm_run(void)
     FaultingState = SM_RUN_FAULT;	
     
     //Communication to the user interface of actual state errors
-    UserInterface_Fault(ERROR_ON_SPEED_FEEDBACK);
+    //UserInterface_Fault(ERROR_ON_SPEED_FEEDBACK);
     
   }
   else if (retVal == FUNCTION_ENDED)
@@ -457,7 +383,7 @@ SM_RetVal_t sm_fault(void)
     driveStop();
     
     //Sets the user interface in lock condition
-    UserInterface_Lock();
+    //UserInterface_Lock();
     
     st_fault = 1;
   }
@@ -485,7 +411,7 @@ SM_RetVal_t sm_faultover(void)
   MC_FuncRetVal_t hwRetVal;
   u8 kpRetVal;
   
-  kpRetVal = keysProcess();
+  //kpRetVal = keysProcess();
   hwRetVal = devChkHWErrEnd();
   
   /******** State change ****************************/
@@ -494,15 +420,6 @@ SM_RetVal_t sm_faultover(void)
     sm_retVal = ERROR_CONDITION;
     // Exit actions
     FaultingState = SM_FAULTOVER_FAULT;	
-  }
-  else if (kpRetVal == USER_SEL)
-  {
-    sm_retVal = NEXT_STATE; 
-    
-    // Exit actions
-    devChkHWErrClr();    
-    //Sets the user interface in unlock condition
-    UserInterface_Unlock();
   }
   return sm_retVal;
 }

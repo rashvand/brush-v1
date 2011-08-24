@@ -27,19 +27,11 @@
 #include "MC_dev_clk.h"
 #include "MC_dev_port.h"
 #include "MC_controlstage_param.h"
-#include "MC_dev_keys.h"
+//#include "MC_dev_keys.h"
 #include "MC_dev_drive.h"
 #include "MC_dev_vtimer.h"
 
-#ifdef DISPLAY
-	#include "MC_dev_display.h"
-#endif
-
-#ifdef DAC_FUNCTIONALITY
-	#include "MC_dev_DAC.h"
-#endif
-
-static pu16 pHWerrorOccurred_reg,pHWerrorActual_reg;
+static pu16 pHWerrorOccurred_reg, pHWerrorActual_reg;
 
 void devInit(pvdev_device_t pdevice)
 {
@@ -52,13 +44,7 @@ void devInit(pvdev_device_t pdevice)
 
 	dev_clkInit();
 	dev_portInit();
-	#ifdef DISPLAY
-		dev_displayInit(pdevice);
-	#endif
-	#ifdef DAC_FUNCTIONALITY
-		dev_DACInit();
-	#endif
-	dev_keysInit();  
+	//dev_keysInit();  
 	dev_vtimerInit();
 }
 

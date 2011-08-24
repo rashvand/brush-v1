@@ -34,10 +34,6 @@
 #include "MC_pid_regulators.h"
 #include "MC_vtimer.h"
 
-#ifdef DAC_FUNCTIONALITY
-	#include "MC_dev_DAC.h"
-#endif
-
 /**** Private typedef *********************************************************/
 typedef enum 
 {DRIVE_RESET,DRIVE_IDLE,DRIVE_STARTINIT,DRIVE_START,DRIVE_RUN,DRIVE_STOP,DRIVE_WAIT,DRIVE_FAULT} DriveState_t;
@@ -117,7 +113,6 @@ void driveInit(pvdev_device_t pdevice)
 void driveIdle(void)
 {
 	DriveState = DRIVE_IDLE;
-	dev_driveIdle();
 }
 
 MC_FuncRetVal_t driveStartUpInit(void)
@@ -257,14 +252,6 @@ void BLDC_Drive(void)
 			#endif
 		#endif
 	}
-	
-	#ifdef DAC_FUNCTIONALITY
-		dev_DACUpdateValues(DAC_CH_1,(u8)(g_pMotorVar->hMeasured_rotor_speed>>6));
-		#if (SPEED_CONTROL_MODE == CLOSED_LOOP)
-			dev_DACUpdateValues(DAC_CH_2,(u8)(outPid>>4));
-		#endif
-	#endif
-
 }
 
 void BLDCDelayCoefComputation(u16 Motor_Frequency)

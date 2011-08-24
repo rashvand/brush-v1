@@ -35,18 +35,13 @@
 #define DISSIPATIVE_BRAKE_POL DISSIPATIVE_BRAKE_ACTIVE_HIGH
 */
 
-//#define BUS_VOLTAGE_MEASUREMENT  // Comment to set fixed value
+#define BUS_VOLTAGE_MEASUREMENT  // Comment to set fixed value
 
 #ifndef BUS_VOLTAGE_MEASUREMENT
 	#define BUS_VOLTAGE_VALUE 330 //Volts
 #endif
 
-// tolto in quanto non abbiamo il sensore di temperatura
-//#define HEAT_SINK_TEMPERATURE_MEASUREMENT // Comment to set fixed value
-
-#ifndef HEAT_SINK_TEMPERATURE_MEASUREMENT
-	#define HEAT_SINK_TEMPERATURE_VALUE 25 //°C
-#endif
+#define HEAT_SINK_TEMPERATURE_VALUE 25 //°C
 
 //BLDC drive: comment to drive the lowsides with GPIOs
 //						uncomment to drive the lowsides with an advanced timer
@@ -93,11 +88,6 @@
 // questo lo tolgo, non usato
 // BRK_INPUT settings
 // #define BKIN_POLARITY	ACTIVE_LOW
-
-// Check configuartion
-#if (defined(DAC_FUNCTIONALITY) && defined(DISSIPATIVE_BRAKE))
-	#error "Is not possible to set DAC_FUNCTIONALITY togeter with DISSIPATIVE_BRAKE"
-#endif
 
 #endif /* __POWER_STAGE_PARAM_H */
 
