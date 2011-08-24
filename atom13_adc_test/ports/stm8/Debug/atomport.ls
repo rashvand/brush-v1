@@ -130,62 +130,88 @@
  500  002e bf00          	ldw	c_x,x
  501  0030 320002        	pop	c_x+2
  502  0033 80            	iret
- 530                     ; 317 INTERRUPT void ADC1_ISR (void)
- 530                     ; 318 {
- 531                     .text:	section	.text,new
- 532  0000               f_ADC1_ISR:
- 534  0000 3b0002        	push	c_x+2
- 535  0003 be00          	ldw	x,c_x
- 536  0005 89            	pushw	x
- 537  0006 3b0002        	push	c_y+2
- 538  0009 be00          	ldw	x,c_y
- 539  000b 89            	pushw	x
- 540  000c be02          	ldw	x,c_lreg+2
- 541  000e 89            	pushw	x
- 542  000f be00          	ldw	x,c_lreg
- 543  0011 89            	pushw	x
- 546                     ; 322     atomIntEnter();
- 548  0012 cd0000        	call	_atomIntEnter
- 550                     ; 326 			Conversion_Values[0] = ADC1_GetConversionValue();
- 552  0015 cd0000        	call	_ADC1_GetConversionValue
- 554  0018 cf0000        	ldw	_Conversion_Values,x
- 555                     ; 336 		 ADC1_ClearITPendingBit(ADC1_IT_EOC);
- 557  001b ae0080        	ldw	x,#128
- 558  001e cd0000        	call	_ADC1_ClearITPendingBit
- 560                     ; 339 		ADC1_StartConversion();
- 562  0021 cd0000        	call	_ADC1_StartConversion
- 564                     ; 342     atomIntExit(TRUE);
- 566  0024 a601          	ld	a,#1
- 567  0026 cd0000        	call	_atomIntExit
- 569                     ; 343 }
- 572  0029 85            	popw	x
- 573  002a bf00          	ldw	c_lreg,x
- 574  002c 85            	popw	x
- 575  002d bf02          	ldw	c_lreg+2,x
- 576  002f 85            	popw	x
- 577  0030 bf00          	ldw	c_y,x
- 578  0032 320002        	pop	c_y+2
- 579  0035 85            	popw	x
- 580  0036 bf00          	ldw	c_x,x
- 581  0038 320002        	pop	c_x+2
- 582  003b 80            	iret
- 594                     	xref	_Conversion_Values
- 595                     	xref	_TIM1_ITConfig
- 596                     	xref	_TIM1_Cmd
- 597                     	xref	_TIM1_TimeBaseInit
- 598                     	xref	_TIM1_DeInit
- 599                     	xref	_ADC1_ClearITPendingBit
- 600                     	xref	_ADC1_GetConversionValue
- 601                     	xref	_ADC1_StartConversion
- 602                     	xdef	f_ADC1_ISR
- 603                     	xdef	f_TIM1_SystemTickISR
- 604                     	xdef	_archInitSystemTickTimer
- 605                     	xref	_atomTimerTick
- 606                     	xdef	_archThreadContextInit
- 607                     	xref	_atomCurrentContext
- 608                     	xref	_atomIntExit
- 609                     	xref	_atomIntEnter
- 610                     	xref.b	c_lreg
- 611                     	xref.b	c_x
- 612                     	xref.b	c_y
- 631                     	end
+ 545                     ; 317 INTERRUPT void ADC1_ISR (void)
+ 545                     ; 318 {
+ 546                     .text:	section	.text,new
+ 547  0000               f_ADC1_ISR:
+ 549       00000001      OFST:	set	1
+ 550  0000 3b0002        	push	c_x+2
+ 551  0003 be00          	ldw	x,c_x
+ 552  0005 89            	pushw	x
+ 553  0006 3b0002        	push	c_y+2
+ 554  0009 be00          	ldw	x,c_y
+ 555  000b 89            	pushw	x
+ 556  000c be02          	ldw	x,c_lreg+2
+ 557  000e 89            	pushw	x
+ 558  000f be00          	ldw	x,c_lreg
+ 559  0011 89            	pushw	x
+ 560  0012 88            	push	a
+ 563                     ; 323     atomIntEnter();
+ 565  0013 cd0000        	call	_atomIntEnter
+ 567                     ; 330 	for(i=0; i<=9;i++)
+ 569  0016 0f01          	clr	(OFST+0,sp)
+ 570  0018               L322:
+ 571                     ; 332 			Conversion_Values[i] = ADC1_GetBufferValue(i);
+ 573  0018 7b01          	ld	a,(OFST+0,sp)
+ 574  001a cd0000        	call	_ADC1_GetBufferValue
+ 576  001d 7b01          	ld	a,(OFST+0,sp)
+ 577  001f 905f          	clrw	y
+ 578  0021 9097          	ld	yl,a
+ 579  0023 9058          	sllw	y
+ 580  0025 90df0000      	ldw	(_Conversion_Values,y),x
+ 581                     ; 330 	for(i=0; i<=9;i++)
+ 583  0029 0c01          	inc	(OFST+0,sp)
+ 586  002b 7b01          	ld	a,(OFST+0,sp)
+ 587  002d a10a          	cp	a,#10
+ 588  002f 25e7          	jrult	L322
+ 589                     ; 337 		 csr_temp = ADC1->CSR;
+ 591  0031 c65400        	ld	a,21504
+ 592  0034 6b01          	ld	(OFST+0,sp),a
+ 593                     ; 338 		 csr_temp &= (uint8_t)~ADC1_IT_EOC;
+ 595  0036 7b01          	ld	a,(OFST+0,sp)
+ 596  0038 a47f          	and	a,#127
+ 597  003a 6b01          	ld	(OFST+0,sp),a
+ 598                     ; 339 		 csr_temp |= (uint8_t)(ADC1_CHANNEL_9);
+ 600  003c 7b01          	ld	a,(OFST+0,sp)
+ 601  003e aa09          	or	a,#9
+ 602  0040 6b01          	ld	(OFST+0,sp),a
+ 603                     ; 340 		 ADC1->CSR = csr_temp;
+ 605  0042 7b01          	ld	a,(OFST+0,sp)
+ 606  0044 c75400        	ld	21504,a
+ 607                     ; 345 		ADC1_StartConversion();
+ 609  0047 cd0000        	call	_ADC1_StartConversion
+ 611                     ; 348     atomIntExit(TRUE);
+ 613  004a a601          	ld	a,#1
+ 614  004c cd0000        	call	_atomIntExit
+ 616                     ; 349 }
+ 619  004f 84            	pop	a
+ 620  0050 85            	popw	x
+ 621  0051 bf00          	ldw	c_lreg,x
+ 622  0053 85            	popw	x
+ 623  0054 bf02          	ldw	c_lreg+2,x
+ 624  0056 85            	popw	x
+ 625  0057 bf00          	ldw	c_y,x
+ 626  0059 320002        	pop	c_y+2
+ 627  005c 85            	popw	x
+ 628  005d bf00          	ldw	c_x,x
+ 629  005f 320002        	pop	c_x+2
+ 630  0062 80            	iret
+ 642                     	xref	_Conversion_Values
+ 643                     	xref	_TIM1_ITConfig
+ 644                     	xref	_TIM1_Cmd
+ 645                     	xref	_TIM1_TimeBaseInit
+ 646                     	xref	_TIM1_DeInit
+ 647                     	xref	_ADC1_GetBufferValue
+ 648                     	xref	_ADC1_StartConversion
+ 649                     	xdef	f_ADC1_ISR
+ 650                     	xdef	f_TIM1_SystemTickISR
+ 651                     	xdef	_archInitSystemTickTimer
+ 652                     	xref	_atomTimerTick
+ 653                     	xdef	_archThreadContextInit
+ 654                     	xref	_atomCurrentContext
+ 655                     	xref	_atomIntExit
+ 656                     	xref	_atomIntEnter
+ 657                     	xref.b	c_lreg
+ 658                     	xref.b	c_x
+ 659                     	xref.b	c_y
+ 678                     	end

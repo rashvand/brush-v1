@@ -211,8 +211,8 @@ static void main_thread_func (uint32_t param)
 		//GPIO_Init(GPIOD, GPIO_PIN_0, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 3
 		//GPIO_Init(GPIOE, GPIO_PIN_0, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 4
 
-		GPIO_Init(GPIOE, GPIO_PIN_6, 		GPIO_MODE_IN_FL_NO_IT);     //analog_in
-		GPIO_Init(GPIOE, GPIO_PIN_7, 		GPIO_MODE_IN_FL_NO_IT);     //analog_in
+		GPIO_Init(GPIOE, GPIO_PIN_6, 		GPIO_MODE_IN_FL_NO_IT);     //ain9
+		GPIO_Init(GPIOE, GPIO_PIN_7, 		GPIO_MODE_IN_FL_NO_IT);     //ain8
 		GPIO_Init(GPIOB, GPIO_PIN_ALL, 	GPIO_MODE_IN_FL_NO_IT); 		//ain0-ain7
 
     /* Initialise UART (115200bps) */
@@ -231,20 +231,20 @@ static void main_thread_func (uint32_t param)
 							ADC1_EXTTRIG_TIM, 
 							DISABLE, 
 							ADC1_ALIGN_LEFT, 
-							ADC1_SCHMITTTRIG_CHANNEL9, 
+							ADC1_SCHMITTTRIG_ALL, 
 							DISABLE); 
-#endif
+#else
 		ADC1_Init(ADC1_CONVERSIONMODE_CONTINUOUS, 
-							ADC1_CHANNEL_3, 
+							ADC1_CHANNEL_9, 
 							ADC1_PRESSEL_FCPU_D2, 
 							ADC1_EXTTRIG_TIM, 
 							DISABLE, 
 							ADC1_ALIGN_LEFT, 
 							ADC1_SCHMITTTRIG_ALL, 
 							DISABLE); 
-
+#endif
 		/* Enable SCAN mode conversion */
-		ADC1_ScanModeCmd(DISABLE); //ENABLE
+		ADC1_ScanModeCmd(ENABLE); //ENABLE
 		
 		/* Enable EOC interrupt */
     ADC1_ITConfig(ADC1_IT_EOCIE,ENABLE);
@@ -327,7 +327,7 @@ static void main_thread_func (uint32_t param)
 				GPIO_WriteReverse(GPIOE, GPIO_PIN_0);
 				
 				/* Print ADC value on serial port */
-				printf("ADC: %d %d %d %d %d %d %d %d %d %d \r\n",
+				printf("<ADC> %6u %6u %6u %6u %6u %6u %6u %6u %6u %6u </ADC>\r\n",
 				Conversion_Values[0],
 				Conversion_Values[1],
 				Conversion_Values[2],

@@ -77,13 +77,13 @@
  235  0021 ae500f        	ldw	x,#20495
  236  0024 cd0000        	call	_GPIO_Init
  238  0027 85            	popw	x
- 239                     ; 214 		GPIO_Init(GPIOE, GPIO_PIN_6, 		GPIO_MODE_IN_FL_NO_IT);     //analog_in
+ 239                     ; 214 		GPIO_Init(GPIOE, GPIO_PIN_6, 		GPIO_MODE_IN_FL_NO_IT);     //ain9
  241  0028 4b00          	push	#0
  242  002a 4b40          	push	#64
  243  002c ae5014        	ldw	x,#20500
  244  002f cd0000        	call	_GPIO_Init
  246  0032 85            	popw	x
- 247                     ; 215 		GPIO_Init(GPIOE, GPIO_PIN_7, 		GPIO_MODE_IN_FL_NO_IT);     //analog_in
+ 247                     ; 215 		GPIO_Init(GPIOE, GPIO_PIN_7, 		GPIO_MODE_IN_FL_NO_IT);     //ain8
  249  0033 4b00          	push	#0
  250  0035 4b80          	push	#128
  251  0037 ae5014        	ldw	x,#20500
@@ -106,7 +106,7 @@
  273                     ; 224 		ADC1_DeInit(); 
  275  0059 cd0000        	call	_ADC1_DeInit
  277                     ; 237 		ADC1_Init(ADC1_CONVERSIONMODE_CONTINUOUS, 
- 277                     ; 238 							ADC1_CHANNEL_3, 
+ 277                     ; 238 							ADC1_CHANNEL_9, 
  277                     ; 239 							ADC1_PRESSEL_FCPU_D2, 
  277                     ; 240 							ADC1_EXTTRIG_TIM, 
  277                     ; 241 							DISABLE, 
@@ -119,75 +119,75 @@
  282  0062 4b00          	push	#0
  283  0064 4b00          	push	#0
  284  0066 4b00          	push	#0
- 285  0068 ae0103        	ldw	x,#259
+ 285  0068 ae0109        	ldw	x,#265
  286  006b cd0000        	call	_ADC1_Init
  288  006e 5b06          	addw	sp,#6
- 289                     ; 247 		ADC1_ScanModeCmd(DISABLE); //ENABLE
- 291  0070 4f            	clr	a
- 292  0071 cd0000        	call	_ADC1_ScanModeCmd
+ 289                     ; 247 		ADC1_ScanModeCmd(ENABLE); //ENABLE
+ 291  0070 a601          	ld	a,#1
+ 292  0072 cd0000        	call	_ADC1_ScanModeCmd
  294                     ; 250     ADC1_ITConfig(ADC1_IT_EOCIE,ENABLE);
- 296  0074 4b01          	push	#1
- 297  0076 ae0020        	ldw	x,#32
- 298  0079 cd0000        	call	_ADC1_ITConfig
- 300  007c 84            	pop	a
+ 296  0075 4b01          	push	#1
+ 297  0077 ae0020        	ldw	x,#32
+ 298  007a cd0000        	call	_ADC1_ITConfig
+ 300  007d 84            	pop	a
  301                     ; 253 		ADC1_Cmd(ENABLE);
- 303  007d a601          	ld	a,#1
- 304  007f cd0000        	call	_ADC1_Cmd
+ 303  007e a601          	ld	a,#1
+ 304  0080 cd0000        	call	_ADC1_Cmd
  306                     ; 256 		ADC1_StartConversion();
- 308  0082 cd0000        	call	_ADC1_StartConversion
+ 308  0083 cd0000        	call	_ADC1_StartConversion
  310                     ; 281     if (test_status == 0)
- 312  0085 96            	ldw	x,sp
- 313  0086 1c0009        	addw	x,#OFST-5
- 314  0089 cd0000        	call	c_lzmp
- 316  008c 2627          	jrne	L37
+ 312  0086 96            	ldw	x,sp
+ 313  0087 1c0009        	addw	x,#OFST-5
+ 314  008a cd0000        	call	c_lzmp
+ 316  008d 2627          	jrne	L37
  317                     ; 286         if (atomThreadStackCheck (&main_tcb, &used_bytes, &free_bytes) == ATOM_OK)
- 319  008e 96            	ldw	x,sp
- 320  008f 1c0005        	addw	x,#OFST-9
- 321  0092 89            	pushw	x
- 322  0093 96            	ldw	x,sp
- 323  0094 1c0003        	addw	x,#OFST-11
- 324  0097 89            	pushw	x
- 325  0098 ae0194        	ldw	x,#L3_main_tcb
- 326  009b cd0000        	call	_atomThreadStackCheck
- 328  009e 5b04          	addw	sp,#4
- 329  00a0 4d            	tnz	a
- 330  00a1 2612          	jrne	L37
+ 319  008f 96            	ldw	x,sp
+ 320  0090 1c0005        	addw	x,#OFST-9
+ 321  0093 89            	pushw	x
+ 322  0094 96            	ldw	x,sp
+ 323  0095 1c0003        	addw	x,#OFST-11
+ 324  0098 89            	pushw	x
+ 325  0099 ae0194        	ldw	x,#L3_main_tcb
+ 326  009c cd0000        	call	_atomThreadStackCheck
+ 328  009f 5b04          	addw	sp,#4
+ 329  00a1 4d            	tnz	a
+ 330  00a2 2612          	jrne	L37
  331                     ; 289             if (free_bytes == 0)
- 333  00a3 96            	ldw	x,sp
- 334  00a4 1c0005        	addw	x,#OFST-9
- 335  00a7 cd0000        	call	c_lzmp
- 337  00aa 2609          	jrne	L37
+ 333  00a4 96            	ldw	x,sp
+ 334  00a5 1c0005        	addw	x,#OFST-9
+ 335  00a8 cd0000        	call	c_lzmp
+ 337  00ab 2609          	jrne	L37
  338                     ; 292                 test_status++;
- 340  00ac 96            	ldw	x,sp
- 341  00ad 1c0009        	addw	x,#OFST-5
- 342  00b0 a601          	ld	a,#1
- 343  00b2 cd0000        	call	c_lgadc
- 345  00b5               L37:
+ 340  00ad 96            	ldw	x,sp
+ 341  00ae 1c0009        	addw	x,#OFST-5
+ 342  00b1 a601          	ld	a,#1
+ 343  00b3 cd0000        	call	c_lgadc
+ 345  00b6               L37:
  346                     ; 318 		sleep_ticks = SYSTEM_TICKS_PER_SEC;
- 348  00b5 ae0064        	ldw	x,#100
- 349  00b8 1f0d          	ldw	(OFST-1,sp),x
- 350  00ba               L101:
+ 348  00b6 ae0064        	ldw	x,#100
+ 349  00b9 1f0d          	ldw	(OFST-1,sp),x
+ 350  00bb               L101:
  351                     ; 324         GPIO_WriteReverse(GPIOD, GPIO_PIN_7);
- 353  00ba 4b80          	push	#128
- 354  00bc ae500f        	ldw	x,#20495
- 355  00bf cd0000        	call	_GPIO_WriteReverse
- 357  00c2 84            	pop	a
+ 353  00bb 4b80          	push	#128
+ 354  00bd ae500f        	ldw	x,#20495
+ 355  00c0 cd0000        	call	_GPIO_WriteReverse
+ 357  00c3 84            	pop	a
  358                     ; 325 				GPIO_WriteReverse(GPIOD, GPIO_PIN_2);
- 360  00c3 4b04          	push	#4
- 361  00c5 ae500f        	ldw	x,#20495
- 362  00c8 cd0000        	call	_GPIO_WriteReverse
- 364  00cb 84            	pop	a
+ 360  00c4 4b04          	push	#4
+ 361  00c6 ae500f        	ldw	x,#20495
+ 362  00c9 cd0000        	call	_GPIO_WriteReverse
+ 364  00cc 84            	pop	a
  365                     ; 326 				GPIO_WriteReverse(GPIOD, GPIO_PIN_0);
- 367  00cc 4b01          	push	#1
- 368  00ce ae500f        	ldw	x,#20495
- 369  00d1 cd0000        	call	_GPIO_WriteReverse
- 371  00d4 84            	pop	a
+ 367  00cd 4b01          	push	#1
+ 368  00cf ae500f        	ldw	x,#20495
+ 369  00d2 cd0000        	call	_GPIO_WriteReverse
+ 371  00d5 84            	pop	a
  372                     ; 327 				GPIO_WriteReverse(GPIOE, GPIO_PIN_0);
- 374  00d5 4b01          	push	#1
- 375  00d7 ae5014        	ldw	x,#20500
- 376  00da cd0000        	call	_GPIO_WriteReverse
- 378  00dd 84            	pop	a
- 379                     ; 330 				printf("ADC: %d %d %d %d %d %d %d %d %d %d \r\n",
+ 374  00d6 4b01          	push	#1
+ 375  00d8 ae5014        	ldw	x,#20500
+ 376  00db cd0000        	call	_GPIO_WriteReverse
+ 378  00de 84            	pop	a
+ 379                     ; 330 				printf("<ADC> %6u %6u %6u %6u %6u %6u %6u %6u %6u %6u </ADC>\r\n",
  379                     ; 331 				Conversion_Values[0],
  379                     ; 332 				Conversion_Values[1],
  379                     ; 333 				Conversion_Values[2],
@@ -198,39 +198,39 @@
  379                     ; 338 				Conversion_Values[7],
  379                     ; 339 				Conversion_Values[8],
  379                     ; 340 				Conversion_Values[9]);
- 381  00de ce0012        	ldw	x,_Conversion_Values+18
- 382  00e1 89            	pushw	x
- 383  00e2 ce0010        	ldw	x,_Conversion_Values+16
- 384  00e5 89            	pushw	x
- 385  00e6 ce000e        	ldw	x,_Conversion_Values+14
- 386  00e9 89            	pushw	x
- 387  00ea ce000c        	ldw	x,_Conversion_Values+12
- 388  00ed 89            	pushw	x
- 389  00ee ce000a        	ldw	x,_Conversion_Values+10
- 390  00f1 89            	pushw	x
- 391  00f2 ce0008        	ldw	x,_Conversion_Values+8
- 392  00f5 89            	pushw	x
- 393  00f6 ce0006        	ldw	x,_Conversion_Values+6
- 394  00f9 89            	pushw	x
- 395  00fa ce0004        	ldw	x,_Conversion_Values+4
- 396  00fd 89            	pushw	x
- 397  00fe ce0002        	ldw	x,_Conversion_Values+2
- 398  0101 89            	pushw	x
- 399  0102 ce0000        	ldw	x,_Conversion_Values
- 400  0105 89            	pushw	x
- 401  0106 ae0000        	ldw	x,#L501
- 402  0109 cd0000        	call	_printf
- 404  010c 5b14          	addw	sp,#20
+ 381  00df ce0012        	ldw	x,_Conversion_Values+18
+ 382  00e2 89            	pushw	x
+ 383  00e3 ce0010        	ldw	x,_Conversion_Values+16
+ 384  00e6 89            	pushw	x
+ 385  00e7 ce000e        	ldw	x,_Conversion_Values+14
+ 386  00ea 89            	pushw	x
+ 387  00eb ce000c        	ldw	x,_Conversion_Values+12
+ 388  00ee 89            	pushw	x
+ 389  00ef ce000a        	ldw	x,_Conversion_Values+10
+ 390  00f2 89            	pushw	x
+ 391  00f3 ce0008        	ldw	x,_Conversion_Values+8
+ 392  00f6 89            	pushw	x
+ 393  00f7 ce0006        	ldw	x,_Conversion_Values+6
+ 394  00fa 89            	pushw	x
+ 395  00fb ce0004        	ldw	x,_Conversion_Values+4
+ 396  00fe 89            	pushw	x
+ 397  00ff ce0002        	ldw	x,_Conversion_Values+2
+ 398  0102 89            	pushw	x
+ 399  0103 ce0000        	ldw	x,_Conversion_Values
+ 400  0106 89            	pushw	x
+ 401  0107 ae0000        	ldw	x,#L501
+ 402  010a cd0000        	call	_printf
+ 404  010d 5b14          	addw	sp,#20
  405                     ; 343         atomTimerDelay(sleep_ticks);
- 407  010e 1e0d          	ldw	x,(OFST-1,sp)
- 408  0110 cd0000        	call	c_itolx
- 410  0113 be02          	ldw	x,c_lreg+2
- 411  0115 89            	pushw	x
- 412  0116 be00          	ldw	x,c_lreg
- 413  0118 89            	pushw	x
- 414  0119 cd0000        	call	_atomTimerDelay
- 416  011c 5b04          	addw	sp,#4
- 418  011e 209a          	jra	L101
+ 407  010f 1e0d          	ldw	x,(OFST-1,sp)
+ 408  0111 cd0000        	call	c_itolx
+ 410  0114 be02          	ldw	x,c_lreg+2
+ 411  0116 89            	pushw	x
+ 412  0117 be00          	ldw	x,c_lreg
+ 413  0119 89            	pushw	x
+ 414  011a cd0000        	call	_atomTimerDelay
+ 416  011d 5b04          	addw	sp,#4
+ 418  011f 209a          	jra	L101
  630                     	xdef	_main
  631                     	switch	.bss
  632  0000               _Conversion_Values:
@@ -262,11 +262,12 @@
  658                     	xref	_printf
  659                     .const:	section	.text
  660  0000               L501:
- 661  0000 4144433a2025  	dc.b	"ADC: %d %d %d %d %"
- 662  0012 642025642025  	dc.b	"d %d %d %d %d %d ",13
- 663  0024 0a00          	dc.b	10,0
- 664                     	xref.b	c_lreg
- 684                     	xref	c_itolx
- 685                     	xref	c_lgadc
- 686                     	xref	c_lzmp
- 687                     	end
+ 661  0000 3c4144433e20  	dc.b	"<ADC> %6u %6u %6u "
+ 662  0012 253675202536  	dc.b	"%6u %6u %6u %6u %6"
+ 663  0024 752025367520  	dc.b	"u %6u %6u </ADC>",13
+ 664  0035 0a00          	dc.b	10,0
+ 665                     	xref.b	c_lreg
+ 685                     	xref	c_itolx
+ 686                     	xref	c_lgadc
+ 687                     	xref	c_lzmp
+ 688                     	end
