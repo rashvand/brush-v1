@@ -72,6 +72,8 @@ void vtimer_UpdateHandler(void)
 			sVtimer[i].msec--;
 			if (sVtimer[i].pCallback != 0)
 			{
+				// nel momento in cui arriva a zero il timer
+				// posso far partire una funzione, se impostata la callback
 				if (sVtimer[i].msec == 0) 
 				{
 					((PFN_Callback_t)sVtimer[i].pCallback)();

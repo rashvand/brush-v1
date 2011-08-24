@@ -29,7 +29,6 @@
 
 /* Exported functions ******************/
 void dev_driveInit(pvdev_device_t pdevice);
-void dev_driveIdle(void);
 MC_FuncRetVal_t dev_driveStartUpInit(void);
 MC_FuncRetVal_t dev_driveStartUp(void);
 MC_FuncRetVal_t dev_driveRun(void);

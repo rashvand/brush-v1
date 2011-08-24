@@ -39,10 +39,6 @@
 
 #include "MC_BLDC_conf.h"  // Include sensor configuration
 
-#ifdef DAC_FUNCTIONALITY
-	#include "MC_dev_DAC.h"
-#endif
-
 #ifndef PWM_LOWSIDE_OUTPUT_ENABLE
 	#define LS_GPIO_CONTROL
 
@@ -640,11 +636,9 @@ void dev_driveInit(pvdev_device_t pdevice)
 
 	#endif
 
+	// faccio partire il timer che gestisce le acquisizioni
+	// Application_ADC_Manager è la funzione che viene chiamata ad ogni timeout
 	vtimer_SetTimer(ADC_SAMPLE_TIMER,ADC_SAMPLE_TIMEOUT,&Application_ADC_Manager);
-}
-
-void dev_driveIdle(void)
-{
 }
 
 MC_FuncRetVal_t dev_driveStartUpInit(void)
@@ -869,9 +863,7 @@ void dev_BLDC_driveUpdate(void)
 				PWM_ON_SW_PORT |= PWM_ON_SW_PIN;
 			}
 			bkin_blink_cnt++;
-		#endif
-		
-		
+		#endif		
 	} 
 	else
 	{
@@ -986,30 +978,9 @@ void GetSyncUserAdc(void)
 #ifdef HEAT_SINK_TEMPERATURE_MEASUREMENT
 	void GetTemperature(void)
 	{
-		u16 data;
-		u8 temp;
-
-		disableInterrupts();
-		data = ADC_Buffer[ ADC_TEMP_INDEX ];
-		enableInterrupts();
-		g_pDevice->regs.r8[VDEV_REG8_HEATSINK_TEMPERATURE] = (u8)(data >> 2);
-
-		if (data > NTC_THRESHOLD)
-		{
-			g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_OCCURRED] |= HEATSINK_TEMPERATURE;
-			g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] |= HEATSINK_TEMPERATURE;      
-		}
-		if (data < NTC_HYSTERIS)
-		{
-			g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] &= (u8)(~HEATSINK_TEMPERATURE);
-		}
-
-		temp = (u8)(TEMP_SENS_T0 + (((s16)data - TEMP_SENS_BETA)/TEMP_SENS_ALPHA));
-		BLDC_Set_Heatsink_Temperature((u8)(temp));
+		*** rimossa questa funzione ***
 	}
-#endif
-
-#ifndef HEAT_SINK_TEMPERATURE_MEASUREMENT
+#else
 	void GetTemperature(void)
 	{
 		BLDC_Set_Heatsink_Temperature((u8)(HEAT_SINK_TEMPERATURE_VALUE));

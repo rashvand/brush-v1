@@ -312,26 +312,11 @@ Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_statemachin
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_statemachine.h]
 ElemType=File
 PathName=mc_fwlib_scalar\inc\mc_statemachine.h
-Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_user_interface.h
-
-[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_user_interface.h]
-ElemType=File
-PathName=mc_fwlib_scalar\inc\mc_user_interface.h
 Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_pid_regulators.h
 
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_pid_regulators.h]
 ElemType=File
 PathName=mc_fwlib_scalar\inc\mc_pid_regulators.h
-Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_keys.h
-
-[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_keys.h]
-ElemType=File
-PathName=mc_fwlib_scalar\inc\mc_keys.h
-Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_display.h
-
-[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_display.h]
-ElemType=File
-PathName=mc_fwlib_scalar\inc\mc_display.h
 Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_bldc_type.h
 
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Inc.mc_fwlib_scalar\inc\mc_bldc_type.h]
@@ -377,11 +362,6 @@ Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_powerst
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_powerstage_param.h]
 ElemType=File
 PathName=mc_fwlib_scalar\param\mc_powerstage_param.h
-Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_bldc_user_interface_param.h
-
-[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_bldc_user_interface_param.h]
-ElemType=File
-PathName=mc_fwlib_scalar\param\mc_bldc_user_interface_param.h
 Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_bldc_motor_param.h
 
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_bldc_motor_param.h]
@@ -397,11 +377,6 @@ Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_bldc_co
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_bldc_conf.h]
 ElemType=File
 PathName=mc_fwlib_scalar\param\mc_bldc_conf.h
-Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_hall_param.h
-
-[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_hall_param.h]
-ElemType=File
-PathName=mc_fwlib_scalar\param\mc_hall_param.h
 
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src]
 ElemType=Folder
@@ -411,31 +386,11 @@ Child=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_statemachi
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_statemachine.c]
 ElemType=File
 PathName=mc_fwlib_scalar\src\mc_statemachine.c
-Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_user_interface.c
-
-[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_user_interface.c]
-ElemType=File
-PathName=mc_fwlib_scalar\src\mc_user_interface.c
 Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_pid_regulators.c
 
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_pid_regulators.c]
 ElemType=File
 PathName=mc_fwlib_scalar\src\mc_pid_regulators.c
-Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_keys.c
-
-[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_keys.c]
-ElemType=File
-PathName=mc_fwlib_scalar\src\mc_keys.c
-Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_display.c
-
-[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_display.c]
-ElemType=File
-PathName=mc_fwlib_scalar\src\mc_display.c
-Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_bldc_user_interface.c
-
-[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_bldc_user_interface.c]
-ElemType=File
-PathName=mc_fwlib_scalar\src\mc_bldc_user_interface.c
 Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_bldc_motor.c
 
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_bldc_motor.c]
@@ -841,22 +796,12 @@ String.6.0=2007,12,10,15,5,33
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc]
 ElemType=Folder
 PathName=STM8_MC_FRAMEWORK\Inc
-Child=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_lcd.h
+Child=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_opt.h
 Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_lcd.h]
-ElemType=File
-PathName=stm8_mc_framework\inc\mc_dev_lcd.h
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_opt.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_opt.h]
 ElemType=File
 PathName=stm8_mc_framework\inc\mc_dev_opt.h
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_dac.h
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_dac.h]
-ElemType=File
-PathName=stm8_mc_framework\inc\mc_dev_dac.h
 Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_drive.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_drive.h]
@@ -867,16 +812,6 @@ Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_v
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_vtimer.h]
 ElemType=File
 PathName=stm8_mc_framework\inc\mc_dev_vtimer.h
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_keys.h
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_keys.h]
-ElemType=File
-PathName=stm8_mc_framework\inc\mc_dev_keys.h
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_display.h
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_display.h]
-ElemType=File
-PathName=stm8_mc_framework\inc\mc_dev_display.h
 Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_port.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_port.h]
@@ -947,30 +882,15 @@ Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_s
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_bldc_conf.h]
 ElemType=File
 PathName=stm8_mc_framework\param\mc_stm8s_bldc_conf.h
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_hall_param.h
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_hall_param.h]
-ElemType=File
-PathName=stm8_mc_framework\param\mc_stm8s_hall_param.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src]
 ElemType=Folder
 PathName=STM8_MC_FRAMEWORK\Src
-Child=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_lcd.c
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_lcd.c]
-ElemType=File
-PathName=stm8_mc_framework\src\mc_stm8s_lcd.c
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_opt.c
+Child=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_opt.c
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_opt.c]
 ElemType=File
 PathName=stm8_mc_framework\src\mc_stm8s_opt.c
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_dac.c
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_dac.c]
-ElemType=File
-PathName=stm8_mc_framework\src\mc_stm8s_dac.c
 Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_vtimer.c
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_vtimer.c]
@@ -981,16 +901,6 @@ Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_port.c]
 ElemType=File
 PathName=stm8_mc_framework\src\mc_stm8s_port.c
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_keys.c
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_keys.c]
-ElemType=File
-PathName=stm8_mc_framework\src\mc_stm8s_keys.c
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_display.c
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_display.c]
-ElemType=File
-PathName=stm8_mc_framework\src\mc_stm8s_display.c
 Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_bldc_drive.c
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_bldc_drive.c]

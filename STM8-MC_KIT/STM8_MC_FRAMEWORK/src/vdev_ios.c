@@ -27,10 +27,6 @@
 
 #include "MC_ControlStage_param.h"
 
-#ifdef DISPLAY
-	#include "mc_dev_display.h"
-#endif
-
 /******************************************************************************/
 errorcode vdev_fninp8(u32 addr, pu8 pportvalue)
 {
@@ -39,17 +35,7 @@ errorcode vdev_fninp8(u32 addr, pu8 pportvalue)
 	switch (addr)
 	{
 		case VDEV_INP8_USER_INPUT:
-			*pportvalue = 0;
-			#ifdef JOYSTICK
-				*pportvalue |= (u8)((u8)(!GPIO_ReadInputPin(KEY_RIGHT_PORT, KEY_RIGHT_BIT)) << USER_INPUT_RIGHT);
-				*pportvalue |= (u8)((u8)(!GPIO_ReadInputPin(KEY_LEFT_PORT, KEY_LEFT_BIT)) << USER_INPUT_LEFT);
-				*pportvalue |= (u8)((u8)(!GPIO_ReadInputPin(KEY_UP_PORT, KEY_UP_BIT)) << USER_INPUT_UP);
-				*pportvalue |= (u8)((u8)(!GPIO_ReadInputPin(KEY_DOWN_PORT, KEY_DOWN_BIT)) << USER_INPUT_DOWN);
-				*pportvalue |= (u8)((u8)(!GPIO_ReadInputPin(KEY_SEL_PORT, KEY_SEL_BIT)) << USER_INPUT_SEL);
-			#endif
-			#ifndef AUTO_START_UP
-				*pportvalue |= (u8)((u8)(!GPIO_ReadInputPin(USER_BUTTON_PORT, USER_BUTTON_BIT)) << USER_INPUT_KEY);
-			#endif
+			*pportvalue = 0;			
 		break;
 	}
 	return ret;
@@ -75,18 +61,10 @@ errorcode vdev_fnout8(u32 addr, u8 pportvalue)
 	
 	switch (addr)
 	{
-		case VDEV_OUT8_DISPLAY_FLUSH:
-			#ifdef DISPLAY
-				// Display flush
-				dev_displayFlush();
-			#endif
+		case VDEV_OUT8_DISPLAY_FLUSH:			
 		break;
 		
 		case VDEV_OUT8_DISPLAY_PRINTCH:
-			#ifdef DISPLAY
-				// Display printch
-				dev_displayPrintch();
-			#endif
 		break;
 
 		case VDEV_OUT8_LED_1:
