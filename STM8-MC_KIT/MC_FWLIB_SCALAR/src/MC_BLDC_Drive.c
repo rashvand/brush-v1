@@ -69,10 +69,6 @@ static MC_FuncRetVal_t DriveStatus;
 
 static u8 bValidatedMeasuredSpeed = 0;
 
-#ifdef HALL
-	u8 bHallError;
-#endif
-
 /**** Private Functions *******************************************************/
 void BLDC_Drive(void);
 u16 GetSpeed_01HZ(void);
@@ -112,9 +108,6 @@ void driveInit(pvdev_device_t pdevice)
 	#ifdef SENSORLESS
 		pcounter_reg = &(pdevice->regs.r16[VDEV_REG16_BEMF_COUNTS]);
 	#endif
-	#ifdef HALL
-		pcounter_reg = &(pdevice->regs.r16[VDEV_REG16_HALL_COUNTS]);
-	#endif
 	
 	pDutyCycleCounts_reg = &(pdevice->regs.r16[VDEV_REG16_BLDC_DUTY_CYCLE_COUNTS]);
 	
@@ -131,9 +124,6 @@ MC_FuncRetVal_t driveStartUpInit(void)
 {
 	DriveState = DRIVE_STARTINIT;
 	bValidatedMeasuredSpeed = 0;
-	#ifdef HALL
-		bHallError = 0;
-	#endif
 	DriveStatus = FUNCTION_RUNNING;
 
 	#if (SPEED_CONTROL_MODE == CLOSED_LOOP)
@@ -194,32 +184,6 @@ void BLDC_Drive(void)
 	// Update measured speed
 	hSpeed_01HZ = GetSpeed_01HZ();
 
-	#ifdef HALL
-		if (hSpeed_01HZ > HALL_MAX_SPEED_01HZ)
-		{
-			hSpeed_01HZ = HALL_MAX_SPEED_01HZ;
-		}
-		#if (HALL_MIN_SPEED_01HZ > 0)
-			if ((hSpeed_01HZ < HALL_MIN_SPEED_01HZ) && (bValidatedMeasuredSpeed == 1))
-			{
-				bHallError++;
-				if (bHallError >= HALL_MAX_ERROR_NUMBER)
-				{
-					DriveStatus = FUNCTION_ERROR;
-					bValidatedMeasuredSpeed = 0;
-				}
-			}
-			if (hSpeed_01HZ > HALL_MIN_SPEED_01HZ)
-			{
-				bValidatedMeasuredSpeed = 1;
-				bHallError = 0;
-			}
-		#else
-			bValidatedMeasuredSpeed = 1;
-		#endif
-			
-	#endif
-	
 	#ifdef SENSORLESS
 		if (hSpeed_01HZ > MIN_SPEED_01HZ)
 		{

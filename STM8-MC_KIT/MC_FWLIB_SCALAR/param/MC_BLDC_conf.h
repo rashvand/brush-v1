@@ -28,11 +28,6 @@
 //#define HALL
 #define SENSORLESS
 
-// Optional includes
-#ifdef HALL
-#include "MC_hall_param.h"
-#endif
-
 #if (!defined SENSORLESS)&&(!defined HALL)
 #error "Invalid configuration: No speed sensor selected"
 #endif

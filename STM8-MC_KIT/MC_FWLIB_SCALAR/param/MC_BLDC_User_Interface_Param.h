@@ -158,10 +158,6 @@ _EEXTRAFIELD_INSTANCE(TAB_11_FIELD_0);		\
 	#define TAB_11_FIELD_0 {"Auto Dly",'',EDIT,TYPE_BOOL,&BLDC_Get_AutoDelay,&sEditExtraField_TAB_11_FIELD_0}
 	#define TAB_11_FIELD_1 {"",'',READ_ONLY,TYPE_TXT,0,0}
 #endif
-#ifdef HALL
-	#define TAB_11_FIELD_0 {"Auto Dly",'',READ_ONLY,TYPE_BOOL,&BLDC_Get_AutoDelay,0}
-	#define TAB_11_FIELD_1 {"",'',READ_ONLY,TYPE_TXT,0,0}
-#endif
 
 #endif /* __MC_BLDC_USER_INTERFACE_PARAM_H */
 

@@ -126,10 +126,6 @@
 	#define FALLING_DELAY 128 // (unit 0-255) for sensorless mode
 	#define RISING_DELAY 128 // (unit 0-255)  for sensorless mode
 #endif
-#ifdef HALL
-	#define FALLING_DELAY 1 // (unit 0-255)     for hall sensor mode
-	#define RISING_DELAY 1 // (unit 0-255)		for hall sensor mode
-#endif
 
 //Real time speed PID Parameters
 #if (CURRENT_CONTROL_MODE == VOLTAGE_MODE)
