@@ -1,0 +1,16 @@
+================================================================================
+                    STM8S-Discovery_Temperature_Sensor PACKAGE
+                                 Release Notes
+================================================================================
+
+
+V1.0 / 21-DEC-2010
+------------------
+
+ - Content:
+
+   o STM8S Standard Peripherals Library V1.1.1
+   o STM8 Touch Sensing Library V2.3.0.1
+   o STM8S Temperature Sensor example with Cosmic and and Raisonance projects
+
+   
