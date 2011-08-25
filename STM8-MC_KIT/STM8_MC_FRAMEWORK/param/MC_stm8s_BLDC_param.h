@@ -33,19 +33,19 @@
 #define PHASE_C_BEMF_ADC_CHAN 			ADC2_CHANNEL_6	// PB6
 
 // tensione batteria
-#define ADC_BUS_CHANNEL							ADC2_CHANNEL_3	// BUS Voltage channel - PB3
+#define ADC_BUS_CHANNEL							ADC2_CHANNEL_9	// BUS Voltage channel - PB3, spostato
 
 // anche questo lo mettiamo sul 3 ... da controllare
-#define ADC_NEUTRAL_POINT_CHANNEL		ADC2_CHANNEL_3 // Neutral point channel (???)
+#define ADC_NEUTRAL_POINT_CHANNEL		ADC2_CHANNEL_9 // Neutral point channel (???)
 
 // corrente sul motore
 #define ADC_CURRENT_CHANNEL					ADC2_CHANNEL_7	// Current Feedback channel - PB7
 
 // questi non ci sono ....
 // bisogna disabilitare la loro gestione da qualche parte
-#define ADC_USER_SYNC_CHANNEL				ADC2_CHANNEL_3	// Sync User channel
-#define ADC_TEMP_CHANNEL						ADC2_CHANNEL_8	// Heatsink temperature sensor channel
-#define ADC_USER_ASYNC_CHANNEL			ADC2_CHANNEL_3	// User Async
+#define ADC_USER_SYNC_CHANNEL				ADC2_CHANNEL_9	// Sync User channel
+#define ADC_TEMP_CHANNEL						ADC2_CHANNEL_9	// Heatsink temperature sensor channel
+#define ADC_USER_ASYNC_CHANNEL			ADC2_CHANNEL_9	// User Async
 
 // rimappato su PORT A
 // Control PINS for samping during Ton
