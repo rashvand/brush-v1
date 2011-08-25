@@ -206,6 +206,8 @@ static void main_thread_func (uint32_t param)
     /* Configure GPIO for flashing the STM8S Discovery LED on GPIO D0 */
     GPIO_DeInit(GPIOD);
 		GPIO_DeInit(GPIOE);
+		GPIO_DeInit(GPIOB);
+		
     GPIO_Init(GPIOD, GPIO_PIN_7, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 1
 		GPIO_Init(GPIOD, GPIO_PIN_2, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 2
 		//GPIO_Init(GPIOD, GPIO_PIN_0, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 3
