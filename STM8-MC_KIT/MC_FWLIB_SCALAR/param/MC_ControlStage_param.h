@@ -3,8 +3,6 @@
 #ifndef __MC_CONTROLSTAGE_PARAM_H
 #define __MC_CONTROLSTAGE_PARAM_H
 
-#include "MC_stm8s_clk_param.h"
-
 // tolto display e anche joystick
 // Configuartion
 //#define DISPLAY
@@ -24,7 +22,5 @@
 // BRK settings
 //Comment this define statement to disable the emergency input feature
 //#define BKIN
-
-#include "MC_stm8s_port_param.h"
 
 #endif /*__MC_CONTROLSTAGE_PARAM_H*/

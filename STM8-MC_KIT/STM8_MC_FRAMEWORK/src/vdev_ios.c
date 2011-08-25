@@ -25,7 +25,7 @@
 #include "vdev.h"
 #include "stm8s_lib.h"
 
-#include "MC_ControlStage_param.h"
+#include "MC_stm8s_param.h"
 
 /******************************************************************************/
 errorcode vdev_fninp8(u32 addr, pu8 pportvalue)

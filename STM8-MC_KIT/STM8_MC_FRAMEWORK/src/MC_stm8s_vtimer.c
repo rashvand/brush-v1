@@ -23,7 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s_lib.h"
-#include "MC_stm8s_clk_param.h"
+#include "MC_stm8s_param.h"
 #include "MC_vtimer.h"
 
 #define DELTAT_MS 1 // ms

@@ -2,8 +2,7 @@
 #include "MC_BLDC_Motor_Param.h"
 #include "MC_BLDC_Drive_Param.h"
 #include "MC_pid_regulators.h"
-#include "MC_stm8s_clk_param.h"
-#include "MC_Powerstage_Param.h"
+#include "MC_stm8s_param.h"
 
 /**** Private define **********************************************************/
 #define ARR_CNT ((STM8_FREQ_MHZ * (u32)1000000)/PWM_FREQUENCY)

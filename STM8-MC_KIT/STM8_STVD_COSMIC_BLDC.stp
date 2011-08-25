@@ -83,7 +83,7 @@ String.100.0=STM8S105C6
 
 [Root.Config.0.Settings.3]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -istm8_mc_framework\inc +warn +mods0 -customDebCompat -customC-pp -customLst -l -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 -istm8_mc_framework\param  -istm8_mc_framework\inc +warn +mods0 -customDebCompat -customC-pp -customLst -l -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2009,3,20,18,2,41
@@ -166,7 +166,7 @@ String.100.0=STM8S105C6
 
 [Root.Config.1.Settings.3]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -istm8_mc_framework\inc +warn +mods0 -customOpt +compact +split -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 -istm8_mc_framework\param  -istm8_mc_framework\inc +warn +mods0 -customOpt +compact +split -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2009,4,6,16,8,0
@@ -247,7 +247,7 @@ Int.1=0
 
 [Root.MC_FWLIB_SCALAR.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -istm8_mc_framework\inc +warn +mods0 -customDebCompat -customC-pp -customLst -l -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 -istm8_mc_framework\param  -istm8_mc_framework\inc +warn +mods0 -customDebCompat -customC-pp -customLst -l -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2009,3,20,18,2,41
@@ -274,7 +274,7 @@ Int.1=0
 
 [Root.MC_FWLIB_SCALAR.Config.1.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -istm8_mc_framework\inc +warn +mods0 -customOpt +compact +split -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 -istm8_mc_framework\param  -istm8_mc_framework\inc +warn +mods0 -customOpt +compact +split -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2009,4,6,16,8,0
@@ -372,11 +372,6 @@ Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_bldc_dr
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_bldc_drive_param.h]
 ElemType=File
 PathName=mc_fwlib_scalar\param\mc_bldc_drive_param.h
-Next=Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_bldc_conf.h
-
-[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Param.mc_fwlib_scalar\param\mc_bldc_conf.h]
-ElemType=File
-PathName=mc_fwlib_scalar\param\mc_bldc_conf.h
 
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src]
 ElemType=Folder
@@ -445,7 +440,7 @@ Int.1=0
 
 [Root.STM8_FWLIB.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -istm8_mc_framework\inc +warn +mods0 -customDebCompat -customC-pp -customLst -l -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 -istm8_mc_framework\param  -istm8_mc_framework\inc +warn +mods0 -customDebCompat -customC-pp -customLst -l -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2011,8,6,0,57,48
@@ -472,7 +467,7 @@ Int.1=0
 
 [Root.STM8_FWLIB.Config.1.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -istm8_mc_framework\inc +warn +mods0 -customOpt +compact +split -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 -istm8_mc_framework\param  -istm8_mc_framework\inc +warn +mods0 -customOpt +compact +split -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2009,4,6,16,8,0
@@ -747,7 +742,7 @@ Int.1=0
 
 [Root.STM8_MC_FRAMEWORK.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -istm8_mc_framework\inc +warn +mods0 -customDebCompat -customC-pp -customLst -l -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 -istm8_mc_framework\param  -istm8_mc_framework\inc +warn +mods0 -customDebCompat -customC-pp -customLst -l -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2011,8,6,0,57,48
@@ -774,7 +769,7 @@ Int.1=0
 
 [Root.STM8_MC_FRAMEWORK.Config.1.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -istm8_mc_framework\inc +warn +mods0 -customOpt +compact +split -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 -istm8_mc_framework\param  -istm8_mc_framework\inc +warn +mods0 -customOpt +compact +split -dBLDC -iMC_FWLIB_SCALAR\inc -iMC_FWLIB_SCALAR\param -iSTM8_FWLIB\inc -iSTM8_MC_FRAMEWORK\inc -iSTM8_MC_FRAMEWORK\param $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2009,4,6,16,8,0
@@ -856,27 +851,17 @@ PathName=stm8_mc_framework\inc\vdev_ios.h
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param]
 ElemType=Folder
 PathName=STM8_MC_FRAMEWORK\Param
-Child=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_bldc_param.h
+Child=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_param.h
 Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src
 
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_bldc_param.h]
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_param.h]
 ElemType=File
-PathName=stm8_mc_framework\param\mc_stm8s_bldc_param.h
+PathName=stm8_mc_framework\param\mc_stm8s_param.h
 Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\vdev_param.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\vdev_param.h]
 ElemType=File
 PathName=stm8_mc_framework\param\vdev_param.h
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_port_param.h
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_port_param.h]
-ElemType=File
-PathName=stm8_mc_framework\param\mc_stm8s_port_param.h
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_clk_param.h
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_clk_param.h]
-ElemType=File
-PathName=stm8_mc_framework\param\mc_stm8s_clk_param.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src]
 ElemType=Folder

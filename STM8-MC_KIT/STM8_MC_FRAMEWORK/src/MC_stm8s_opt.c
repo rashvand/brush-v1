@@ -3,9 +3,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s_lib.h"
 #include "MC_dev_opt.h"
-#include "MC_stm8s_clk_param.h"
-#include "MC_PowerStage_Param.h"
-#include "MC_ControlStage_param.h"
+#include "MC_stm8s_param.h"
 #include "MC_BLDC_conf.h"
 
 void dev_optInit(void)

@@ -23,11 +23,9 @@
 #include "MC_drive.h"
 #include "MC_dev_drive.h"  // Include low level drive function
 #include "MC_BLDC_motor.h" // Include motor & drive param
-#include "MC_BLDC_conf.h"  // Include sensor configuration
 
 #include "MC_BLDC_drive_param.h"  
-#include "MC_ControlStage_param.h"
-#include "MC_PowerStage_Param.h"		 
+#include "MC_stm8s_param.h"		 
 
 #include "MC_BLDC_timers.h"
 
@@ -101,9 +99,7 @@ void driveInit(pvdev_device_t pdevice)
 	
 	g_pdevice = pdevice;
 	
-	#ifdef SENSORLESS
-		pcounter_reg = &(pdevice->regs.r16[VDEV_REG16_BEMF_COUNTS]);
-	#endif
+	pcounter_reg = &(pdevice->regs.r16[VDEV_REG16_BEMF_COUNTS]);
 	
 	pDutyCycleCounts_reg = &(pdevice->regs.r16[VDEV_REG16_BLDC_DUTY_CYCLE_COUNTS]);
 	
@@ -179,12 +175,10 @@ void BLDC_Drive(void)
 	// Update measured speed
 	hSpeed_01HZ = GetSpeed_01HZ();
 
-	#ifdef SENSORLESS
-		if (hSpeed_01HZ > MIN_SPEED_01HZ)
-		{
-			bValidatedMeasuredSpeed = 1;
-		}
-	#endif
+	if (hSpeed_01HZ > MIN_SPEED_01HZ)
+	{
+		bValidatedMeasuredSpeed = 1;
+	}
 	
 	hMeasuredSpeed = (u16)(((u32)bHztoRPM * hSpeed_01HZ)/10);
 	hTargetSpeed = g_pMotorVar->hTarget_rotor_speed;

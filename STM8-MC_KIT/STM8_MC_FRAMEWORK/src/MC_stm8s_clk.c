@@ -24,7 +24,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s_lib.h"
 #include "MC_dev_clk.h"
-#include "MC_stm8s_clk_param.h"
+#include "MC_stm8s_param.h"
 
 void dev_clkInit(void)
 {

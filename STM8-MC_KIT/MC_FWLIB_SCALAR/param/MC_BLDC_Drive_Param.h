@@ -3,8 +3,6 @@
 #ifndef __BLDC_DRIVE_PARAM_H
 #define __BLDC_DRIVE_PARAM_H
 
-#include "MC_BLDC_conf.h"
-
 // Constant parameters
 
 // BLDC configuration default values
@@ -102,10 +100,8 @@
 #define TARGET_ROTOR_SPEED 2000 // (unit rpm)
 #define DUTY_CYCLE 80 // (unit )
 #define CURRENT_REFERENCE 300 // (unit mA)
-#ifdef SENSORLESS
-	#define FALLING_DELAY 128 // (unit 0-255) for sensorless mode
-	#define RISING_DELAY 128 // (unit 0-255)  for sensorless mode
-#endif
+#define FALLING_DELAY 128 // (unit 0-255) for sensorless mode
+#define RISING_DELAY 128 // (unit 0-255)  for sensorless mode
 
 //Real time speed PID Parameters
 #if (CURRENT_CONTROL_MODE == VOLTAGE_MODE)
@@ -124,10 +120,8 @@
 #define AUTO_DELAY 0 // Set Delay cofficient according a curve (0 Off, 1 On)
 
 // Configuartion control
-#if defined (SENSORLESS)
-	#if (CURRENT_CONTROL_MODE == CURRENT_MODE) && (BEMF_SAMPLING_METHOD == BEMF_SAMPLING_MIXED)
-		#error "Invalid configuartion: BEMF sampling mixed not possible in current mode"
-	#endif
+#if (CURRENT_CONTROL_MODE == CURRENT_MODE) && (BEMF_SAMPLING_METHOD == BEMF_SAMPLING_MIXED)
+	#error "Invalid configuartion: BEMF sampling mixed not possible in current mode"
 #endif
 
 #endif /* __BLDC_DRIVE_PARAM_H */

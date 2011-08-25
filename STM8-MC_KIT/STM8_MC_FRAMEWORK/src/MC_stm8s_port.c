@@ -22,8 +22,7 @@
 /******************************************************************************/
 #include "stm8s_lib.h"
 
-#include "MC_stm8s_port_param.h"
-#include "MC_PowerStage_param.h"
+#include "MC_stm8s_param.h"
 #include "MC_dev_port.h"
 
 /* Private prototypes *********************************************************/

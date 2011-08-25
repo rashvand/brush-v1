@@ -10,10 +10,10 @@
 #define VDEV_INP8_USER_INPUT 			0x01
 #define VDEV_OUT8_DISPLAY_FLUSH 	0x02
 #define VDEV_OUT8_DISPLAY_PRINTCH 0x03
-#define VDEV_OUT8_LED_1 0x04
-#define VDEV_OUT8_LED_2 0x05
-#define VDEV_OUT8_LED_3 0x06
-#define VDEV_OUT8_LED_4 0x07
+#define VDEV_OUT8_LED_1 					0x04
+#define VDEV_OUT8_LED_2 					0x05
+#define VDEV_OUT8_LED_3 					0x06
+#define VDEV_OUT8_LED_4 					0x07
 
 // I/O Command
 // LED management
@@ -83,12 +83,6 @@
 
 /******************************************************************************/
 // Common defines
-#define USER_INPUT_RIGHT 5
-#define USER_INPUT_LEFT 4
-#define USER_INPUT_UP 3
-#define USER_INPUT_DOWN 2
-#define USER_INPUT_SEL 1
-#define USER_INPUT_KEY 0
 
 #define VDEV_DISPLAY_BUFFER_EMPTY 0
 #define VDEV_DISPLAY_BUFFER_READY  1
