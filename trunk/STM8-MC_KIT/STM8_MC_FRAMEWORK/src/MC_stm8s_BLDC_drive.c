@@ -5,8 +5,7 @@
 
 #include "stm8s_lib.h"
 
-#include "MC_stm8s_clk_param.h"
-#include "MC_stm8s_BLDC_param.h"
+#include "MC_stm8s_param.h"
 
 #include "MC_Faults.h"
 
@@ -15,10 +14,6 @@
 #include "MC_bldc_motor.h"				
 #include "MC_BLDC_Motor_Param.h"  
 #include "MC_BLDC_Drive_Param.h"  
-#include "MC_PowerStage_Param.h" 	
-#include "MC_ControlStage_Param.h" 	
-
-#include "MC_BLDC_conf.h"  // Include sensor configuration
 
 #ifndef PWM_LOWSIDE_OUTPUT_ENABLE
 	#define LS_GPIO_CONTROL
@@ -82,9 +77,7 @@ static StartUpStatus_t StartUpStatus = STARTUP_IDLE;
 
 #define ARRTIM2 500
 
-#ifdef SENSORLESS
-	#define ARR_CURRENT_REF_TIM ARRTIM2
-#endif
+#define ARR_CURRENT_REF_TIM ARRTIM2
 
 #define MILLIAMP_TOCNT(ma) (((((u32)ma * RS_M)/1000) * AOP * (u32)ARR_CURRENT_REF_TIM)/5000)
 #define ADC_TOMILLIAMP(adc) ((((u32)adc * 1000 * 1000) / ((u32)1024 * AOP * RS_M)) * 5)
@@ -552,9 +545,7 @@ void dev_driveInit(pvdev_device_t pdevice)
 	// Current Limitation
 	CurrentLimitCnt = (u16)(MILLIAMP_TOCNT (g_pBLDC_Struct->pBLDC_Const->hCurrent_Limitation));
 
-#ifdef SENSORLESS
 	pcounter_reg = &(pdevice->regs.r16[VDEV_REG16_BEMF_COUNTS]);
-#endif
 	
 	pDutyCycleCounts_reg = &(pdevice->regs.r16[VDEV_REG16_BLDC_DUTY_CYCLE_COUNTS]);
 
@@ -646,9 +637,7 @@ MC_FuncRetVal_t dev_driveStartUp(void)
 			#ifdef DEBUG_PINS
 				AUTO_SWITCH_PORT &= (u8)(~AUTO_SWITCH_PIN);
 			#endif
-			#ifdef SENSORLESS
-				StartUpStatus = STARTUP_ALIGN;
-			#endif
+			StartUpStatus = STARTUP_ALIGN;
 			first_cap = 0;
 		}
 		break;
@@ -661,9 +650,7 @@ MC_FuncRetVal_t dev_driveStartUp(void)
 		break;
 
 	case STARTUP_START:
-		#ifdef SENSORLESS
-			MTC_Status |= MTC_STEP_MODE;
-		#endif
+		MTC_Status |= MTC_STEP_MODE;
 		MTC_Status &= (u8)(~(MTC_STARTUP_FAILED|MTC_OVER_CURRENT_FAIL|MTC_LAST_FORCED_STEP|MTC_MOTOR_STALLED));
 		
 		// Reset software threshold
@@ -677,9 +664,7 @@ MC_FuncRetVal_t dev_driveStartUp(void)
 		// Enable update interrupt
 		TIM1->IER |= BIT0;
 
-		#ifdef SENSORLESS
-			StartUpStatus = STARTUP_RAMPING;
-		#endif
+		StartUpStatus = STARTUP_RAMPING;
 		break;
 
 	case STARTUP_RAMPING:
@@ -1004,199 +989,197 @@ void SpeedMeasurement(void)
 	}
 }
 
-#ifdef SENSORLESS	
-	@near @interrupt @svlreg void ADC2_IRQHandler (void)
+@near @interrupt @svlreg void ADC2_IRQHandler (void)
+{
+	if (ADC_State == ADC_SYNC)
 	{
-		if (ADC_State == ADC_SYNC)
-		{
-			// Syncronous sampling
-			
-			u16 data;
-			u8 delay;
-			u16 bemf_threshold;
-
-			// Reset bit
-			bComHanderEnable = 0;
-				
-			//clear interrupt flag
-			ADC1->CSR &= (u8)(~BIT7);
-					
-			//left align - read DRH first
-			data = ADC1->DRH;
-			data <<= 2;
-			data |= (ADC1->DRL & 0x03);   
-			
-			switch (ADC_Sync_State)
-			{
-				case ADC_BEMF_INIT:
-					ADC1->CSR = (u8)((Current_BEMF_Channel|BIT5)); 
-					BEMF_Sample_Debounce = 0;
-					Zero_Sample_Count = 0;
-					ADC_Sync_State = ADC_BEMF_SAMPLE;
-					SetSamplingPoint_BEMF();
-					break;
-
-				case ADC_BEMF_SAMPLE: 
-					//detect zero crossing 
-					if (Current_BEMF == BEMF_FALLING)
-					{
-						if (Z_Detection_Type == Z_DETECT_PWM_OFF)
-						{
-							bemf_threshold = BEMF_FALLING_THRESHOLD;
-						}
-						else
-						{
-							bemf_threshold = hNeutralPoint;
-						}
-
-						if (Ramp_Step > FORCED_STATUP_STEPS)
-						{
-							if (data < bemf_threshold)
-							{
-								Zero_Sample_Count++;
-								BEMF_Sample_Debounce++;
-								if (BEMF_Sample_Debounce >= BEMF_SAMPLE_COUNT)
-								{
-									hTim3Th -= hTim3Cnt;
-									GetStepTime();
-
-									#ifdef DEBUG_PINS
-										Z_DEBUG_PORT ^= Z_DEBUG_PIN;
-									#endif
-	 
-									SpeedMeasurement();
-
-									bComHanderEnable = 1;
-
-									BEMF_Sample_Debounce = 0;
-								}
-							}
-							else
-							{
-								BEMF_Sample_Debounce = 0;
-							}
-						}
-					}
-					else /* if (Current_BEMF != BEMF_FALLING) */
-					{
-						if (Z_Detection_Type == Z_DETECT_PWM_OFF)
-						{
-							bemf_threshold = BEMF_RISING_THRESHOLD;
-						}
-						else
-						{
-							bemf_threshold = hNeutralPoint;
-						}
+		// Syncronous sampling
 		
-						if (Ramp_Step > FORCED_STATUP_STEPS)
+		u16 data;
+		u8 delay;
+		u16 bemf_threshold;
+
+		// Reset bit
+		bComHanderEnable = 0;
+			
+		//clear interrupt flag
+		ADC1->CSR &= (u8)(~BIT7);
+				
+		//left align - read DRH first
+		data = ADC1->DRH;
+		data <<= 2;
+		data |= (ADC1->DRL & 0x03);   
+		
+		switch (ADC_Sync_State)
+		{
+			case ADC_BEMF_INIT:
+				ADC1->CSR = (u8)((Current_BEMF_Channel|BIT5)); 
+				BEMF_Sample_Debounce = 0;
+				Zero_Sample_Count = 0;
+				ADC_Sync_State = ADC_BEMF_SAMPLE;
+				SetSamplingPoint_BEMF();
+				break;
+
+			case ADC_BEMF_SAMPLE: 
+				//detect zero crossing 
+				if (Current_BEMF == BEMF_FALLING)
+				{
+					if (Z_Detection_Type == Z_DETECT_PWM_OFF)
+					{
+						bemf_threshold = BEMF_FALLING_THRESHOLD;
+					}
+					else
+					{
+						bemf_threshold = hNeutralPoint;
+					}
+
+					if (Ramp_Step > FORCED_STATUP_STEPS)
+					{
+						if (data < bemf_threshold)
 						{
-							if (data > bemf_threshold)
+							Zero_Sample_Count++;
+							BEMF_Sample_Debounce++;
+							if (BEMF_Sample_Debounce >= BEMF_SAMPLE_COUNT)
 							{
-								Zero_Sample_Count++;
-								BEMF_Sample_Debounce++;
-								if (BEMF_Sample_Debounce >= BEMF_SAMPLE_COUNT)
-								{
-									hTim3Th -= hTim3Cnt;
-									GetStepTime();
-								
-									#ifdef DEBUG_PINS
-										Z_DEBUG_PORT ^= Z_DEBUG_PIN;
-									#endif
+								hTim3Th -= hTim3Cnt;
+								GetStepTime();
 
-									SpeedMeasurement();
+								#ifdef DEBUG_PINS
+									Z_DEBUG_PORT ^= Z_DEBUG_PIN;
+								#endif
+ 
+								SpeedMeasurement();
 
-									bComHanderEnable = 1;
+								bComHanderEnable = 1;
 
-									BEMF_Sample_Debounce = 0;
-								}
-							}
-							else
-							{
 								BEMF_Sample_Debounce = 0;
 							}
 						}
+						else
+						{
+							BEMF_Sample_Debounce = 0;
+						}
 					}
-					break;
+				}
+				else /* if (Current_BEMF != BEMF_FALLING) */
+				{
+					if (Z_Detection_Type == Z_DETECT_PWM_OFF)
+					{
+						bemf_threshold = BEMF_RISING_THRESHOLD;
+					}
+					else
+					{
+						bemf_threshold = hNeutralPoint;
+					}
+	
+					if (Ramp_Step > FORCED_STATUP_STEPS)
+					{
+						if (data > bemf_threshold)
+						{
+							Zero_Sample_Count++;
+							BEMF_Sample_Debounce++;
+							if (BEMF_Sample_Debounce >= BEMF_SAMPLE_COUNT)
+							{
+								hTim3Th -= hTim3Cnt;
+								GetStepTime();
+							
+								#ifdef DEBUG_PINS
+									Z_DEBUG_PORT ^= Z_DEBUG_PIN;
+								#endif
 
-				default:
-				case ADC_CURRENT_INIT:
-					ADC1->CSR = (ADC_CURRENT_CHANNEL|BIT5); 
-					ADC_Sync_State = ADC_CURRENT_SAMPLE;
-					SetSamplingPoint_Current();
-					break;
-				
-				case ADC_CURRENT_SAMPLE: 
-					ADC_Buffer[ADC_CURRENT_INDEX] = data;
-					break;
-			}
+								SpeedMeasurement();
 
-			// Store the current channel selected
-			bCSR_Tmp = ADC1->CSR;
+								bComHanderEnable = 1;
 
-			// **************************************
-			// *** Set the Async sampling channel ***
-			// **************************************
-			// la prossima conversione sarà di tipo asincrono
-			// vado a leggere la tensione della batteria
-			ADC1->CSR = (ADC_BUS_CHANNEL|BIT5); 
+								BEMF_Sample_Debounce = 0;
+							}
+						}
+						else
+						{
+							BEMF_Sample_Debounce = 0;
+						}
+					}
+				}
+				break;
+
+			default:
+			case ADC_CURRENT_INIT:
+				ADC1->CSR = (ADC_CURRENT_CHANNEL|BIT5); 
+				ADC_Sync_State = ADC_CURRENT_SAMPLE;
+				SetSamplingPoint_Current();
+				break;
 			
-			// **********************************
-			// *** Start asyncronous sampling ***
-			// **********************************
-			#ifdef DEV_CUT_1
-				// Disable ext. trigger
-				ADC1->CR2 &= (u8)(~BIT6);
-				//turn on ADC fix bug on cut1 device
-				ADC1->CR1 |= BIT0;
-				//Start ADC sample
-				ADC1->CR1 |= BIT0;
-			#else
-				// Disable ext. trigger
-				ADC1->CR2 &= (u8)(~BIT6);
-				//Start ADC sample
-				ADC1->CR1 |= BIT0;
-			#endif
-
-			ADC_State = ADC_ASYNC;
-			
-			if (bComHanderEnable == 1)
-			{
-				ComHandler();
-			}
+			case ADC_CURRENT_SAMPLE: 
+				ADC_Buffer[ADC_CURRENT_INDEX] = data;
+				break;
 		}
-		else /* if (ADC_State == ADC_ASYNC) */
+
+		// Store the current channel selected
+		bCSR_Tmp = ADC1->CSR;
+
+		// **************************************
+		// *** Set the Async sampling channel ***
+		// **************************************
+		// la prossima conversione sarà di tipo asincrono
+		// vado a leggere la tensione della batteria
+		ADC1->CSR = (ADC_BUS_CHANNEL|BIT5); 
+		
+		// **********************************
+		// *** Start asyncronous sampling ***
+		// **********************************
+		#ifdef DEV_CUT_1
+			// Disable ext. trigger
+			ADC1->CR2 &= (u8)(~BIT6);
+			//turn on ADC fix bug on cut1 device
+			ADC1->CR1 |= BIT0;
+			//Start ADC sample
+			ADC1->CR1 |= BIT0;
+		#else
+			// Disable ext. trigger
+			ADC1->CR2 &= (u8)(~BIT6);
+			//Start ADC sample
+			ADC1->CR1 |= BIT0;
+		#endif
+
+		ADC_State = ADC_ASYNC;
+		
+		if (bComHanderEnable == 1)
 		{
-			// Asyncronous sampling
-			
-			u16 data;			
-			data = ADC1->DRH;
-			data <<= 2;
-			data |= (ADC1->DRL & 0x03);
-
-			//clear interrupt flag
-			ADC1->CSR &= (u8)(~BIT7);
-
-			// Restore the sync ADC channel
-			ADC1->CSR = bCSR_Tmp;
-						
-			// Configure syncronous sampling
-			#ifdef DEV_CUT_1
-				// Enable ext. trigger
-				ADC1->CR2 |= BIT6;
-				//turn on ADC fix bug on cut1 device
-				ADC1->CR1 |= BIT0;  
-			#else
-				// Enable ext. trigger
-				ADC1->CR2 |= BIT6;
-			#endif
-
-			// Manage async sampling
-			ADC_Buffer[ADC_BUS_INDEX] = data;
-			
-			ADC_State = ADC_SYNC;			
+			ComHandler();
 		}
 	}
-#endif
+	else /* if (ADC_State == ADC_ASYNC) */
+	{
+		// Asyncronous sampling
+		
+		u16 data;			
+		data = ADC1->DRH;
+		data <<= 2;
+		data |= (ADC1->DRL & 0x03);
+
+		//clear interrupt flag
+		ADC1->CSR &= (u8)(~BIT7);
+
+		// Restore the sync ADC channel
+		ADC1->CSR = bCSR_Tmp;
+					
+		// Configure syncronous sampling
+		#ifdef DEV_CUT_1
+			// Enable ext. trigger
+			ADC1->CR2 |= BIT6;
+			//turn on ADC fix bug on cut1 device
+			ADC1->CR1 |= BIT0;  
+		#else
+			// Enable ext. trigger
+			ADC1->CR2 |= BIT6;
+		#endif
+
+		// Manage async sampling
+		ADC_Buffer[ADC_BUS_INDEX] = data;
+		
+		ADC_State = ADC_SYNC;			
+	}
+}
 
 void DebugPinsOff(void)
 {
@@ -1269,10 +1252,8 @@ void Init_TIM1(void)
 	ToCMPxH( TIM1->CCR3H, 0 );
 	ToCMPxL( TIM1->CCR3L, 0 );
 
-	#ifdef SENSORLESS
-		ToCMPxH( TIM1->CCR4H, (hArrPwmVal-SAMPLING_POINT_DURING_TOFF_CNT) );
-		ToCMPxL( TIM1->CCR4L, (hArrPwmVal-SAMPLING_POINT_DURING_TOFF_CNT) );
-	#endif
+	ToCMPxH( TIM1->CCR4H, (hArrPwmVal-SAMPLING_POINT_DURING_TOFF_CNT) );
+	ToCMPxL( TIM1->CCR4L, (hArrPwmVal-SAMPLING_POINT_DURING_TOFF_CNT) );
 	
 	//set dead time to 6us (with 62.5ns/count)
 	TIM1->DTR = (u8)(hCntDeadDtime); 
@@ -1332,7 +1313,6 @@ void Init_TIM1(void)
 
 void Init_TIM2(void)
 {
-#ifdef SENSORLESS
 	//counter disabled, ARR preload register disabled, up counting, edge aligned mode
 	TIM2->CR1 = BIT2;
 
@@ -1363,7 +1343,6 @@ void Init_TIM2(void)
 
 	//force timer update
 	TIM2->EGR = (BIT5|BIT0);
-#endif
 }
 
 #ifdef TIMER2_HANDLES_HALL
@@ -1464,9 +1443,7 @@ void ComHandler(void)
 			C_D_DEBUG_PORT |= C_D_DEBUG_PIN;
 		#endif
 		Commutate_Motor();
-		#ifdef SENSORLESS
-			Phase_State = PHASE_DEMAG; 
-		#endif	
+		Phase_State = PHASE_DEMAG; 
 		Enable_ADC_Current_Sampling();
 	break;
 
@@ -1609,21 +1586,19 @@ void ComHandler(void)
 			}
 			else
 			{
-				#ifdef SENSORLESS
-					//if number of consectutive BEMF events occurred, switch out of stepped mode
-					if( Zero_Cross_Count >= MINIMUM_CONSECTIVE_ZERO_CROSS )
-					{
-						MTC_Status |= MTC_LAST_FORCED_STEP;
-						Motor_Stall_Count = 0;
-						Commutation_Time = Average_Zero_Cross_Time;
-						
-						hTim3Th = Average_Zero_Cross_Time;
-		
-						//load commutation time into timer
-						Previous_Zero_Cross_Time = Commutation_Time;
-						Zero_Cross_Time = Commutation_Time;
-					}
-				#endif				
+				//if number of consectutive BEMF events occurred, switch out of stepped mode
+				if( Zero_Cross_Count >= MINIMUM_CONSECTIVE_ZERO_CROSS )
+				{
+					MTC_Status |= MTC_LAST_FORCED_STEP;
+					Motor_Stall_Count = 0;
+					Commutation_Time = Average_Zero_Cross_Time;
+					
+					hTim3Th = Average_Zero_Cross_Time;
+	
+					//load commutation time into timer
+					Previous_Zero_Cross_Time = Commutation_Time;
+					Zero_Cross_Time = Commutation_Time;
+				}
 			}
 			
 			Average_Zero_Cross_Time = (Previous_Zero_Cross_Time + Zero_Cross_Time) >> 1;
@@ -1632,7 +1607,6 @@ void ComHandler(void)
 		}
 		else
 		{
-		#ifdef SENSORLESS
 			//if zero crossing not detected - commutate motor
 			if( (MTC_Status & MTC_STEP_MODE) != MTC_STEP_MODE )
 			{
@@ -1653,10 +1627,7 @@ void ComHandler(void)
 			#endif
 			Commutate_Motor();
 			Zero_Cross_Count=0;
-			#ifdef SENSORLESS
-				Phase_State = PHASE_DEMAG; 
-			#endif			
-		#endif
+			Phase_State = PHASE_DEMAG; 
 		}
 		Last_Zero_Cross_Count = Zero_Cross_Count;
 		break;
@@ -1667,235 +1638,233 @@ void ComHandler(void)
 	}
 }
 	
-#ifdef SENSORLESS
-	void Commutate_Motor( void )
-	{
-		u16 cur_time;
+void Commutate_Motor( void )
+{
+	u16 cur_time;
 
-		cur_time = hTim3Cnt;
+	cur_time = hTim3Cnt;
 
-		// Switch to Frozen
-		TIM1->EGR |= BIT5;
+	// Switch to Frozen
+	TIM1->EGR |= BIT5;
 
-		// Restore Values
-		TIM1->CCMR1 = tmp_TIM1_CCMR1;
-		TIM1->CCMR2 = tmp_TIM1_CCMR2;
-		TIM1->CCMR3 = tmp_TIM1_CCMR3;
-		TIM1->CCER1 = tmp_TIM1_CCER1;
-		TIM1->CCER2 = tmp_TIM1_CCER2;
+	// Restore Values
+	TIM1->CCMR1 = tmp_TIM1_CCMR1;
+	TIM1->CCMR2 = tmp_TIM1_CCMR2;
+	TIM1->CCMR3 = tmp_TIM1_CCMR3;
+	TIM1->CCER1 = tmp_TIM1_CCER1;
+	TIM1->CCER2 = tmp_TIM1_CCER2;
 
-		//commutate the motor
-		TIM1->EGR |= BIT5;
-		
-		#ifdef LS_GPIO_CONTROL
-		{
-			LS_Conf = LS_Steps_SW[Current_Step];
-
-			if (LS_Conf == LS_A_B)
-			{
-				// Activate   B
-				#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_B_PORT->ODR |= LS_B_PIN;
-				#else
-					LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-				#endif
-				// Deactivate A
-				#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-				#else
-					LS_A_PORT->ODR |= LS_A_PIN;
-				#endif
-			}
-			
-			if (LS_Conf == LS_A_C)
-			{
-				// Activate   C
-				#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_C_PORT->ODR |= LS_C_PIN;
-				#else
-					LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-				#endif
-				// Deactivate A
-				#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-				#else
-					LS_A_PORT->ODR |= LS_A_PIN;
-				#endif
-			}
-
-			if (LS_Conf == LS_B_A)
-			{
-				// Activate   A
-				#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_A_PORT->ODR |= LS_A_PIN;
-				#else
-					LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-				#endif
-				// Deactivate B
-				#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-				#else
-					LS_B_PORT->ODR |= LS_B_PIN;
-				#endif
-			}
-
-			if (LS_Conf == LS_B_C)
-			{
-				// Activate   C
-				#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_C_PORT->ODR |= LS_C_PIN;
-				#else
-					LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-				#endif
-				// Deactivate B
-				#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-				#else
-					LS_B_PORT->ODR |= LS_B_PIN;
-				#endif
-			}
-
-			if (LS_Conf == LS_C_A)
-			{
-				// Activate   A
-				#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_A_PORT->ODR |= LS_A_PIN;
-				#else
-					LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-				#endif
-				// Deactivate C
-				#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-				#else
-					LS_C_PORT->ODR |= LS_C_PIN;
-				#endif
-			}
-
-			if (LS_Conf == LS_C_B)
-			{
-				// Activate   B
-				#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_B_PORT->ODR |= LS_B_PIN;
-				#else
-					LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-				#endif
-				// Deactivate C
-				#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-					LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-				#else
-					LS_C_PORT->ODR |= LS_C_PIN;
-				#endif
-			}
-		}
-		#endif
-		
-		Current_BEMF = BEMFSteps[Current_Step].BEMF_Level;
-		Current_BEMF_Channel = BEMFSteps[Current_Step].ADC_Channel;
-
-		if (g_pBLDC_Struct->pBLDC_Var->bFastDemag == 0)
-		{
-			// Update CCMRx OCxCE bit (Actual)
-			TIM1->CCMR1 = (u8)(PhaseSteps[Current_Step].CCMR_1 & 0x80);
-			TIM1->CCMR2 = (u8)(PhaseSteps[Current_Step].CCMR_2 & 0x80);
-			TIM1->CCMR3 = (u8)(PhaseSteps[Current_Step].CCMR_3 & 0x80);
-		}
-		else
-		{
-			// Update CCMRx OCxCE bit (Actual)
-			TIM1->CCMR1 = (u8)(Fast_Demag_Steps[Current_Step].CCMR_1 & 0x80);
-			TIM1->CCMR2 = (u8)(Fast_Demag_Steps[Current_Step].CCMR_2 & 0x80);
-			TIM1->CCMR3 = (u8)(Fast_Demag_Steps[Current_Step].CCMR_3 & 0x80);
-		}
-
-		// Preload next values
-		TIM1->CCMR1 |= (u8)(PhaseSteps[Current_Step].CCMR_1 & 0x7F);
-		TIM1->CCMR2 |= (u8)(PhaseSteps[Current_Step].CCMR_2 & 0x7F);
-		TIM1->CCMR3 |= (u8)(PhaseSteps[Current_Step].CCMR_3 & 0x7F);
-		TIM1->CCER1 = PhaseSteps[Current_Step].CCER_1;
-		TIM1->CCER2 = PhaseSteps[Current_Step].CCER_2;
+	//commutate the motor
+	TIM1->EGR |= BIT5;
 	
-		//calc demag time
-		if( (MTC_Status & MTC_STEP_MODE) == MTC_STEP_MODE )
+	#ifdef LS_GPIO_CONTROL
+	{
+		LS_Conf = LS_Steps_SW[Current_Step];
+
+		if (LS_Conf == LS_A_B)
 		{
-			if( (MTC_Status & MTC_LAST_FORCED_STEP) == MTC_LAST_FORCED_STEP )
-			{
-				MTC_Status &= (u8)(~MTC_STEP_MODE);
-				#ifdef DEBUG_PINS
-					AUTO_SWITCH_PORT |= AUTO_SWITCH_PIN;
-				#endif
-			}
-			
-			//Demag_Time = (u16)((u32)(Commutation_Time * BLDC_Get_Demag_Time()) / 100);
-			tmp_u8 = BLDC_Get_Demag_Time();
-			#asm
-				; tmp_sc_u8 = (u8)((tmp_u8 * 256) / (u8)(100));
-				
-				ld A,_tmp_u8
-				clrw x
-				ld XH,A
-				ld A,#0x64
-				div X,A
-				
-				ld A,XL
-				ld _tmp_u8,A
-			
-				; Demag_Time = (Commutation_Time * tmp_sc_u8) >> 8;
-				
-				ld A,_Commutation_Time
-				ld XL,A
-				ld A,_tmp_u8
-				mul X,A
-				ldw _tmp_u16,X
-				ld A,_Commutation_Time + 1
-				ld XL,A
-				ld A,_tmp_u8
-				mul X,A
-				ld A,XH
-				clrw X
-				ld XL,A
-				addw X,_tmp_u16
-				ldw _Demag_Time,X
-			#endasm
+			// Activate   B
+			#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_B_PORT->ODR |= LS_B_PIN;
+			#else
+				LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
+			#endif
+			// Deactivate A
+			#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
+			#else
+				LS_A_PORT->ODR |= LS_A_PIN;
+			#endif
 		}
-		else
-		{		
-			//Demag_Time = (u16)((u32)(Average_Zero_Cross_Time * BLDC_Get_Demag_Time()) / 100);
-			tmp_u8 = BLDC_Get_Demag_Time();
-			#asm
-				; tmp_sc_u8 = (u8)((BLDC_Get_Demag_Time() * 256) / (u8)(100));
-				
-				ld A,_tmp_u8
-				clrw x
-				ld XH,A
-				ld A,#0x64
-				div X,A
-				
-				ld A,XL
-				ld _tmp_u8,A
-			
-				; Demag_Time = (Average_Zero_Cross_Time * tmp_sc_u8) >> 8;
-				
-				ld A,_Average_Zero_Cross_Time
-				ld XL,A
-				ld A,_tmp_u8
-				mul X,A
-				ldw _tmp_u16,X
-				ld A,_Average_Zero_Cross_Time + 1
-				ld XL,A
-				ld A,_tmp_u8
-				mul X,A
-				ld A,XH
-				clrw X
-				ld XL,A
-				addw X,_tmp_u16
-				ldw _Demag_Time,X
-			#endasm
+		
+		if (LS_Conf == LS_A_C)
+		{
+			// Activate   C
+			#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_C_PORT->ODR |= LS_C_PIN;
+			#else
+				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
+			#endif
+			// Deactivate A
+			#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
+			#else
+				LS_A_PORT->ODR |= LS_A_PIN;
+			#endif
 		}
 
-		LastSwitchedCom = hTim3Cnt;
-		hTim3Th = hTim3Cnt + Demag_Time;
+		if (LS_Conf == LS_B_A)
+		{
+			// Activate   A
+			#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_A_PORT->ODR |= LS_A_PIN;
+			#else
+				LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
+			#endif
+			// Deactivate B
+			#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
+			#else
+				LS_B_PORT->ODR |= LS_B_PIN;
+			#endif
+		}
+
+		if (LS_Conf == LS_B_C)
+		{
+			// Activate   C
+			#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_C_PORT->ODR |= LS_C_PIN;
+			#else
+				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
+			#endif
+			// Deactivate B
+			#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
+			#else
+				LS_B_PORT->ODR |= LS_B_PIN;
+			#endif
+		}
+
+		if (LS_Conf == LS_C_A)
+		{
+			// Activate   A
+			#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_A_PORT->ODR |= LS_A_PIN;
+			#else
+				LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
+			#endif
+			// Deactivate C
+			#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
+			#else
+				LS_C_PORT->ODR |= LS_C_PIN;
+			#endif
+		}
+
+		if (LS_Conf == LS_C_B)
+		{
+			// Activate   B
+			#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_B_PORT->ODR |= LS_B_PIN;
+			#else
+				LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
+			#endif
+			// Deactivate C
+			#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
+				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
+			#else
+				LS_C_PORT->ODR |= LS_C_PIN;
+			#endif
+		}
+	}
+	#endif
+	
+	Current_BEMF = BEMFSteps[Current_Step].BEMF_Level;
+	Current_BEMF_Channel = BEMFSteps[Current_Step].ADC_Channel;
+
+	if (g_pBLDC_Struct->pBLDC_Var->bFastDemag == 0)
+	{
+		// Update CCMRx OCxCE bit (Actual)
+		TIM1->CCMR1 = (u8)(PhaseSteps[Current_Step].CCMR_1 & 0x80);
+		TIM1->CCMR2 = (u8)(PhaseSteps[Current_Step].CCMR_2 & 0x80);
+		TIM1->CCMR3 = (u8)(PhaseSteps[Current_Step].CCMR_3 & 0x80);
+	}
+	else
+	{
+		// Update CCMRx OCxCE bit (Actual)
+		TIM1->CCMR1 = (u8)(Fast_Demag_Steps[Current_Step].CCMR_1 & 0x80);
+		TIM1->CCMR2 = (u8)(Fast_Demag_Steps[Current_Step].CCMR_2 & 0x80);
+		TIM1->CCMR3 = (u8)(Fast_Demag_Steps[Current_Step].CCMR_3 & 0x80);
+	}
+
+	// Preload next values
+	TIM1->CCMR1 |= (u8)(PhaseSteps[Current_Step].CCMR_1 & 0x7F);
+	TIM1->CCMR2 |= (u8)(PhaseSteps[Current_Step].CCMR_2 & 0x7F);
+	TIM1->CCMR3 |= (u8)(PhaseSteps[Current_Step].CCMR_3 & 0x7F);
+	TIM1->CCER1 = PhaseSteps[Current_Step].CCER_1;
+	TIM1->CCER2 = PhaseSteps[Current_Step].CCER_2;
+
+	//calc demag time
+	if( (MTC_Status & MTC_STEP_MODE) == MTC_STEP_MODE )
+	{
+		if( (MTC_Status & MTC_LAST_FORCED_STEP) == MTC_LAST_FORCED_STEP )
+		{
+			MTC_Status &= (u8)(~MTC_STEP_MODE);
+			#ifdef DEBUG_PINS
+				AUTO_SWITCH_PORT |= AUTO_SWITCH_PIN;
+			#endif
+		}
+		
+		//Demag_Time = (u16)((u32)(Commutation_Time * BLDC_Get_Demag_Time()) / 100);
+		tmp_u8 = BLDC_Get_Demag_Time();
+		#asm
+			; tmp_sc_u8 = (u8)((tmp_u8 * 256) / (u8)(100));
+			
+			ld A,_tmp_u8
+			clrw x
+			ld XH,A
+			ld A,#0x64
+			div X,A
+			
+			ld A,XL
+			ld _tmp_u8,A
+		
+			; Demag_Time = (Commutation_Time * tmp_sc_u8) >> 8;
+			
+			ld A,_Commutation_Time
+			ld XL,A
+			ld A,_tmp_u8
+			mul X,A
+			ldw _tmp_u16,X
+			ld A,_Commutation_Time + 1
+			ld XL,A
+			ld A,_tmp_u8
+			mul X,A
+			ld A,XH
+			clrw X
+			ld XL,A
+			addw X,_tmp_u16
+			ldw _Demag_Time,X
+		#endasm
+	}
+	else
+	{		
+		//Demag_Time = (u16)((u32)(Average_Zero_Cross_Time * BLDC_Get_Demag_Time()) / 100);
+		tmp_u8 = BLDC_Get_Demag_Time();
+		#asm
+			; tmp_sc_u8 = (u8)((BLDC_Get_Demag_Time() * 256) / (u8)(100));
+			
+			ld A,_tmp_u8
+			clrw x
+			ld XH,A
+			ld A,#0x64
+			div X,A
+			
+			ld A,XL
+			ld _tmp_u8,A
+		
+			; Demag_Time = (Average_Zero_Cross_Time * tmp_sc_u8) >> 8;
+			
+			ld A,_Average_Zero_Cross_Time
+			ld XL,A
+			ld A,_tmp_u8
+			mul X,A
+			ldw _tmp_u16,X
+			ld A,_Average_Zero_Cross_Time + 1
+			ld XL,A
+			ld A,_tmp_u8
+			mul X,A
+			ld A,XH
+			clrw X
+			ld XL,A
+			addw X,_tmp_u16
+			ldw _Demag_Time,X
+		#endasm
+	}
+
+	LastSwitchedCom = hTim3Cnt;
+	hTim3Th = hTim3Cnt + Demag_Time;
 }
-#endif
 
 void StopMotor( void )
 {	
@@ -2115,10 +2084,8 @@ void StartMotor( void )
 	ToCMPxL( TIM1->CCR3L, temp );
 
 	// Current Limitation
-#ifdef SENSORLESS
 	ToCMPxH( TIM2->CCR2H, MILLIAMP_TOCNT (STARTUP_CURRENT_LIMITATION) );
 	ToCMPxL( TIM2->CCR2L, MILLIAMP_TOCNT (STARTUP_CURRENT_LIMITATION) );
-#endif
 
 	Phase_State = PHASE_ZERO; 
 }
@@ -2186,10 +2153,8 @@ u16 Set_Duty(u16 duty)
 	ToCMPxL( TIM1->CCR3L, duty );
 
 	// Current Limitation
-	#ifdef SENSORLESS
-		ToCMPxH( TIM2->CCR2H, CurrentLimitCnt );
-		ToCMPxL( TIM2->CCR2L, CurrentLimitCnt );
-	#endif
+	ToCMPxH( TIM2->CCR2H, CurrentLimitCnt );
+	ToCMPxL( TIM2->CCR2L, CurrentLimitCnt );
 	
 	*pDutyCycleCounts_reg = duty;
 	return duty;
@@ -2265,10 +2230,8 @@ u16 Set_Current(u16 current)
 		current = CurrentLimitCnt;
 
 	// Current Limitation
-	#ifdef SENSORLESS
-		ToCMPxH( TIM2->CCR2H, current );
-		ToCMPxL( TIM2->CCR2L, current );
-	#endif
+	ToCMPxH( TIM2->CCR2H, current );
+	ToCMPxL( TIM2->CCR2L, current );
 
 	return temp;
 } 
