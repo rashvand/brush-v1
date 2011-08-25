@@ -306,11 +306,13 @@ void State_Machine(s16 *min, s16 *max, u8 *no_of_temp_vals, s16 *critical_temp_l
 				stop_TIM3;			
 				
 				/* get minimum critical value */
+				/*
 				SerialPutString(buff2);
 				while(!(UART2->SR & UART2_SR_TC)){};
 				GetInputString(Buff_In1);
- 
+				*/
 				/* Convert the temperature entered by user into its decimal equivalent */
+				/*
 				if (Buff_In1[0] == '-')
 				{
 					*critical_temp_low = ((Buff_In1[2] - '0') * 10) + (Buff_In1[3] - '0');
@@ -318,13 +320,17 @@ void State_Machine(s16 *min, s16 *max, u8 *no_of_temp_vals, s16 *critical_temp_l
 				}
 				else
 					*critical_temp_low = ((Buff_In1[1] - '0') * 100) + ((Buff_In1[2] - '0') * 10) + (Buff_In1[3] - '0');
+				*/
+				*critical_temp_low = 10;
 
 				/* get maximum critical value */
+				/*
 				SerialPutString(buff3);
 				while(!(UART2->SR & UART2_SR_TC)){};
 				GetInputString(Buff_In1);
-
+				*/
 				/* Convert the temperature entered by user into its decimal equivalent */
+				/*
 				if(Buff_In1[0]=='-')
 				{
 					*critical_temp_high = ((Buff_In1[2] - '0') * 10) + (Buff_In1[3] - '0');
@@ -332,6 +338,8 @@ void State_Machine(s16 *min, s16 *max, u8 *no_of_temp_vals, s16 *critical_temp_l
 				}
 				else
 					*critical_temp_high = ((Buff_In1[1] - '0') * 100) + ((Buff_In1[2] - '0') * 10) + (Buff_In1[3] - '0');
+				*/
+				*critical_temp_high = 100;
 				
 				TIM3_Init();			//initialize timer 3
 
