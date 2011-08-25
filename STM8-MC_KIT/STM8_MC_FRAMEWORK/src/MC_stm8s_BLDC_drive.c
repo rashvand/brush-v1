@@ -1,23 +1,4 @@
-/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
-* File Name          : MC_stm8s_BLDC_drive.c
-* Author             : IMS Systems Lab 
-* Date First Issued  : mm/dd/yyy
-* Description        : Low level BLDC drive module
-********************************************************************************
-* History:
-* mm/dd/yyyy ver. x.y.z
-********************************************************************************
-* THE PRESENT SOFTWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
-* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
-* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
-* CONTENT OF SUCH SOFTWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
-* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
-*
-* THIS SOURCE CODE IS PROTECTED BY A LICENSE.
-* FOR MORE INFORMATION PLEASE CAREFULLY READ THE LICENSE AGREEMENT FILE LOCATED
-* IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
-*******************************************************************************/
+// Low level BLDC drive module
 
 /* Includes ******************************************************/
 #include "MC_dev_drive.h"
@@ -51,11 +32,7 @@
 void dev_BLDC_driveUpdate(void);
 void Application_ADC_Manager( void );
 void GetCurrent(void);
-void GetSyncUserAdc(void);
 void GetBusVoltage(void);
-void GetTemperature(void);
-void GetNeutralPoint(void);
-void GetAsyncUserAdc(void);
 void GetStepTime(void);
 void SpeedMeasurement(void);
 void DebugPinsOff(void);
@@ -72,14 +49,12 @@ void StartMotor( void );
 void Init_ADC( void );
 void Enable_ADC_BEMF_Sampling( void );
 void Enable_ADC_Current_Sampling( void );
-void Enable_ADC_User_Sync_Sampling( void );
 u16 CheckMaxDuty(u16 bRequested_Duty);
 void DelayCoefAdjust(void);
 u16 Set_Duty(u16 duty);
 u16 Set_Current(u16 current);
 void SetSamplingPoint_BEMF(void);
 void SetSamplingPoint_Current(void);
-void SetSamplingPoint_User_Sync(void);
 
 #ifdef LS_GPIO_CONTROL
 	void LS_GPIO_MANAGE(void);
@@ -124,30 +99,14 @@ u8 ADC_State;
 #define ADC_ASYNC	0x01
 
 u8 ADC_Sync_State = 0x04;
-#define ADC_BEMF_INIT			0x00
-#define ADC_BEMF_SAMPLE			0x01
-#define ADC_CURRENT_INIT		0x02
+#define ADC_BEMF_INIT					0x00
+#define ADC_BEMF_SAMPLE				0x01
+#define ADC_CURRENT_INIT			0x02
 #define ADC_CURRENT_SAMPLE		0x03
-#define ADC_USER_SYNC_INIT		0x04
-#define ADC_USER_SYNC_SAMPLE	0x05
 
-u8 ADC_Async_State = 0;
-#define ADC_BUS_INIT				0x00
-#define ADC_BUS_SAMPLE				0x01
-#define ADC_TEMP_INIT				0x02
-#define ADC_TEMP_SAMPLE				0x03
-#define ADC_NEUTRAL_POINT_INIT		0x04
-#define ADC_NEUTRAL_POINT_SAMPLE	0x05
-#define ADC_USER_ASYNC_INIT			0x06
-#define ADC_USER_ASYNC_SAMPLE		0x07
-
-#define SIZE_ADC_BUFFER 				6
+#define SIZE_ADC_BUFFER 				2
 #define ADC_CURRENT_INDEX				0
-#define ADC_USER_SYNC_INDEX			1 
-#define ADC_BUS_INDEX						2
-#define ADC_TEMP_INDEX					3
-#define ADC_NEUTRAL_POINT_INDEX	4
-#define ADC_USER_ASYNC_INDEX		5
+#define ADC_BUS_INDEX						1 // usato anche per il neutral point
 
 u16 ADC_Buffer[ SIZE_ADC_BUFFER ];
 
@@ -889,128 +848,67 @@ void Application_ADC_Manager( void )
 	vtimer_SetTimer(ADC_SAMPLE_TIMER,ADC_SAMPLE_TIMEOUT,&Application_ADC_Manager);
 	
 	GetCurrent();
-	GetSyncUserAdc();
-	GetBusVoltage();
-	GetTemperature();
-	GetNeutralPoint();
-	GetAsyncUserAdc();
+	GetBusVoltage(); // QUESTA SETTA ANCHE IL VALORE DEL NEUTRAL POINT	
 }
 
 void GetCurrent(void)
 {
 	u16 hVal;
 	disableInterrupts();
-	hVal = ADC_Buffer[ADC_CURRENT_INDEX];
+	hVal = ADC_Buffer[ ADC_CURRENT_INDEX ];
 	enableInterrupts();
 
 	BLDC_Set_Current_measured((u16)(ADC_TOMILLIAMP(hVal)/100));
 }
 
-void GetSyncUserAdc(void)
-{
-	u16 hSyncUserAdc;
-	
-	disableInterrupts();
-	hSyncUserAdc = ADC_Buffer[ADC_USER_SYNC_INDEX];
-	enableInterrupts();
-	
-	// Call User defined function with hUserAdc parameter
-}
-
-#ifdef BUS_VOLTAGE_MEASUREMENT
-	void GetBusVoltage( void )
-	{
-		u16 data;
-		
-		disableInterrupts();
-		data = ADC_Buffer[ ADC_BUS_INDEX ];
-		enableInterrupts();
-		
-		if (data > MAX_BUS_VOLTAGE16)
-		{
-
-			#ifdef DISSIPATIVE_BRAKE
-				#if (DISSIPATIVE_BRAKE_POL == DISSIPATIVE_BRAKE_ACTIVE_HIGH)
-					DISSIPATIVE_BRAKE_PORT->ODR |= DISSIPATIVE_BRAKE_BIT;
-				#else
-					DISSIPATIVE_BRAKE_PORT->ODR &= (u8)(~DISSIPATIVE_BRAKE_BIT);
-				#endif
-			#else			
-				g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_OCCURRED] |= BUS_OVERVOLTAGE;
-				g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] |= BUS_OVERVOLTAGE;
-			#endif
-		}
-		if (data < BRAKE_HYSTERESIS)
-		{
-			#ifdef DISSIPATIVE_BRAKE
-				#if (DISSIPATIVE_BRAKE_POL == DISSIPATIVE_BRAKE_ACTIVE_HIGH)
-					DISSIPATIVE_BRAKE_PORT->ODR &= (u8)(~DISSIPATIVE_BRAKE_BIT);
-				#else
-					DISSIPATIVE_BRAKE_PORT->ODR |= DISSIPATIVE_BRAKE_BIT;
-				#endif
-			#else
-				g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] &= (u8)(~BUS_OVERVOLTAGE);
-			#endif
-		}
-		if (data < MIN_BUS_VOLTAGE16)
-		{
-			g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_OCCURRED] |= BUS_UNDERVOLTAGE;
-			g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] |= BUS_UNDERVOLTAGE;      
-		}
-		else
-		{
-			g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] &= (u8)(~BUS_UNDERVOLTAGE);
-		}    
-	    
-		g_pDevice->regs.r16[VDEV_REG16_BOARD_BUS_VOLTAGE] = data;
-
-		BLDC_Set_Bus_Voltage((u16)((data * BUSV_CONVERSION)/1024));
-	}
-#endif
-
-#ifndef BUS_VOLTAGE_MEASUREMENT
-	void GetBusVoltage( void )
-	{
-		BLDC_Set_Bus_Voltage((u16)(BUS_VOLTAGE_VALUE));
-	}
-#endif
-
-#ifdef HEAT_SINK_TEMPERATURE_MEASUREMENT
-	void GetTemperature(void)
-	{
-		*** rimossa questa funzione ***
-	}
-#else
-	void GetTemperature(void)
-	{
-		BLDC_Set_Heatsink_Temperature((u8)(HEAT_SINK_TEMPERATURE_VALUE));
-	}
-#endif
-
-void GetNeutralPoint(void)
+void GetBusVoltage( void )
 {
 	u16 data;
+	
 	disableInterrupts();
-	data = ADC_Buffer[ ADC_NEUTRAL_POINT_INDEX ];
+	data = ADC_Buffer[ ADC_BUS_INDEX ];
 	enableInterrupts();
+	
+	if (data > MAX_BUS_VOLTAGE16)
+	{
+		#ifdef DISSIPATIVE_BRAKE
+			#if (DISSIPATIVE_BRAKE_POL == DISSIPATIVE_BRAKE_ACTIVE_HIGH)
+				DISSIPATIVE_BRAKE_PORT->ODR |= DISSIPATIVE_BRAKE_BIT;
+			#else
+				DISSIPATIVE_BRAKE_PORT->ODR &= (u8)(~DISSIPATIVE_BRAKE_BIT);
+			#endif
+		#else			
+			g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_OCCURRED] |= BUS_OVERVOLTAGE;
+			g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] |= BUS_OVERVOLTAGE;
+		#endif
+	}
+	if (data < BRAKE_HYSTERESIS)
+	{
+		#ifdef DISSIPATIVE_BRAKE
+			#if (DISSIPATIVE_BRAKE_POL == DISSIPATIVE_BRAKE_ACTIVE_HIGH)
+				DISSIPATIVE_BRAKE_PORT->ODR &= (u8)(~DISSIPATIVE_BRAKE_BIT);
+			#else
+				DISSIPATIVE_BRAKE_PORT->ODR |= DISSIPATIVE_BRAKE_BIT;
+			#endif
+		#else
+			g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] &= (u8)(~BUS_OVERVOLTAGE);
+		#endif
+	}
+	if (data < MIN_BUS_VOLTAGE16)
+	{
+		g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_OCCURRED] |= BUS_UNDERVOLTAGE;
+		g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] |= BUS_UNDERVOLTAGE;      
+	}
+	else
+	{
+		g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] &= (u8)(~BUS_UNDERVOLTAGE);
+	}    
+		
+	g_pDevice->regs.r16[VDEV_REG16_BOARD_BUS_VOLTAGE] = data;
 
-	hNeutralPoint = data;
-}
-
-void GetAsyncUserAdc(void)
-{
-	u16 hAsyncUserAdc;
-
-	disableInterrupts();
-	hAsyncUserAdc = ADC_Buffer[ADC_USER_ASYNC_INDEX];
-	enableInterrupts();
-
-	#ifdef SET_TARGET_SPEED_BY_POTENTIOMETER
-		// Set Target speed
-		BLDC_Set_Target_rotor_speed((u16)(((u32)MAX_SPEED_RPM * hAsyncUserAdc)/1023));
-	#else
-		// Call User defined function with hAsyncUserAdc parameter
-	#endif
+	BLDC_Set_Bus_Voltage((u16)((data * BUSV_CONVERSION) / 1024));
+	
+	hNeutralPoint = data; // *** SETTO IL VALORE DEL NEUTRAL POINT ***
 }
 
 void Init_ADC( void )
@@ -1018,7 +916,7 @@ void Init_ADC( void )
 	u8 value;
 	u16 ADC_TDR_tmp;
 
-	ADC_Sync_State = ADC_USER_SYNC_INIT;
+	ADC_Sync_State = ADC_CURRENT_INIT;
 	ADC_State = ADC_SYNC;
 
 	ADC1->CSR = 0; 
@@ -1039,13 +937,8 @@ void Init_ADC( void )
 	ADC_TDR_tmp |= (u16)(1) << PHASE_C_BEMF_ADC_CHAN;
 
 	ADC_TDR_tmp |= (u16)(1) << ADC_CURRENT_CHANNEL;
-	ADC_TDR_tmp |= (u16)(1) << ADC_USER_SYNC_CHANNEL;
-
 	ADC_TDR_tmp |= (u16)(1) << ADC_BUS_CHANNEL;
-	ADC_TDR_tmp |= (u16)(1) << ADC_NEUTRAL_POINT_CHANNEL;
-	ADC_TDR_tmp |= (u16)(1) << ADC_TEMP_CHANNEL;
-	ADC_TDR_tmp |= (u16)(1) << ADC_USER_ASYNC_CHANNEL;
-
+	
 	ToCMPxH( ADC1->TDRH, ADC_TDR_tmp);
 	ToCMPxL( ADC1->TDRL, ADC_TDR_tmp);
 	
@@ -1062,7 +955,6 @@ void Init_ADC( void )
 	ADC1->CSR |= BIT5;
 }
 
-
 void Enable_ADC_BEMF_Sampling( void )
 {
 	//Enable sampling of BEMF
@@ -1073,12 +965,6 @@ void Enable_ADC_Current_Sampling( void )
 {
 	//Enable sampling of the current
 	ADC_Sync_State = ADC_CURRENT_INIT;
-}
-
-void Enable_ADC_User_Sync_Sampling( void )
-{
-	//allow application use of ADC
-	ADC_Sync_State = ADC_USER_SYNC_INIT;
 }
 
 // This function capture the time into the Zero_Cross_Time vars
@@ -1140,7 +1026,7 @@ void SpeedMeasurement(void)
 			data <<= 2;
 			data |= (ADC1->DRL & 0x03);   
 			
-			switch( ADC_Sync_State )
+			switch (ADC_Sync_State)
 			{
 				case ADC_BEMF_INIT:
 					ADC1->CSR = (u8)((Current_BEMF_Channel|BIT5)); 
@@ -1148,13 +1034,13 @@ void SpeedMeasurement(void)
 					Zero_Sample_Count = 0;
 					ADC_Sync_State = ADC_BEMF_SAMPLE;
 					SetSamplingPoint_BEMF();
-				break;
+					break;
 
 				case ADC_BEMF_SAMPLE: 
 					//detect zero crossing 
-					if( Current_BEMF == BEMF_FALLING )
+					if (Current_BEMF == BEMF_FALLING)
 					{
-						if( Z_Detection_Type == Z_DETECT_PWM_OFF )
+						if (Z_Detection_Type == Z_DETECT_PWM_OFF)
 						{
 							bemf_threshold = BEMF_FALLING_THRESHOLD;
 						}
@@ -1165,11 +1051,11 @@ void SpeedMeasurement(void)
 
 						if (Ramp_Step > FORCED_STATUP_STEPS)
 						{
-							if( data <  bemf_threshold  )
+							if (data < bemf_threshold)
 							{
 								Zero_Sample_Count++;
 								BEMF_Sample_Debounce++;
-								if( BEMF_Sample_Debounce >= BEMF_SAMPLE_COUNT )
+								if (BEMF_Sample_Debounce >= BEMF_SAMPLE_COUNT)
 								{
 									hTim3Th -= hTim3Cnt;
 									GetStepTime();
@@ -1191,9 +1077,9 @@ void SpeedMeasurement(void)
 							}
 						}
 					}
-					else
+					else /* if (Current_BEMF != BEMF_FALLING) */
 					{
-						if( Z_Detection_Type == Z_DETECT_PWM_OFF )
+						if (Z_Detection_Type == Z_DETECT_PWM_OFF)
 						{
 							bemf_threshold = BEMF_RISING_THRESHOLD;
 						}
@@ -1204,11 +1090,11 @@ void SpeedMeasurement(void)
 		
 						if (Ramp_Step > FORCED_STATUP_STEPS)
 						{
-							if( data > bemf_threshold )
+							if (data > bemf_threshold)
 							{
 								Zero_Sample_Count++;
 								BEMF_Sample_Debounce++;
-								if( BEMF_Sample_Debounce >= BEMF_SAMPLE_COUNT )
+								if (BEMF_Sample_Debounce >= BEMF_SAMPLE_COUNT)
 								{
 									hTim3Th -= hTim3Cnt;
 									GetStepTime();
@@ -1230,60 +1116,33 @@ void SpeedMeasurement(void)
 							}
 						}
 					}
-				break;
+					break;
 
+				default:
 				case ADC_CURRENT_INIT:
 					ADC1->CSR = (ADC_CURRENT_CHANNEL|BIT5); 
 					ADC_Sync_State = ADC_CURRENT_SAMPLE;
 					SetSamplingPoint_Current();
-				break;
-
-				default:
-				case ADC_USER_SYNC_INIT:
-					ADC1->CSR = (ADC_USER_SYNC_CHANNEL|BIT5); 
-					ADC_Sync_State = ADC_USER_SYNC_SAMPLE;
-					SetSamplingPoint_User_Sync();
-				break;
-
-		
-				case ADC_CURRENT_SAMPLE: 
-					ADC_Buffer[ ADC_CURRENT_INDEX ] = data;
 					break;
-
-				case ADC_USER_SYNC_SAMPLE: 
-					ADC_Buffer[ ADC_USER_SYNC_INDEX] = data;
+				
+				case ADC_CURRENT_SAMPLE: 
+					ADC_Buffer[ADC_CURRENT_INDEX] = data;
 					break;
 			}
 
 			// Store the current channel selected
 			bCSR_Tmp = ADC1->CSR;
 
-			// Set the Async sampling channel
-			switch (ADC_Async_State)
-			{
-				default:
-				case ADC_BUS_INIT:
-					ADC1->CSR = (ADC_BUS_CHANNEL|BIT5); 
-					ADC_Async_State = ADC_BUS_SAMPLE;
-				break;
-				
-				case ADC_TEMP_INIT:
-					ADC1->CSR = (ADC_TEMP_CHANNEL|BIT5); 
-					ADC_Async_State = ADC_TEMP_SAMPLE;
-				break;
-
-				case ADC_NEUTRAL_POINT_INIT:
-					ADC1->CSR = (ADC_NEUTRAL_POINT_CHANNEL|BIT5); 
-					ADC_Async_State = ADC_NEUTRAL_POINT_SAMPLE;
-				break;
-				
-				case ADC_USER_ASYNC_INIT:
-					ADC1->CSR = (ADC_USER_ASYNC_CHANNEL|BIT5); 
-					ADC_Async_State = ADC_USER_ASYNC_SAMPLE;
-				break;
-			}
-
-			// Start asyncronous sampling
+			// **************************************
+			// *** Set the Async sampling channel ***
+			// **************************************
+			// la prossima conversione sarà di tipo asincrono
+			// vado a leggere la tensione della batteria
+			ADC1->CSR = (ADC_BUS_CHANNEL|BIT5); 
+			
+			// **********************************
+			// *** Start asyncronous sampling ***
+			// **********************************
 			#ifdef DEV_CUT_1
 				// Disable ext. trigger
 				ADC1->CR2 &= (u8)(~BIT6);
@@ -1305,11 +1164,11 @@ void SpeedMeasurement(void)
 				ComHandler();
 			}
 		}
-		else
+		else /* if (ADC_State == ADC_ASYNC) */
 		{
-			// Syncronous sampling
-			u16 data;
+			// Asyncronous sampling
 			
+			u16 data;			
 			data = ADC1->DRH;
 			data <<= 2;
 			data |= (ADC1->DRL & 0x03);
@@ -1319,8 +1178,7 @@ void SpeedMeasurement(void)
 
 			// Restore the sync ADC channel
 			ADC1->CSR = bCSR_Tmp;
-					
-			
+						
 			// Configure syncronous sampling
 			#ifdef DEV_CUT_1
 				// Enable ext. trigger
@@ -1333,32 +1191,9 @@ void SpeedMeasurement(void)
 			#endif
 
 			// Manage async sampling
-			switch (ADC_Async_State)
-			{
-				default:
-				case ADC_BUS_SAMPLE:
-					ADC_Buffer[ ADC_BUS_INDEX ] = data;
-					ADC_Async_State = ADC_TEMP_INIT;
-				break;
-
-				case ADC_TEMP_SAMPLE:
-					ADC_Buffer[ ADC_TEMP_INDEX ] = data;
-					ADC_Async_State = ADC_NEUTRAL_POINT_INIT;
-				break;
-
-				case ADC_NEUTRAL_POINT_SAMPLE:
-					ADC_Buffer[ ADC_NEUTRAL_POINT_INDEX ] = data;
-					ADC_Async_State = ADC_USER_ASYNC_INIT;
-				break;
-
-				case ADC_USER_ASYNC_SAMPLE:
-					ADC_Buffer[ ADC_USER_ASYNC_INDEX ] = data;
-					ADC_Async_State = ADC_BUS_INIT;
-				break;
-			}
+			ADC_Buffer[ADC_BUS_INDEX] = data;
 			
-			ADC_State = ADC_SYNC;
-			
+			ADC_State = ADC_SYNC;			
 		}
 	}
 #endif
@@ -1632,7 +1467,7 @@ void ComHandler(void)
 		#ifdef SENSORLESS
 			Phase_State = PHASE_DEMAG; 
 		#endif	
-		Enable_ADC_User_Sync_Sampling();
+		Enable_ADC_Current_Sampling();
 	break;
 
 	case PHASE_DEMAG:
@@ -2078,7 +1913,7 @@ void StopMotor( void )
 		LS_GPIO_OFF();
 	#endif
 		
-	Enable_ADC_User_Sync_Sampling();
+	Enable_ADC_Current_Sampling();
 	Motor_Frequency = 0;
 }
 
@@ -2506,13 +2341,6 @@ void SetSamplingPoint_BEMF(void)
 }
 
 void SetSamplingPoint_Current(void)
-{
-	// set sampling point xx us after Ton + DeadTime - during PWM_On
-	ToCMPxH( TIM1->CCR4H, (hCntDeadDtime+SAMPLING_POINT_DURING_TON_CNT) );
-	ToCMPxL( TIM1->CCR4L, (hCntDeadDtime+SAMPLING_POINT_DURING_TON_CNT) );
-}
-
-void SetSamplingPoint_User_Sync(void)
 {
 	// set sampling point xx us after Ton + DeadTime - during PWM_On
 	ToCMPxH( TIM1->CCR4H, (hCntDeadDtime+SAMPLING_POINT_DURING_TON_CNT) );

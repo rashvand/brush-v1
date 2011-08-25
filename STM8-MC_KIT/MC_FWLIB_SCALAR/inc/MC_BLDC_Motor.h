@@ -70,9 +70,6 @@ void  BLDC_Set_Speed_KD(s16 val);
 s16 BLDC_Get_Bus_Voltage(void);
 void  BLDC_Set_Bus_Voltage(s16 BusVoltage);
 
-u8 BLDC_Get_Heatsink_Temperature(void);
-void BLDC_Set_Heatsink_Temperature(u8 temp);
-
 u8 BLDC_Get_FastDemag(void);
 void BLDC_Set_FastDemag(u8 temp);
 

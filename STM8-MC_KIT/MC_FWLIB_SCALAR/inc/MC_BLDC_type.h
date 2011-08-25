@@ -44,7 +44,6 @@ typedef struct
 	u8 bDemag_Time;
 	u16 hMinimumOffTime;
 	u16 hBusVoltage;
-	u8	bHeatsinkTemp;
 	u8  bFastDemag;
 	u8  bToggleMode;
 	u8  bAutoDelay;

@@ -1,25 +1,3 @@
-/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
-* File Name          : MC_stm8s_BLDC_param.h
-* Author             : IMS Systems Lab 
-* Date First Issued  : mm/dd/yyy
-* Description        : 
-********************************************************************************
-* History:
-* mm/dd/yyyy ver. x.y.z
-********************************************************************************
-* THE PRESENT SOFTWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
-* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
-* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
-* CONTENT OF SUCH SOFTWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
-* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
-*
-* THIS SOURCE CODE IS PROTECTED BY A LICENSE.
-* FOR MORE INFORMATION PLEASE CAREFULLY READ THE LICENSE AGREEMENT FILE LOCATED
-* IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
-*******************************************************************************/
-
-/******************************************************************************/
 #ifndef __BLDC_MTC_PARAM_H
 #define __BLDC_MTC_PARAM_H
 
@@ -35,24 +13,14 @@
 // tensione batteria
 #define ADC_BUS_CHANNEL							ADC2_CHANNEL_9	// BUS Voltage channel - PB3, spostato
 
-// anche questo lo mettiamo sul 3 ... da controllare
-#define ADC_NEUTRAL_POINT_CHANNEL		ADC2_CHANNEL_9 // Neutral point channel (???)
-
 // corrente sul motore
 #define ADC_CURRENT_CHANNEL					ADC2_CHANNEL_7	// Current Feedback channel - PB7
-
-// questi non ci sono ....
-// bisogna disabilitare la loro gestione da qualche parte
-#define ADC_USER_SYNC_CHANNEL				ADC2_CHANNEL_9	// Sync User channel
-#define ADC_TEMP_CHANNEL						ADC2_CHANNEL_9	// Heatsink temperature sensor channel
-#define ADC_USER_ASYNC_CHANNEL			ADC2_CHANNEL_9	// User Async
 
 // rimappato su PORT A
 // Control PINS for samping during Ton
 #define MCI_CONTROL_PINS 	(BIT4|BIT5|BIT6)
 #define MCI_CONTROL_DDR 	GPIOA->DDR
 #define MCI_CONTROL_DR  	GPIOA->ODR
-
 
 /****************************************************************************************
 *** Debug Pin Info **********************************************************************
@@ -192,5 +160,3 @@ D9	UC_DEBUG2 -> C_D_DEBUG
 #define RAMP_VALUE63	(u16)		92
 
 #endif /* __BLDC_MTC_PARAM_H */
-
-/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/

@@ -1,25 +1,3 @@
-/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
-* File Name          : MC_BLDC_Motor.c
-* Author             : IMS Systems Lab 
-* Date First Issued  : mm/dd/yyy
-* Description        : BLDC motor implementation module
-********************************************************************************
-* History:
-* mm/dd/yyyy ver. x.y.z
-********************************************************************************
-* THE PRESENT SOFTWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
-* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
-* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
-* CONTENT OF SUCH SOFTWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
-* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
-*
-* THIS SOURCE CODE IS PROTECTED BY A LICENSE.
-* FOR MORE INFORMATION PLEASE CAREFULLY READ THE LICENSE AGREEMENT FILE LOCATED
-* IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
-*******************************************************************************/
-
-/******************************************************************************/
 #include "MC_BLDC_Motor.h"
 #include "MC_BLDC_Motor_Param.h"
 #include "MC_BLDC_Drive_Param.h"
@@ -46,7 +24,6 @@
 		(u8)(DEMAG_TIME), /* Demag_Time */											\
 		(u16)(MINIMUM_OFF_TIME), /* hMinimumOffTime */\
 		0, /* hBusVoltage */\
-		0, /* bHeatsinkTemp */\
 		FAST_DEMAG, /* bFastDemag */\
 		TOGGLE_MODE, /* bToggleMode */\
 		AUTO_DELAY /* bAutoDelay */\
@@ -130,22 +107,22 @@ s16 BLDC_Get_Measured_rotor_speed(void)
 	return sBLDC_Struct.pBLDC_Var->hMeasured_rotor_speed;
 }
 
-u8  BLDC_Get_Duty_cycle(void)
+u8 BLDC_Get_Duty_cycle(void)
 {	
 	return (u8)((100*(u32)(sBLDC_Struct.pBLDC_Var->hDuty_cycle))/hArrPwmVal);
 }
 
-u16  BLDC_Get_Duty_cycle_cnt(void)
+u16 BLDC_Get_Duty_cycle_cnt(void)
 {	
 	return sBLDC_Struct.pBLDC_Var->hDuty_cycle;
 }
 
-void  BLDC_Set_Duty_cycle(u8 val)
+void BLDC_Set_Duty_cycle(u8 val)
 {
 	sBLDC_Struct.pBLDC_Var->hDuty_cycle = (u16)(((u32)(hArrPwmVal)*val)/100);
 }
 
-void  BLDC_Set_Duty_cycle_cnt(u16 val)
+void BLDC_Set_Duty_cycle_cnt(u16 val)
 {
 	sBLDC_Struct.pBLDC_Var->hDuty_cycle = (u16)val;
 }
@@ -155,7 +132,7 @@ u16 BLDC_Get_Current_reference(void)
 	return sBLDC_Struct.pBLDC_Var->hCurrent_reference/100;
 }
 
-void  BLDC_Set_Current_reference(u16 val)
+void BLDC_Set_Current_reference(u16 val)
 {
 	sBLDC_Struct.pBLDC_Var->hCurrent_reference = val * 100;
 }
@@ -165,17 +142,17 @@ u16 BLDC_Get_Current_measured(void)
 	return sBLDC_Struct.pBLDC_Var->hCurrent_measured;
 }
 
-void  BLDC_Set_Current_measured(u16 val)
+void BLDC_Set_Current_measured(u16 val)
 {
 	sBLDC_Struct.pBLDC_Var->hCurrent_measured = val;
 }
 
-u8  BLDC_Get_Falling_Delay(void)
+u8 BLDC_Get_Falling_Delay(void)
 {
 	return sBLDC_Struct.pBLDC_Var->bFalling_Delay;
 }
 
-void  BLDC_Set_Falling_Delay(u8 val)
+void BLDC_Set_Falling_Delay(u8 val)
 {
 	#ifdef RISE_FALL_DELAY_LINK
 		sBLDC_Struct.pBLDC_Var->bRising_Delay = val;
@@ -183,12 +160,12 @@ void  BLDC_Set_Falling_Delay(u8 val)
 	sBLDC_Struct.pBLDC_Var->bFalling_Delay = val;
 }
 
-u8 	BLDC_Get_Rising_Delay(void)
+u8 BLDC_Get_Rising_Delay(void)
 {
 	return sBLDC_Struct.pBLDC_Var->bRising_Delay;
 }
 
-void 	BLDC_Set_Rising_Delay(u8 val)
+void BLDC_Set_Rising_Delay(u8 val)
 {
 	#ifdef RISE_FALL_DELAY_LINK
 		sBLDC_Struct.pBLDC_Var->bFalling_Delay = val;
@@ -206,17 +183,17 @@ void BLDC_Set_Demag_Time(u8 val)
 	sBLDC_Struct.pBLDC_Var->bDemag_Time = val;
 }
 
-u16 	BLDC_Get_MinimumOffTime(void)
+u16	BLDC_Get_MinimumOffTime(void)
 {
 	return sBLDC_Struct.pBLDC_Var->hMinimumOffTime;
 }
 
-void 	BLDC_Set_MinimumOffTime(u16 val)
+void BLDC_Set_MinimumOffTime(u16 val)
 {
 	sBLDC_Struct.pBLDC_Var->hMinimumOffTime = val;
 }
 
-s16  BLDC_Get_Speed_KP(void)
+s16 BLDC_Get_Speed_KP(void)
 {
 	#if (SPEED_CONTROL_MODE == CLOSED_LOOP)
 		return sBLDC_Struct.pBLDC_Const->pPID_Speed->pPID_Var->hKp_Gain;
@@ -225,12 +202,12 @@ s16  BLDC_Get_Speed_KP(void)
 	#endif
 }
 
-void  BLDC_Set_Speed_KP(s16 val)
+void BLDC_Set_Speed_KP(s16 val)
 {
 	sBLDC_Struct.pBLDC_Const->pPID_Speed->pPID_Var->hKp_Gain = val;
 }
 
-s16  BLDC_Get_Speed_KI(void)
+s16 BLDC_Get_Speed_KI(void)
 {
 	#if (SPEED_CONTROL_MODE == CLOSED_LOOP)
 		return sBLDC_Struct.pBLDC_Const->pPID_Speed->pPID_Var->hKi_Gain;
@@ -239,12 +216,12 @@ s16  BLDC_Get_Speed_KI(void)
 	#endif
 }
 
-void  BLDC_Set_Speed_KI(s16 val)
+void BLDC_Set_Speed_KI(s16 val)
 {
 	sBLDC_Struct.pBLDC_Const->pPID_Speed->pPID_Var->hKi_Gain = val;
 }
 
-s16  BLDC_Get_Speed_KD(void)
+s16 BLDC_Get_Speed_KD(void)
 {
 	#if (SPEED_CONTROL_MODE == CLOSED_LOOP)
 		return sBLDC_Struct.pBLDC_Const->pPID_Speed->pPID_Var->hKd_Gain;
@@ -253,7 +230,7 @@ s16  BLDC_Get_Speed_KD(void)
 	#endif
 }
 
-void  BLDC_Set_Speed_KD(s16 val)
+void BLDC_Set_Speed_KD(s16 val)
 {
 	sBLDC_Struct.pBLDC_Const->pPID_Speed->pPID_Var->hKd_Gain = val;
 }
@@ -263,19 +240,9 @@ s16 BLDC_Get_Bus_Voltage(void)
         return (s16)(sBLDC_Struct.pBLDC_Var->hBusVoltage);
 }
 
-void  BLDC_Set_Bus_Voltage(s16 BusVoltage)
+void BLDC_Set_Bus_Voltage(s16 BusVoltage)
 {
 	sBLDC_Struct.pBLDC_Var->hBusVoltage = BusVoltage;
-}
-
-u8 BLDC_Get_Heatsink_Temperature(void)
-{
-	return (u8)(sBLDC_Struct.pBLDC_Var->bHeatsinkTemp);
-}
-
-void BLDC_Set_Heatsink_Temperature(u8 temp)
-{
-	sBLDC_Struct.pBLDC_Var->bHeatsinkTemp = temp;
 }
 
 u8 BLDC_Get_FastDemag(void)

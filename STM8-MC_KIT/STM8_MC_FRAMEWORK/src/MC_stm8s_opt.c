@@ -1,25 +1,4 @@
-/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
-* File Name          : MC_stm8s_opt.c
-* Author             : IMS Systems Lab 
-* Date First Issued  : mm/dd/yyy
-* Description        : Low level option byte managament module
-********************************************************************************
-* History:
-* mm/dd/yyyy ver. x.y.z
-********************************************************************************
-* THE PRESENT SOFTWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
-* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
-* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
-* CONTENT OF SUCH SOFTWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
-* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
-*
-* THIS SOURCE CODE IS PROTECTED BY A LICENSE.
-* FOR MORE INFORMATION PLEASE CAREFULLY READ THE LICENSE AGREEMENT FILE LOCATED
-* IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
-*******************************************************************************/
-
-/******************************************************************************/
+// Low level option byte managament module
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s_lib.h"
@@ -27,7 +6,7 @@
 #include "MC_stm8s_clk_param.h"
 #include "MC_PowerStage_Param.h"
 #include "MC_ControlStage_param.h"
-#include "MC_stm8s_BLDC_conf.h"
+#include "MC_BLDC_conf.h"
 
 void dev_optInit(void)
 {
@@ -80,4 +59,3 @@ void dev_optInit(void)
 	/* Lock Data memory */	
 	FLASH_Lock(FLASH_MEMTYPE_DATA);
 }
-/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
