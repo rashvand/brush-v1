@@ -877,11 +877,6 @@ Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_s
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_clk_param.h]
 ElemType=File
 PathName=stm8_mc_framework\param\mc_stm8s_clk_param.h
-Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_bldc_conf.h
-
-[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param.stm8_mc_framework\param\mc_stm8s_bldc_conf.h]
-ElemType=File
-PathName=stm8_mc_framework\param\mc_stm8s_bldc_conf.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src]
 ElemType=Folder
