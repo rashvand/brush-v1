@@ -15,6 +15,8 @@
 #include "MC_BLDC_Motor_Param.h"  
 #include "MC_BLDC_Drive_Param.h"  
 
+#define DEV_CUT_1
+
 #ifndef PWM_LOWSIDE_OUTPUT_ENABLE
 	#define LS_GPIO_CONTROL
 
@@ -881,8 +883,8 @@ void GetBusVoltage( void )
 	}
 	if (data < MIN_BUS_VOLTAGE16)
 	{
-		g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_OCCURRED] |= BUS_UNDERVOLTAGE;
-		g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] |= BUS_UNDERVOLTAGE;      
+//		g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_OCCURRED] |= BUS_UNDERVOLTAGE;
+//		g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] |= BUS_UNDERVOLTAGE;      
 	}
 	else
 	{

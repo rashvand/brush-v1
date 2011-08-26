@@ -4,7 +4,6 @@
 #include "stm8s_lib.h"
 #include "MC_dev_opt.h"
 #include "MC_stm8s_param.h"
-#include "MC_BLDC_conf.h"
 
 void dev_optInit(void)
 {

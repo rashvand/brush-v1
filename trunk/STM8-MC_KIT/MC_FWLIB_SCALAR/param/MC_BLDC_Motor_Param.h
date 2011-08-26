@@ -8,6 +8,6 @@
 
 // Constant parameters
 #define MOTOR_POLE_PAIRS 6 //2 // (unit none)
-#define MAX_SPEED_RPM 3500 // (unit rpm)
+#define MAX_SPEED_RPM 3000 // (unit rpm)
 
 #endif /* __BLDC_MOTOR_PARAM_H */
