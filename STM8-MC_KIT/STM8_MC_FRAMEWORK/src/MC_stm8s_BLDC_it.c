@@ -2,7 +2,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s_it.h"
-#include "MC_BLDC_conf.h"
 #include "MC_ControlStage_param.h"
 
 /* Private typedef -----------------------------------------------------------*/

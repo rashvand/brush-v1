@@ -49,34 +49,6 @@
 #define DEBUG3_PORT 	GPIOE
 #define DEBUG3_PIN 		GPIO_PIN_0	// UC_DEBUG4
 
-
-//della roba che segue non c'è niente ...
-/*
-// User interface configuration port/pin
-#define KEY_UP_PORT GPIOB
-#define KEY_UP_BIT  GPIO_PIN_6
-
-#define KEY_DOWN_PORT GPIOB
-#define KEY_DOWN_BIT  GPIO_PIN_7
-
-#define KEY_RIGHT_PORT GPIOB
-#define KEY_RIGHT_BIT  GPIO_PIN_5
-
-#define KEY_LEFT_PORT  GPIOB
-#define KEY_LEFT_BIT   GPIO_PIN_4
-
-#define KEY_SEL_PORT   GPIOD
-#define KEY_SEL_BIT    GPIO_PIN_7
-
-#define USER_BUTTON_PORT GPIOC
-#define USER_BUTTON_BIT  GPIO_PIN_0
-*/
-
-// questi non sono usati ....
-// LCD Chip Select I/O definition
-#define LCD_CS_PORT (GPIOF)
-#define LCD_CS_PIN  (GPIO_PIN_0)
-
 /*
 // Brake command
 #define DISSIPATIVE_BRAKE_PORT 	GPIOD
