@@ -619,7 +619,12 @@ PathName=stm8_fwlib\inc\stm8s_wwdg.h
 [Root.STM8_FWLIB.STM8_FWLIB\Src]
 ElemType=Folder
 PathName=STM8_FWLIB\Src
-Child=Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart3.c
+Child=Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart2.c
+
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart2.c]
+ElemType=File
+PathName=stm8_fwlib\src\stm8s_uart2.c
+Next=Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart3.c
 
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart3.c]
 ElemType=File
@@ -791,8 +796,13 @@ String.6.0=2007,12,10,15,5,33
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc]
 ElemType=Folder
 PathName=STM8_MC_FRAMEWORK\Inc
-Child=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_opt.h
+Child=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\uart.h
 Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Param
+
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\uart.h]
+ElemType=File
+PathName=stm8_mc_framework\inc\uart.h
+Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_opt.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Inc.stm8_mc_framework\inc\mc_dev_opt.h]
 ElemType=File
@@ -866,7 +876,12 @@ PathName=stm8_mc_framework\param\vdev_param.h
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src]
 ElemType=Folder
 PathName=STM8_MC_FRAMEWORK\Src
-Child=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_opt.c
+Child=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\uart.c
+
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\uart.c]
+ElemType=File
+PathName=stm8_mc_framework\src\uart.c
+Next=Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_opt.c
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_opt.c]
 ElemType=File
