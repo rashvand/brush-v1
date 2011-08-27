@@ -106,9 +106,10 @@ void driveInit(pvdev_device_t pdevice)
 	vtimer_SetTimer(BLDC_CONTROL_TIMER,bSpeed_PID_sampling_time,&BLDC_Drive);
 }
 
-void driveIdle(void)
+MC_FuncRetVal_t driveIdle(void)
 {
 	DriveState = DRIVE_IDLE;
+	return FUNCTION_ENDED;
 }
 
 MC_FuncRetVal_t driveStartUpInit(void)
@@ -154,11 +155,6 @@ MC_FuncRetVal_t driveWait(void)
 {
 	DriveState = DRIVE_WAIT;
 	return dev_driveWait();
-}
-
-MC_FuncRetVal_t driveFault(void)
-{
-  return FUNCTION_ENDED;
 }
 
 void BLDC_Drive(void)

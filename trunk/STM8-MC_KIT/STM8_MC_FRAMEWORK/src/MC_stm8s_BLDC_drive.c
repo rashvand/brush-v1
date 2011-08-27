@@ -15,7 +15,9 @@
 #include "MC_BLDC_Motor_Param.h"  
 #include "MC_BLDC_Drive_Param.h"  
 
-#define DEV_CUT_1
+#include "uart.h"
+
+//#define DEV_CUT_1
 
 #ifndef PWM_LOWSIDE_OUTPUT_ENABLE
 	#define LS_GPIO_CONTROL
@@ -554,10 +556,19 @@ void dev_driveInit(pvdev_device_t pdevice)
 	Init_TIM1();
 	Init_TIM2();
 	Init_ADC();  
+	
 	#ifdef DEBUG_PINS
 		DebugPinsOff();
 	#endif
 	
+#if 1
+    /* Initialise UART (115200bps) */
+    if (uart_init(115200) != 0)
+    {
+        /* Error initialising UART */
+    }
+#endif
+
 	#ifdef LS_GPIO_CONTROL
 
 		//Init LS_GPIO_PORT
@@ -883,8 +894,8 @@ void GetBusVoltage( void )
 	}
 	if (data < MIN_BUS_VOLTAGE16)
 	{
-//		g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_OCCURRED] |= BUS_UNDERVOLTAGE;
-//		g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] |= BUS_UNDERVOLTAGE;      
+		g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_OCCURRED] |= BUS_UNDERVOLTAGE;
+		g_pDevice->regs.r16[VDEV_REG16_HW_ERROR_ACTUAL] |= BUS_UNDERVOLTAGE;      
 	}
 	else
 	{
@@ -1177,7 +1188,7 @@ void SpeedMeasurement(void)
 		#endif
 
 		// Manage async sampling
-		ADC_Buffer[ADC_BUS_INDEX] = data;
+		ADC_Buffer[ADC_BUS_INDEX] = 460; //data;
 		
 		ADC_State = ADC_SYNC;			
 	}
@@ -1346,91 +1357,6 @@ void Init_TIM2(void)
 	//force timer update
 	TIM2->EGR = (BIT5|BIT0);
 }
-
-#ifdef TIMER2_HANDLES_HALL
-@near @interrupt @svlreg void TIM2_CAP_COM_IRQHandler (void)
-{
-	u8 bHStatus = 0;
-
-	#ifdef DEBUG_PINS
-		Z_DEBUG_PORT ^= Z_DEBUG_PIN;
-	#endif
-
-	GetStepTime();
-
-	// Read status of H1 and set the expected polarity
-	if (H1_PORT & H1_PIN)
-	{
-		TIM2->CCER1 |= BIT5;
-		bHStatus |= BIT2;
-	}
-	else
-	{
-		TIM2->CCER1 &= (u8)(~(BIT5));
-	}
-	
-	// Read status of H2 and set the expected polarity
-	if (H2_PORT & H2_PIN)
-	{
-		TIM2->CCER1 |= BIT1;
-		bHStatus |= BIT1;
-	}
-	else
-	{
-		TIM2->CCER1 &= (u8)(~(BIT1));
-	}
-	
-	// Read status of H3 and set the expected polarity
-	if (H3_PORT & H3_PIN)
-	{
-		TIM2->CCER2 |= BIT1;
-		bHStatus |= BIT0;
-	}
-	else
-	{
-		TIM2->CCER2 &= (u8)(~(BIT1));
-	}
-	
-	if (TIM2->SR1 & BIT2)
-	{
-		TIM2_ClearITPendingBit(TIM2_IT_CC2);
-	}
-
-	if (TIM2->SR1 & BIT1)
-	{
-		TIM2_ClearITPendingBit(TIM2_IT_CC1);
-	}
-
-	if (TIM2->SR1 & BIT3)
-	{
-		TIM2_ClearITPendingBit(TIM2_IT_CC3);
-	}
-
-	Current_Step = (u8)(bHallSteps[bHStatus]);
-	if (Current_Step == NOT_VALID)
-	{
-		MTC_Status |= MTC_MOTOR_STALLED;
-	}
-
-	Current_BEMF = BEMFSteps[Current_Step].BEMF_Level;
-	
-	TIM1->CCMR1 = PhaseSteps[Current_Step].CCMR_1;
-	TIM1->CCMR2 = PhaseSteps[Current_Step].CCMR_2;
-	TIM1->CCMR3 = PhaseSteps[Current_Step].CCMR_3;
-	TIM1->CCER1 = PhaseSteps[Current_Step].CCER_1;
-	TIM1->CCER2 = PhaseSteps[Current_Step].CCER_2;
-	
-	Phase_State = PHASE_ZERO;
-	ComHandler();
-
-	// Timeout refresh
-	vtimer_SetTimer(HALL_CAPT_TIMEOUT_TIMER,HALL_CAPT_TIMEOUT_MS,&Hall_Timeout);
-
-	SpeedMeasurement();
-	
-	return;
-}
-#endif
 
 void ComHandler(void)
 {

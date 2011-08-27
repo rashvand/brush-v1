@@ -21,7 +21,7 @@
 //						uncomment to drive the lowsides with an advanced timer
 //#define PWM_LOWSIDE_OUTPUT_ENABLE
 
-#define BUS_ADC_CONV_RATIO  	0.075 // DC bus voltage partitioning ratio: modificato: R71/(R71+R22)
+#define BUS_ADC_CONV_RATIO  	0.153 // DC bus voltage partitioning ratio: modificato: R71/(R71+R22)
 #define EXPECTED_MCU_VOLTAGE 	3.4  	// modificato come da vcc di BRUSH
 #define BUSV_CONVERSION (EXPECTED_MCU_VOLTAGE/BUS_ADC_CONV_RATIO)
 #define MAX_BUS_VOLTAGE 	20 	//Volts: modificato

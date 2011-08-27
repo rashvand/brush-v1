@@ -1,39 +1,36 @@
-/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
-* File Name          : main.c
-* Author             : IMS Systems Lab 
-* Date First Issued  : mm/dd/yyy
-* Description        : main module
-********************************************************************************
-* History:
-* mm/dd/yyyy ver. x.y.z
-********************************************************************************
-* THE PRESENT SOFTWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
-* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
-* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
-* CONTENT OF SUCH SOFTWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
-* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
-*
-* THIS SOURCE CODE IS PROTECTED BY A LICENSE.
-* FOR MORE INFORMATION PLEASE CAREFULLY READ THE LICENSE AGREEMENT FILE LOCATED
-* IN THE ROOT DIRECTORY OF THIS FIRMWARE PACKAGE.
-*******************************************************************************/
-
 /* Includes ------------------------------------------------------------------*/
+#include "stm8s_type.h"
 #include "MC_StateMachine.h"
+#include <stdio.h>
 
 /* Private defines -----------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
 /*****************************************************************************/
+extern u16 ADC_Buffer[ 6 ];
 
 void main(void)
 {
-  /* Infinite loop */
+  u32 i=0;
+	/* Infinite loop */
   while (1)
   {
+		i++;
 		StateMachineExec();
+		/* Print ADC value on serial port */
+		if(i == 300)
+		{
+			printf("<ADC> %6u %6u %6u %6u %6u %6u %6u %6u %6u %6u </ADC>\r\n",
+				ADC_Buffer[0],
+				ADC_Buffer[1],
+				ADC_Buffer[2],
+				ADC_Buffer[3],
+				ADC_Buffer[4],
+				ADC_Buffer[5],
+				0,0,0,0);
+			i = 0;
+		}
   }
 }
 

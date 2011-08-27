@@ -7,107 +7,215 @@ Number=1.3
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_statemachine.c.Config.0]
 ExternDep= mc_fwlib_scalar\src\mc_statemachine.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  MC_FWLIB_SCALAR\inc\MC_StateMachine.h MC_FWLIB_SCALAR\inc\MC_type.h  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h  MC_FWLIB_SCALAR\inc\MC_vtimer.h MC_FWLIB_SCALAR\param\MC_controlstage_param.h  MC_FWLIB_SCALAR\inc\MC_dev.h stm8_mc_framework\inc\vdev.h  stm8_mc_framework\param\vdev_param.h MC_FWLIB_SCALAR\inc\MC_drive.h  MC_FWLIB_SCALAR\inc\MC_Faults.h
 
+[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_statemachine.c.Config.1]
+ExternDep= mc_fwlib_scalar\src\mc_statemachine.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  MC_FWLIB_SCALAR\inc\MC_StateMachine.h MC_FWLIB_SCALAR\inc\MC_type.h  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h  MC_FWLIB_SCALAR\inc\MC_vtimer.h MC_FWLIB_SCALAR\param\MC_controlstage_param.h  MC_FWLIB_SCALAR\inc\MC_dev.h stm8_mc_framework\inc\vdev.h  stm8_mc_framework\param\vdev_param.h MC_FWLIB_SCALAR\inc\MC_drive.h  MC_FWLIB_SCALAR\inc\MC_Faults.h
+
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_pid_regulators.c.Config.0]
 ExternDep=  mc_fwlib_scalar\src\mc_pid_regulators.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h  MC_FWLIB_SCALAR\inc\MC_pid_regulators.h MC_FWLIB_SCALAR\inc\MC_type.h  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h
 
+[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_pid_regulators.c.Config.1]
+ExternDep=  mc_fwlib_scalar\src\mc_pid_regulators.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  MC_FWLIB_SCALAR\inc\MC_pid_regulators.h MC_FWLIB_SCALAR\inc\MC_type.h  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h
+
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_bldc_motor.c.Config.0]
+ExternDep= mc_fwlib_scalar\src\mc_bldc_motor.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  MC_FWLIB_SCALAR\inc\MC_BLDC_Motor.h MC_FWLIB_SCALAR\inc\MC_BLDC_type.h  MC_FWLIB_SCALAR\inc\MC_type.h stm8_mc_framework\inc\dev_type.h  STM8_FWLIB\inc\stm8s_type.h MC_FWLIB_SCALAR\param\MC_BLDC_Motor_Param.h  MC_FWLIB_SCALAR\param\MC_BLDC_Drive_Param.h  MC_FWLIB_SCALAR\inc\MC_pid_regulators.h  stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h
+
+[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_bldc_motor.c.Config.1]
 ExternDep= mc_fwlib_scalar\src\mc_bldc_motor.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  MC_FWLIB_SCALAR\inc\MC_BLDC_Motor.h MC_FWLIB_SCALAR\inc\MC_BLDC_type.h  MC_FWLIB_SCALAR\inc\MC_type.h stm8_mc_framework\inc\dev_type.h  STM8_FWLIB\inc\stm8s_type.h MC_FWLIB_SCALAR\param\MC_BLDC_Motor_Param.h  MC_FWLIB_SCALAR\param\MC_BLDC_Drive_Param.h  MC_FWLIB_SCALAR\inc\MC_pid_regulators.h  stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h
 
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_bldc_drive.c.Config.0]
 ExternDep= mc_fwlib_scalar\src\mc_bldc_drive.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  MC_FWLIB_SCALAR\inc\MC_drive.h stm8_mc_framework\inc\vdev.h  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h  stm8_mc_framework\param\vdev_param.h MC_FWLIB_SCALAR\inc\MC_dev.h  MC_FWLIB_SCALAR\inc\MC_type.h stm8_mc_framework\inc\MC_dev_drive.h  MC_FWLIB_SCALAR\inc\MC_BLDC_motor.h MC_FWLIB_SCALAR\inc\MC_BLDC_type.h  MC_FWLIB_SCALAR\param\MC_BLDC_drive_param.h  stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h  MC_FWLIB_SCALAR\inc\MC_BLDC_timers.h MC_FWLIB_SCALAR\inc\MC_pid_regulators.h  MC_FWLIB_SCALAR\inc\MC_vtimer.h
 
+[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_bldc_drive.c.Config.1]
+ExternDep= mc_fwlib_scalar\src\mc_bldc_drive.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  MC_FWLIB_SCALAR\inc\MC_drive.h stm8_mc_framework\inc\vdev.h  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h  stm8_mc_framework\param\vdev_param.h MC_FWLIB_SCALAR\inc\MC_dev.h  MC_FWLIB_SCALAR\inc\MC_type.h stm8_mc_framework\inc\MC_dev_drive.h  MC_FWLIB_SCALAR\inc\MC_BLDC_motor.h MC_FWLIB_SCALAR\inc\MC_BLDC_type.h  MC_FWLIB_SCALAR\param\MC_BLDC_drive_param.h  stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h  MC_FWLIB_SCALAR\inc\MC_BLDC_timers.h MC_FWLIB_SCALAR\inc\MC_pid_regulators.h  MC_FWLIB_SCALAR\inc\MC_vtimer.h
+
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_vtimer.c.Config.0]
 ExternDep= mc_fwlib_scalar\src\mc_vtimer.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h MC_FWLIB_SCALAR\inc\MC_vtimer.h  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h
 
+[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_vtimer.c.Config.1]
+ExternDep= mc_fwlib_scalar\src\mc_vtimer.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  MC_FWLIB_SCALAR\inc\MC_vtimer.h stm8_mc_framework\inc\dev_type.h  STM8_FWLIB\inc\stm8s_type.h
+
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_dev.c.Config.0]
+ExternDep= mc_fwlib_scalar\src\mc_dev.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  MC_FWLIB_SCALAR\inc\MC_dev.h MC_FWLIB_SCALAR\inc\MC_type.h  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h  stm8_mc_framework\inc\vdev.h stm8_mc_framework\param\vdev_param.h  stm8_mc_framework\inc\MC_dev_opt.h stm8_mc_framework\inc\MC_dev_clk.h  stm8_mc_framework\inc\MC_dev_port.h  MC_FWLIB_SCALAR\param\MC_controlstage_param.h  stm8_mc_framework\inc\MC_dev_drive.h stm8_mc_framework\inc\MC_dev_vtimer.h
+
+[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\mc_dev.c.Config.1]
 ExternDep= mc_fwlib_scalar\src\mc_dev.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  MC_FWLIB_SCALAR\inc\MC_dev.h MC_FWLIB_SCALAR\inc\MC_type.h  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h  stm8_mc_framework\inc\vdev.h stm8_mc_framework\param\vdev_param.h  stm8_mc_framework\inc\MC_dev_opt.h stm8_mc_framework\inc\MC_dev_clk.h  stm8_mc_framework\inc\MC_dev_port.h  MC_FWLIB_SCALAR\param\MC_controlstage_param.h  stm8_mc_framework\inc\MC_dev_drive.h stm8_mc_framework\inc\MC_dev_vtimer.h
 
 [Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\main.c.Config.0]
 ExternDep= mc_fwlib_scalar\src\main.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h  MC_FWLIB_SCALAR\inc\MC_StateMachine.h
 
+[Root.MC_FWLIB_SCALAR.MC_FWLIB_SCALAR\Src.mc_fwlib_scalar\src\main.c.Config.1]
+ExternDep= mc_fwlib_scalar\src\main.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  MC_FWLIB_SCALAR\inc\MC_StateMachine.h
+
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart3.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_uart3.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_uart3.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_clk.h
+
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart3.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_uart3.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h STM8_FWLIB\inc\stm8s_clk.h
 
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart1.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_uart1.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_clk.h
 
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart1.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_uart1.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_uart1.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h STM8_FWLIB\inc\stm8s_clk.h
+
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_tim4.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_tim4.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_tim4.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
+
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_tim4.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_tim4.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h
 
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_tim3.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_tim3.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
 
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_tim3.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_tim3.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_tim3.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h
+
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_tim2.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_tim2.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
+
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_tim2.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_tim2.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_tim2.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h
 
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_tim1.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_tim1.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_tim1.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
 
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_tim1.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_tim1.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h
+
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_spi.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_spi.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
+
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_spi.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_spi.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
 
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_rst.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_rst.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_rst.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
 
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_rst.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_rst.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_rst.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
+
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_iwdg.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_iwdg.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
+
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_iwdg.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_iwdg.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_iwdg.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h
 
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_itc.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_itc.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_itc.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
 
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_itc.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_itc.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_itc.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
+
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_i2c.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_i2c.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
+
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_i2c.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_i2c.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
 
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_gpio.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_gpio.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_gpio.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
 
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_gpio.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_gpio.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h
+
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_flash.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_flash.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_flash.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
+
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_flash.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_flash.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h
 
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_exti.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_exti.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
 
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_exti.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_exti.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_exti.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h
+
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_clk.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_clk.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_clk.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
+
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_clk.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_clk.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_clk.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
 
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_beep.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_beep.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_tim3.h STM8_FWLIB\inc\stm8s_clk.h
 
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_beep.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_beep.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_beep.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h
+
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_awu.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_awu.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_awu.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_tim3.h STM8_FWLIB\inc\stm8s_clk.h
+
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_awu.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_awu.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_awu.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_tim3.h STM8_FWLIB\inc\stm8s_clk.h
 
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_adc2.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_adc2.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
 
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_adc2.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_adc2.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_adc2.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h
+
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_wwdg.c.Config.0]
 ExternDep= stm8_fwlib\src\stm8s_wwdg.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h STM8_FWLIB\inc\stm8s_wwdg.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h
 
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_wwdg.c.Config.1]
+ExternDep= stm8_fwlib\src\stm8s_wwdg.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  STM8_FWLIB\inc\stm8s_wwdg.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h
+
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_opt.c.Config.0]
+ExternDep= stm8_mc_framework\src\mc_stm8s_opt.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_adc1.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_awu.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_itc.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_rst.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_wwdg.h  stm8_mc_framework\inc\MC_dev_opt.h stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h
+
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_opt.c.Config.1]
 ExternDep= stm8_mc_framework\src\mc_stm8s_opt.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_adc1.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_awu.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_itc.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_rst.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_wwdg.h  stm8_mc_framework\inc\MC_dev_opt.h stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_vtimer.c.Config.0]
 ExternDep= stm8_mc_framework\src\mc_stm8s_vtimer.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_adc1.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_awu.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_itc.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_rst.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_wwdg.h  stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h MC_FWLIB_SCALAR\inc\MC_vtimer.h  stm8_mc_framework\inc\dev_type.h
 
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_vtimer.c.Config.1]
+ExternDep=  stm8_mc_framework\src\mc_stm8s_vtimer.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_adc1.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_awu.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_itc.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_rst.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_wwdg.h  stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h MC_FWLIB_SCALAR\inc\MC_vtimer.h  stm8_mc_framework\inc\dev_type.h
+
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_port.c.Config.0]
+ExternDep= stm8_mc_framework\src\mc_stm8s_port.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_adc1.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_awu.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_itc.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_rst.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_wwdg.h  stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h  stm8_mc_framework\inc\MC_dev_port.h
+
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_port.c.Config.1]
 ExternDep= stm8_mc_framework\src\mc_stm8s_port.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_adc1.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_awu.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_itc.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_rst.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_wwdg.h  stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h  stm8_mc_framework\inc\MC_dev_port.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_bldc_drive.c.Config.0]
 ExternDep=  stm8_mc_framework\src\mc_stm8s_bldc_drive.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  stm8_mc_framework\inc\MC_dev_drive.h stm8_mc_framework\inc\vdev.h  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h  stm8_mc_framework\param\vdev_param.h MC_FWLIB_SCALAR\inc\MC_dev.h  MC_FWLIB_SCALAR\inc\MC_type.h STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_macro.h STM8_FWLIB\inc\stm8s_adc1.h  STM8_FWLIB\inc\stm8s_adc2.h STM8_FWLIB\inc\stm8s_awu.h  STM8_FWLIB\inc\stm8s_tim3.h STM8_FWLIB\inc\stm8s_clk.h  STM8_FWLIB\inc\stm8s_beep.h STM8_FWLIB\inc\stm8s_flash.h  STM8_FWLIB\inc\stm8s_exti.h STM8_FWLIB\inc\stm8s_gpio.h  STM8_FWLIB\inc\stm8s_i2c.h STM8_FWLIB\inc\stm8s_itc.h  STM8_FWLIB\inc\stm8s_iwdg.h STM8_FWLIB\inc\stm8s_rst.h  STM8_FWLIB\inc\stm8s_spi.h STM8_FWLIB\inc\stm8s_tim1.h  STM8_FWLIB\inc\stm8s_tim2.h STM8_FWLIB\inc\stm8s_tim4.h  STM8_FWLIB\inc\stm8s_uart1.h STM8_FWLIB\inc\stm8s_uart3.h  STM8_FWLIB\inc\stm8s_wwdg.h stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h MC_FWLIB_SCALAR\inc\MC_Faults.h  MC_FWLIB_SCALAR\inc\MC_vtimer.h MC_FWLIB_SCALAR\inc\MC_BLDC_timers.h  MC_FWLIB_SCALAR\inc\MC_bldc_motor.h MC_FWLIB_SCALAR\inc\MC_BLDC_type.h  MC_FWLIB_SCALAR\param\MC_BLDC_Motor_Param.h  MC_FWLIB_SCALAR\param\MC_BLDC_Drive_Param.h
 
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_bldc_drive.c.Config.1]
+ExternDep=  stm8_mc_framework\src\mc_stm8s_bldc_drive.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  stm8_mc_framework\inc\MC_dev_drive.h stm8_mc_framework\inc\vdev.h  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h  stm8_mc_framework\param\vdev_param.h MC_FWLIB_SCALAR\inc\MC_dev.h  MC_FWLIB_SCALAR\inc\MC_type.h STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_macro.h STM8_FWLIB\inc\stm8s_adc1.h  STM8_FWLIB\inc\stm8s_adc2.h STM8_FWLIB\inc\stm8s_awu.h  STM8_FWLIB\inc\stm8s_tim3.h STM8_FWLIB\inc\stm8s_clk.h  STM8_FWLIB\inc\stm8s_beep.h STM8_FWLIB\inc\stm8s_flash.h  STM8_FWLIB\inc\stm8s_exti.h STM8_FWLIB\inc\stm8s_gpio.h  STM8_FWLIB\inc\stm8s_i2c.h STM8_FWLIB\inc\stm8s_itc.h  STM8_FWLIB\inc\stm8s_iwdg.h STM8_FWLIB\inc\stm8s_rst.h  STM8_FWLIB\inc\stm8s_spi.h STM8_FWLIB\inc\stm8s_tim1.h  STM8_FWLIB\inc\stm8s_tim2.h STM8_FWLIB\inc\stm8s_tim4.h  STM8_FWLIB\inc\stm8s_uart1.h STM8_FWLIB\inc\stm8s_uart3.h  STM8_FWLIB\inc\stm8s_wwdg.h stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h MC_FWLIB_SCALAR\inc\MC_Faults.h  MC_FWLIB_SCALAR\inc\MC_vtimer.h MC_FWLIB_SCALAR\inc\MC_BLDC_timers.h  MC_FWLIB_SCALAR\inc\MC_bldc_motor.h MC_FWLIB_SCALAR\inc\MC_BLDC_type.h  MC_FWLIB_SCALAR\param\MC_BLDC_Motor_Param.h  MC_FWLIB_SCALAR\param\MC_BLDC_Drive_Param.h
+
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_clk.c.Config.0]
+ExternDep= stm8_mc_framework\src\mc_stm8s_clk.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_adc1.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_awu.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_itc.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_rst.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_wwdg.h  stm8_mc_framework\inc\MC_dev_clk.h stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h
+
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_clk.c.Config.1]
 ExternDep= stm8_mc_framework\src\mc_stm8s_clk.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h" STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_adc1.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_awu.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_itc.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_rst.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_wwdg.h  stm8_mc_framework\inc\MC_dev_clk.h stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_bldc_it.c.Config.0]
 ExternDep=  stm8_mc_framework\src\mc_stm8s_bldc_it.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  stm8_mc_framework\inc\stm8s_it.h STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_adc1.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_awu.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_itc.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_rst.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_wwdg.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h
 
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\mc_stm8s_bldc_it.c.Config.1]
+ExternDep=  stm8_mc_framework\src\mc_stm8s_bldc_it.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  stm8_mc_framework\inc\stm8s_it.h STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_adc1.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_awu.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_itc.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_rst.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_wwdg.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h
+
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\stm8_interrupt_vector.c.Config.0]
 ExternDep=  stm8_mc_framework\src\stm8_interrupt_vector.c  C:\Programmi\COSMIC\CXSTM8_32K\Hstm8\mods0.h stm8_mc_framework\inc\stm8s_it.h  STM8_FWLIB\inc\stm8s_lib.h STM8_FWLIB\inc\stm8s_map.h  stm8_mc_framework\inc\stm8s_conf.h STM8_FWLIB\inc\stm8s_type.h  STM8_FWLIB\inc\stm8s_macro.h STM8_FWLIB\inc\stm8s_adc1.h  STM8_FWLIB\inc\stm8s_adc2.h STM8_FWLIB\inc\stm8s_awu.h  STM8_FWLIB\inc\stm8s_tim3.h STM8_FWLIB\inc\stm8s_clk.h  STM8_FWLIB\inc\stm8s_beep.h STM8_FWLIB\inc\stm8s_flash.h  STM8_FWLIB\inc\stm8s_exti.h STM8_FWLIB\inc\stm8s_gpio.h  STM8_FWLIB\inc\stm8s_i2c.h STM8_FWLIB\inc\stm8s_itc.h  STM8_FWLIB\inc\stm8s_iwdg.h STM8_FWLIB\inc\stm8s_rst.h  STM8_FWLIB\inc\stm8s_spi.h STM8_FWLIB\inc\stm8s_tim1.h  STM8_FWLIB\inc\stm8s_tim2.h STM8_FWLIB\inc\stm8s_tim4.h  STM8_FWLIB\inc\stm8s_uart1.h STM8_FWLIB\inc\stm8s_uart3.h  STM8_FWLIB\inc\stm8s_wwdg.h
+
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\stm8_interrupt_vector.c.Config.1]
+ExternDep=  stm8_mc_framework\src\stm8_interrupt_vector.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  stm8_mc_framework\inc\stm8s_it.h STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_type.h STM8_FWLIB\inc\stm8s_macro.h  STM8_FWLIB\inc\stm8s_adc1.h STM8_FWLIB\inc\stm8s_adc2.h  STM8_FWLIB\inc\stm8s_awu.h STM8_FWLIB\inc\stm8s_tim3.h  STM8_FWLIB\inc\stm8s_clk.h STM8_FWLIB\inc\stm8s_beep.h  STM8_FWLIB\inc\stm8s_flash.h STM8_FWLIB\inc\stm8s_exti.h  STM8_FWLIB\inc\stm8s_gpio.h STM8_FWLIB\inc\stm8s_i2c.h  STM8_FWLIB\inc\stm8s_itc.h STM8_FWLIB\inc\stm8s_iwdg.h  STM8_FWLIB\inc\stm8s_rst.h STM8_FWLIB\inc\stm8s_spi.h  STM8_FWLIB\inc\stm8s_tim1.h STM8_FWLIB\inc\stm8s_tim2.h  STM8_FWLIB\inc\stm8s_tim4.h STM8_FWLIB\inc\stm8s_uart1.h  STM8_FWLIB\inc\stm8s_uart3.h STM8_FWLIB\inc\stm8s_wwdg.h
 
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\vdev.c.Config.0]
 ExternDep= stm8_mc_framework\src\vdev.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h  stm8_mc_framework\inc\vdev_ios.h stm8_mc_framework\inc\vdev_callbacks.h  stm8_mc_framework\inc\vdev.h STM8_MC_FRAMEWORK\param\vdev_param.h
 
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\vdev.c.Config.1]
+ExternDep= stm8_mc_framework\src\vdev.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  stm8_mc_framework\inc\dev_type.h STM8_FWLIB\inc\stm8s_type.h  stm8_mc_framework\inc\vdev_ios.h stm8_mc_framework\inc\vdev_callbacks.h  stm8_mc_framework\inc\vdev.h stm8_mc_framework\param\vdev_param.h
+
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\vdev_callbacks.c.Config.0]
 ExternDep= stm8_mc_framework\src\vdev_callbacks.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  stm8_mc_framework\inc\vdev_callbacks.h stm8_mc_framework\inc\dev_type.h  STM8_FWLIB\inc\stm8s_type.h stm8_mc_framework\inc\vdev.h  STM8_MC_FRAMEWORK\param\vdev_param.h
 
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\vdev_callbacks.c.Config.1]
+ExternDep= stm8_mc_framework\src\vdev_callbacks.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  stm8_mc_framework\inc\vdev_callbacks.h stm8_mc_framework\inc\dev_type.h  STM8_FWLIB\inc\stm8s_type.h stm8_mc_framework\inc\vdev.h  stm8_mc_framework\param\vdev_param.h
+
 [Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\vdev_ios.c.Config.0]
+ExternDep= stm8_mc_framework\src\vdev_ios.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  stm8_mc_framework\inc\vdev_ios.h stm8_mc_framework\inc\dev_type.h  STM8_FWLIB\inc\stm8s_type.h stm8_mc_framework\inc\vdev.h  stm8_mc_framework\param\vdev_param.h STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_macro.h STM8_FWLIB\inc\stm8s_adc1.h  STM8_FWLIB\inc\stm8s_adc2.h STM8_FWLIB\inc\stm8s_awu.h  STM8_FWLIB\inc\stm8s_tim3.h STM8_FWLIB\inc\stm8s_clk.h  STM8_FWLIB\inc\stm8s_beep.h STM8_FWLIB\inc\stm8s_flash.h  STM8_FWLIB\inc\stm8s_exti.h STM8_FWLIB\inc\stm8s_gpio.h  STM8_FWLIB\inc\stm8s_i2c.h STM8_FWLIB\inc\stm8s_itc.h  STM8_FWLIB\inc\stm8s_iwdg.h STM8_FWLIB\inc\stm8s_rst.h  STM8_FWLIB\inc\stm8s_spi.h STM8_FWLIB\inc\stm8s_tim1.h  STM8_FWLIB\inc\stm8s_tim2.h STM8_FWLIB\inc\stm8s_tim4.h  STM8_FWLIB\inc\stm8s_uart1.h STM8_FWLIB\inc\stm8s_uart3.h  STM8_FWLIB\inc\stm8s_wwdg.h stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h
+
+[Root.STM8_MC_FRAMEWORK.STM8_MC_FRAMEWORK\Src.stm8_mc_framework\src\vdev_ios.c.Config.1]
 ExternDep= stm8_mc_framework\src\vdev_ios.c  "C:\Program Files\COSMIC\CXSTM8_32K\Hstm8\mods0.h"  stm8_mc_framework\inc\vdev_ios.h stm8_mc_framework\inc\dev_type.h  STM8_FWLIB\inc\stm8s_type.h stm8_mc_framework\inc\vdev.h  stm8_mc_framework\param\vdev_param.h STM8_FWLIB\inc\stm8s_lib.h  STM8_FWLIB\inc\stm8s_map.h stm8_mc_framework\inc\stm8s_conf.h  STM8_FWLIB\inc\stm8s_macro.h STM8_FWLIB\inc\stm8s_adc1.h  STM8_FWLIB\inc\stm8s_adc2.h STM8_FWLIB\inc\stm8s_awu.h  STM8_FWLIB\inc\stm8s_tim3.h STM8_FWLIB\inc\stm8s_clk.h  STM8_FWLIB\inc\stm8s_beep.h STM8_FWLIB\inc\stm8s_flash.h  STM8_FWLIB\inc\stm8s_exti.h STM8_FWLIB\inc\stm8s_gpio.h  STM8_FWLIB\inc\stm8s_i2c.h STM8_FWLIB\inc\stm8s_itc.h  STM8_FWLIB\inc\stm8s_iwdg.h STM8_FWLIB\inc\stm8s_rst.h  STM8_FWLIB\inc\stm8s_spi.h STM8_FWLIB\inc\stm8s_tim1.h  STM8_FWLIB\inc\stm8s_tim2.h STM8_FWLIB\inc\stm8s_tim4.h  STM8_FWLIB\inc\stm8s_uart1.h STM8_FWLIB\inc\stm8s_uart3.h  STM8_FWLIB\inc\stm8s_wwdg.h stm8_mc_framework\param\MC_stm8s_param.h  MC_FWLIB_SCALAR\param\MC_ControlStage_param.h  MC_FWLIB_SCALAR\param\MC_PowerStage_param.h

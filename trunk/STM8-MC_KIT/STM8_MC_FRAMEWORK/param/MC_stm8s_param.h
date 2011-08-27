@@ -61,7 +61,7 @@
 #define PHASE_C_BEMF_ADC_CHAN 			ADC2_CHANNEL_6	// PB6
 
 // tensione batteria
-#define ADC_BUS_CHANNEL							ADC2_CHANNEL_9	// BUS Voltage channel - PB3, spostato
+#define ADC_BUS_CHANNEL							ADC2_CHANNEL_3	// BUS Voltage channel - PB3, spostato
 
 // corrente sul motore
 #define ADC_CURRENT_CHANNEL					ADC2_CHANNEL_7	// Current Feedback channel - PB7
