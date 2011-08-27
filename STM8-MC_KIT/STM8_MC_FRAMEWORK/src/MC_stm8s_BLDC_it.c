@@ -285,7 +285,6 @@
   * @par Called functions:
   * None
   */
-#ifndef TIMER2_HANLDES_HALL
 @near @interrupt void TIM2_UPD_OVF_BRK_IRQHandler (void)
 {
   /* In order to detect unexpected events during development,
@@ -293,7 +292,6 @@
   */
   return;
 }
-#endif
 
 /**
   * @brief Timer2 Capture/Compare Interruption routine.
@@ -305,7 +303,6 @@
   * @par Called functions:
   * None
   */
-#ifndef TIMER2_HANDLES_HALL
 @near @interrupt void TIM2_CAP_COM_IRQHandler (void)
 {
   /* In order to detect unexpected events during development,
@@ -313,7 +310,6 @@
   */
   return;
 }
-#endif
 
 /**
   * @brief Timer3 Update/Overflow/Break Interruption routine.

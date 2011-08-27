@@ -12,9 +12,9 @@
 //#define CURRENT_CONTROL_MODE CURRENT_MODE  // (unit none)
 
 // Drive param
-#define PWM_FREQUENCY 				18000 // (unit Hz)
+#define PWM_FREQUENCY 				50000 // (unit Hz)
 #define DEMAG_TIME 						20 // (unit % of the step time)
-#define CURRENT_LIMITATION 		3000 // (unit mA) // messo 10A
+#define CURRENT_LIMITATION 		10000 // (unit mA) // messo 10A
 #define MINIMUM_OFF_TIME 			9500 // (unit ns)
 #define DUTY_CYCLE_TH_TON 		81 // Threshold for apply sampling during Ton
 
@@ -37,7 +37,7 @@
 #define ALIGN_DURATION 300 // 300ms
 #define ALIGN_SLOPE 4 // 4ms
 #define FORCED_STATUP_STEPS 0 // Number of forced step without Z sampling
-#define STARTUP_CURRENT_LIMITATION 1000 // (unit mA) // messo 10A
+#define STARTUP_CURRENT_LIMITATION 10000 // (unit mA) // messo 10A
 #define MIN_SPEED_01HZ 100 // unit 0.1 Hz
 
 // Sampling Method
@@ -45,8 +45,8 @@
 #define BEMF_SAMPLING_TON   1
 #define BEMF_SAMPLING_TOFF  2
 
-#define BEMF_SAMPLING_METHOD BEMF_SAMPLING_MIXED
-//#define BEMF_SAMPLING_METHOD BEMF_SAMPLING_TON
+//#define BEMF_SAMPLING_METHOD BEMF_SAMPLING_MIXED
+#define BEMF_SAMPLING_METHOD BEMF_SAMPLING_TON
 //#define BEMF_SAMPLING_METHOD BEMF_SAMPLING_TOFF
 
 #define SAMPLING_POINT_DURING_TOFF 1500 // (unit ns) before Ton
