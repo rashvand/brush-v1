@@ -1188,7 +1188,7 @@ void SpeedMeasurement(void)
 		#endif
 
 		// Manage async sampling
-		ADC_Buffer[ADC_BUS_INDEX] = 460; //data;
+		ADC_Buffer[ADC_BUS_INDEX] = data;
 		
 		ADC_State = ADC_SYNC;			
 	}
