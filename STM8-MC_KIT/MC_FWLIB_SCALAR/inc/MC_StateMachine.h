@@ -21,6 +21,20 @@
 #ifndef __MC_STATEMACHINE_H__
 #define __MC_STATEMACHINE_H__
 
+typedef enum 
+{
+	SM_RESET,
+	SM_IDLE,
+	SM_STARTINIT,
+	SM_START,
+	SM_RUN,
+	SM_STOP,
+	SM_WAIT,
+	SM_FAULT,
+	SM_DEBUG1,
+	SM_DEBUG2
+} State_t;
+
 void StateMachineExec(void);
 
 #endif /*__MC_STATEMACHINE_H__*/

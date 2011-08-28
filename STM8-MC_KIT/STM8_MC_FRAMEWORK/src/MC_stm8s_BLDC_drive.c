@@ -14,8 +14,11 @@
 #include "MC_bldc_motor.h"				
 #include "MC_BLDC_Motor_Param.h"  
 #include "MC_BLDC_Drive_Param.h"  
+#include "MC_StateMachine.h"
 
 #include "uart.h"
+#include "stm8s_adc1.h"
+#include "stm8s_tim1.h"
 
 //#define DEV_CUT_1
 
@@ -572,27 +575,15 @@ void dev_driveInit(pvdev_device_t pdevice)
 	#ifdef LS_GPIO_CONTROL
 
 		//Init LS_GPIO_PORT
-		#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-		#else
-			LS_A_PORT->ODR |= LS_A_PIN;
-		#endif
+		LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
 		LS_A_PORT->DDR |= LS_A_PIN;
 		LS_A_PORT->CR1 |= LS_A_PIN;
 		LS_A_PORT->CR2 |= LS_A_PIN;
-		#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-		#else
-			LS_B_PORT->ODR |= LS_B_PIN;
-		#endif
+		LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
 		LS_B_PORT->DDR |= LS_B_PIN;
 		LS_B_PORT->CR1 |= LS_B_PIN;
 		LS_B_PORT->CR2 |= LS_B_PIN;
-		#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-		#else
-			LS_C_PORT->ODR |= LS_C_PIN;
-		#endif
+		LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
 		LS_C_PORT->DDR |= LS_C_PIN;
 		LS_C_PORT->CR1 |= LS_C_PIN;
 		LS_C_PORT->CR2 |= LS_C_PIN;
@@ -773,36 +764,58 @@ void dev_BLDC_driveUpdate(void)
 	#endif
 }
 
+
+u16 tim1_step = 0;
+extern State_t bState;
+
 @near @interrupt @svlreg void TIM1_UPD_OVF_TRG_BRK_IRQHandler (void)
 {
 	#ifdef DEBUG_PINS
 		static u16 bkin_blink_cnt = 0;
 	#endif
+	
+	// ***********************************************************
+	// ***********************************************************
+	// ***********************************************************
+	// da rimuovere !!!
+	// solo per test adc
+	// debug !!!
+	if (bState == SM_DEBUG1 || bState == SM_DEBUG2)
+	{
+		if (tim1_step == 500)
+		{
+			GPIO_WriteReverse(GPIOD, GPIO_PIN_7);
+			GPIO_WriteReverse(GPIOD, GPIO_PIN_2);
+			GPIO_WriteReverse(GPIOD, GPIO_PIN_0);
+			GPIO_WriteReverse(GPIOE, GPIO_PIN_0);
+			tim1_step = 0;
+		}
+		else
+			tim1_step++;
+		
+		TIM1->SR1 = (u8)(~(u8)TIM1_IT_UPDATE);
+		
+		return;
+	}
+	//ELSE
+	
+	
+	
+	
+	
+	
 	if( (TIM1->SR1 & BIT7) == BIT7 )
 	{
 		TIM1->SR1 &= (u8)(~BIT7);
 		
 		#ifdef LS_GPIO_CONTROL
-			// Disable low side
-			
+			// Disable low side			
 			// Deactivate A
-			#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
 				LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-			#else
-				LS_A_PORT->ODR |= LS_A_PIN;
-			#endif
 			// Deactivate B
-			#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
 				LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-			#else
-				LS_B_PORT->ODR |= LS_B_PIN;
-			#endif
 			// Deactivate C
-			#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-			#else
-				LS_C_PORT->ODR |= LS_C_PIN;
-			#endif
+				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);			
 		#endif
 		
 		StartUpStatus = STARTUP_IDLE;
@@ -1004,6 +1017,32 @@ void SpeedMeasurement(void)
 
 @near @interrupt @svlreg void ADC2_IRQHandler (void)
 {
+	if (bState == SM_DEBUG1 || bState == SM_DEBUG2)
+	{
+		ADC_Buffer[ADC_BUS_INDEX] = ADC1_GetConversionValue();
+		ADC1_ClearFlag(ADC1_FLAG_EOC); // SW Clear the EOC flag to get the ADC ready for the next start conversion command
+		ADC1_StartConversion();
+		return;
+		
+		if (1)
+		{
+			u8 temp_AD_H;
+			u8 temp_AD_L;
+			
+			temp_AD_H = ADC1->DRH;	    // read conversion result (MSB first!)
+			temp_AD_L = ADC1->DRL;	    // and store it to AD samples field
+			
+			ADC_Buffer[ADC_BUS_INDEX] = ((u16)(temp_AD_H) << 2) | (temp_AD_L & 3);
+			
+			ADC1->CSR &= ~ADC1_CSR_EOC;		// clear end of conversion flag
+			ADC1->CR1 |=  ADC1_CR1_ADON;	// Wake-up/trigg the ADC 
+			
+			return;
+		}
+	}
+	//ELSE
+	
+	
 	if (ADC_State == ADC_SYNC)
 	{
 		// Syncronous sampling
@@ -1216,6 +1255,10 @@ void DebugPinsOff(void)
 void Init_TIM1(void)
 {
 	//counter disabled, ARR preload register disabled, up counting, edge aligned mode
+	// dal manuale: 
+	// When enabled by the UDIS bit, the UIF bit is set 
+	// and an update interrupt request is sent only when 
+	// registers are updated (counter overflow/underflow)
 	TIM1->CR1 = BIT2;
 
 	//Master Mode=TRGO-OC4REF,COMS only on COMG set, Preload CCxE, CCxNE, and OCxM bits
@@ -1592,97 +1635,49 @@ void Commutate_Motor( void )
 		if (LS_Conf == LS_A_B)
 		{
 			// Activate   B
-			#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_B_PORT->ODR |= LS_B_PIN;
-			#else
-				LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-			#endif
+			LS_B_PORT->ODR |= LS_B_PIN;
 			// Deactivate A
-			#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-			#else
-				LS_A_PORT->ODR |= LS_A_PIN;
-			#endif
+			LS_A_PORT->ODR &= (u8)(~LS_A_PIN);			
 		}
 		
 		if (LS_Conf == LS_A_C)
 		{
 			// Activate   C
-			#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_C_PORT->ODR |= LS_C_PIN;
-			#else
-				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-			#endif
+			LS_C_PORT->ODR |= LS_C_PIN;
 			// Deactivate A
-			#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-			#else
-				LS_A_PORT->ODR |= LS_A_PIN;
-			#endif
+			LS_A_PORT->ODR &= (u8)(~LS_A_PIN);			
 		}
 
 		if (LS_Conf == LS_B_A)
 		{
 			// Activate   A
-			#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_A_PORT->ODR |= LS_A_PIN;
-			#else
-				LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-			#endif
+			LS_A_PORT->ODR |= LS_A_PIN;
 			// Deactivate B
-			#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-			#else
-				LS_B_PORT->ODR |= LS_B_PIN;
-			#endif
+			LS_B_PORT->ODR &= (u8)(~LS_B_PIN);			
 		}
 
 		if (LS_Conf == LS_B_C)
 		{
 			// Activate   C
-			#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_C_PORT->ODR |= LS_C_PIN;
-			#else
-				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-			#endif
+			LS_C_PORT->ODR |= LS_C_PIN;
 			// Deactivate B
-			#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-			#else
-				LS_B_PORT->ODR |= LS_B_PIN;
-			#endif
+			LS_B_PORT->ODR &= (u8)(~LS_B_PIN);			
 		}
 
 		if (LS_Conf == LS_C_A)
 		{
 			// Activate   A
-			#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_A_PORT->ODR |= LS_A_PIN;
-			#else
-				LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-			#endif
+			LS_A_PORT->ODR |= LS_A_PIN;
 			// Deactivate C
-			#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-			#else
-				LS_C_PORT->ODR |= LS_C_PIN;
-			#endif
+			LS_C_PORT->ODR &= (u8)(~LS_C_PIN);			
 		}
 
 		if (LS_Conf == LS_C_B)
 		{
 			// Activate   B
-			#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_B_PORT->ODR |= LS_B_PIN;
-			#else
-				LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-			#endif
+			LS_B_PORT->ODR |= LS_B_PIN;
 			// Deactivate C
-			#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-			#else
-				LS_C_PORT->ODR |= LS_C_PIN;
-			#endif
+			LS_C_PORT->ODR &= (u8)(~LS_C_PIN);			
 		}
 	}
 	#endif
@@ -2250,125 +2245,65 @@ void DelayCoefAdjust(void)
 		if ((LS_Steps[Current_Step] & LS_A) == 0)
 		{
 			// Deactivate A
-			#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-			#else
-				LS_A_PORT->ODR |= LS_A_PIN;
-			#endif
+			LS_A_PORT->ODR &= (u8)(~LS_A_PIN);			
 		}
 		else
 		{
 			// Activate A
-			#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_A_PORT->ODR |= LS_A_PIN;
-			#else
-				LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-			#endif
+			LS_A_PORT->ODR |= LS_A_PIN;			
 		}
 		
 		if ((LS_Steps[Current_Step] & LS_B) == 0)
 		{
 			// Deactivate B
-			#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-			#else
-				LS_B_PORT->ODR |= LS_B_PIN;
-			#endif
+			LS_B_PORT->ODR &= (u8)(~LS_B_PIN);			
 		}
 		else
 		{
 			// Activate B
-			#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_B_PORT->ODR |= LS_B_PIN;
-			#else
-				LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-			#endif
+			LS_B_PORT->ODR |= LS_B_PIN;			
 		}
 		
 		if ((LS_Steps[Current_Step] & LS_C) == 0)
 		{
 			// Deactivate C
-			#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-			#else
-				LS_C_PORT->ODR |= LS_C_PIN;
-			#endif
+			LS_C_PORT->ODR &= (u8)(~LS_C_PIN);			
 		}
 		else
 		{
 			// Activate C
-			#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-				LS_C_PORT->ODR |= LS_C_PIN;
-			#else
-				LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-			#endif
+			LS_C_PORT->ODR |= LS_C_PIN;			
 		}
 	}
 	
 	void LS_GPIO_OFF(void)
 	{
 		// Deactivate A
-		#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-		#else
-			LS_A_PORT->ODR |= LS_A_PIN;
-		#endif
+		LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
 		// Deactivate B
-		#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-		#else
-			LS_B_PORT->ODR |= LS_B_PIN;
-		#endif
+		LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
 		// Deactivate C
-		#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-		#else
-			LS_C_PORT->ODR |= LS_C_PIN;
-		#endif
+		LS_C_PORT->ODR &= (u8)(~LS_C_PIN);		
 	}
 	
 	void LS_GPIO_BRAKE(void)
 	{
 		// Deactivate A
-		#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-		#else
-			LS_A_PORT->ODR |= LS_A_PIN;
-		#endif
+		LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
 		// Activate B
-		#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_B_PORT->ODR |= LS_B_PIN;
-		#else
-			LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-		#endif
+		LS_B_PORT->ODR |= LS_B_PIN;
 		// Activate C
-		#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_C_PORT->ODR |= LS_C_PIN;
-		#else
-			LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-		#endif
+		LS_C_PORT->ODR |= LS_C_PIN;		
 	}
 	
 	void LS_GPIO_BOOT(void)
 	{
 		// Activate A
-		#if (PWM_U_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_A_PORT->ODR |= LS_A_PIN;
-		#else
-			LS_A_PORT->ODR &= (u8)(~LS_A_PIN);
-		#endif
+		LS_A_PORT->ODR |= LS_A_PIN;
 		// Activate B
-		#if (PWM_V_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_B_PORT->ODR |= LS_B_PIN;
-		#else
-			LS_B_PORT->ODR &= (u8)(~LS_B_PIN);
-		#endif
+		LS_B_PORT->ODR |= LS_B_PIN;
 		// Activate C
-		#if (PWM_W_LOW_SIDE_POLARITY == ACTIVE_HIGH)
-			LS_C_PORT->ODR |= LS_C_PIN;
-		#else
-			LS_C_PORT->ODR &= (u8)(~LS_C_PIN);
-		#endif
+		LS_C_PORT->ODR |= LS_C_PIN;		
 	}
 #endif
 

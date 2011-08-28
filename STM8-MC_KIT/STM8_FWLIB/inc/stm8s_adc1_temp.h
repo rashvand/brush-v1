@@ -3,8 +3,8 @@
   * @file stm8s_adc1.h
   * @brief This file contains all the prototypes/macros for the ADC1 peripheral.
   * @author STMicroelectronics - MCD Application Team
-  * @version V1.1.1
-  * @date 06/05/2009
+  * @version V1.0.1
+  * @date 09/22/2008
   ******************************************************************************
   *
   * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
@@ -14,7 +14,7 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2009 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2008 STMicroelectronics</center></h2>
   * @image html logo.bmp
   ******************************************************************************
   */
@@ -53,7 +53,7 @@ typedef enum {
   */
 typedef enum {
   ADC1_EXTTRIG_TIM   = (u8)0x00, /**< Conversion from Internal TIM1 TRGO event */
-  ADC1_EXTTRIG_GPIO  = (u8)0x10  /**< Conversion from External interrupt on ADC_ETR pin*/
+  ADC1_EXTTRIG_GPIO  = (u8)0x01  /**< Conversion from External interrupt on ADC_ETR pin*/
 } ADC1_ExtTrig_TypeDef;
 
 /**
@@ -118,8 +118,15 @@ typedef enum {
   ADC1_SCHMITTTRIG_CHANNEL6  = (u8)0x06, /**< Schmitt trigger disable on AIN6 */
   ADC1_SCHMITTTRIG_CHANNEL7  = (u8)0x07, /**< Schmitt trigger disable on AIN7 */
   ADC1_SCHMITTTRIG_CHANNEL8  = (u8)0x08, /**< Schmitt trigger disable on AIN8 */
-  ADC1_SCHMITTTRIG_CHANNEL9  = (u8)0x09, /**< Schmitt trigger disable on AIN9 */  
-	ADC1_SCHMITTTRIG_ALL			 = (u8)0xFF /**< Schmitt trigger disable on All channels */ 
+  ADC1_SCHMITTTRIG_CHANNEL9  = (u8)0x09, /**< Schmitt trigger disable on AIN9 */
+  ADC1_SCHMITTTRIG_CHANNEL10 = (u8)0x0A, /**< Schmitt trigger disable on AIN10 */
+  ADC1_SCHMITTTRIG_CHANNEL11 = (u8)0x0B, /**< Schmitt trigger disable on AIN11 */
+  ADC1_SCHMITTTRIG_CHANNEL12 = (u8)0x0C, /**< Schmitt trigger disable on AIN12 */
+  ADC1_SCHMITTTRIG_CHANNEL13 = (u8)0x0D, /**< Schmitt trigger disable on AIN13 */
+  ADC1_SCHMITTTRIG_CHANNEL14 = (u8)0x0E, /**< Schmitt trigger disable on AIN14 */
+  ADC1_SCHMITTTRIG_CHANNEL15 = (u8)0x0F, /**< Schmitt trigger disable on AIN15 */
+  ADC1_SCHMITTTRIG_ALL       = (u8)0x1F /**< Schmitt trigger disable on all channels */
+
 } ADC1_SchmittTrigg_TypeDef;
 
 /**
@@ -146,8 +153,14 @@ typedef enum {
   ADC1_CHANNEL_6  = (u8)0x06, /**< Analog channel 6 */
   ADC1_CHANNEL_7  = (u8)0x07, /**< Analog channel 7 */
   ADC1_CHANNEL_8  = (u8)0x08, /**< Analog channel 8 */
-  ADC1_CHANNEL_9  = (u8)0x09 /**< Analog channel 9 */
-  } ADC1_Channel_TypeDef;
+  ADC1_CHANNEL_9  = (u8)0x09, /**< Analog channel 9 */
+  ADC1_CHANNEL_10 = (u8)0x0A, /**< Analog channel 10 */
+  ADC1_CHANNEL_11 = (u8)0x0B, /**< Analog channel 11 */
+  ADC1_CHANNEL_12 = (u8)0x0C, /**< Analog channel 12 */
+  ADC1_CHANNEL_13 = (u8)0x0D, /**< Analog channel 13 */
+  ADC1_CHANNEL_14 = (u8)0x0E, /**< Analog channel 14 */
+  ADC1_CHANNEL_15 = (u8)0x0F  /**< Analog channel 15 */
+} ADC1_Channel_TypeDef;
 
 /**
   * @}
@@ -239,8 +252,14 @@ typedef enum {
     ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_CHANNEL6) || \
     ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_CHANNEL7) || \
     ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_CHANNEL8) || \
-		((SCHMITTTRIG) == ADC1_SCHMITTTRIG_ALL) || \
-    ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_CHANNEL9))
+    ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_CHANNEL9) || \
+    ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_CHANNEL10) || \
+    ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_CHANNEL11) || \
+    ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_CHANNEL12) || \
+    ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_CHANNEL13) || \
+    ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_CHANNEL14) || \
+    ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_CHANNEL15) || \
+    ((SCHMITTTRIG) == ADC1_SCHMITTTRIG_ALL))
 
 /**
   * @brief Macro used by the assert function to check the different conversion modes.
@@ -260,12 +279,18 @@ typedef enum {
                                     ((CHANNEL) == ADC1_CHANNEL_6) || \
                                     ((CHANNEL) == ADC1_CHANNEL_7) || \
                                     ((CHANNEL) == ADC1_CHANNEL_8) || \
-                                    ((CHANNEL) == ADC1_CHANNEL_9))
+                                    ((CHANNEL) == ADC1_CHANNEL_9) || \
+                                    ((CHANNEL) == ADC1_CHANNEL_10) || \
+                                    ((CHANNEL) == ADC1_CHANNEL_11) || \
+                                    ((CHANNEL) == ADC1_CHANNEL_12) || \
+                                    ((CHANNEL) == ADC1_CHANNEL_13) || \
+                                    ((CHANNEL) == ADC1_CHANNEL_14) || \
+                                    ((CHANNEL) == ADC1_CHANNEL_15))
 
 /**
   * @brief Macro used by the assert function to check the possible buffer values.
   */
-#define IS_ADC1_BUFFER_OK(BUFFER) ((BUFFER) <= (u8)0x09)
+#define IS_ADC1_BUFFER_OK(BUFFER) (((BUFFER) >= (u8)0) && ((BUFFER) <= (u8)9))
 
 /**
   * @}
@@ -277,15 +302,15 @@ typedef enum {
   * @{
   */
 void ADC1_DeInit(void);
-void ADC1_Init(ADC1_ConvMode_TypeDef ADC1_ConversionMode, ADC1_Channel_TypeDef ADC1_Channel, ADC1_PresSel_TypeDef ADC1_PrescalerSelection, ADC1_ExtTrig_TypeDef ADC1_ExtTrigger, FunctionalState ADC1_ExtTriggerState, ADC1_Align_TypeDef ADC1_Align, ADC1_SchmittTrigg_TypeDef ADC1_SchmittTriggerChannel, FunctionalState ADC1_SchmittTriggerState);
+void ADC1_Init(ADC1_ConvMode_TypeDef ADC1_ConversionMode, ADC1_Channel_TypeDef ADC1_Channel, ADC1_PresSel_TypeDef ADC1_PrescalerSelection, ADC1_ExtTrig_TypeDef ADC1_ExtTrigger, FunctionalState ADC1_ExtTrigState, ADC1_Align_TypeDef ADC1_Align, ADC1_SchmittTrigg_TypeDef ADC1_SchmittTriggerChannel, FunctionalState ADC1_SchmittTriggerState);
 void ADC1_Cmd(FunctionalState NewState);
 void ADC1_ScanModeCmd(FunctionalState NewState);
 void ADC1_DataBufferCmd(FunctionalState NewState);
-void ADC1_ITConfig(ADC1_IT_TypeDef ADC1_IT, FunctionalState NewState);
+void ADC1_ITConfig(ADC1_IT_TypeDef ADC1_IT, FunctionalState ADC1_ITEnable);
 void ADC1_PrescalerConfig(ADC1_PresSel_TypeDef ADC1_Prescaler);
-void ADC1_SchmittTriggerConfig(ADC1_SchmittTrigg_TypeDef ADC1_SchmittTriggerChannel, FunctionalState NewState);
+void ADC1_SchmittTriggerConfig(ADC1_SchmittTrigg_TypeDef ADC1_SchmittTriggerChannel, FunctionalState ADC1_SchmittTriggerState);
 void ADC1_ConversionConfig(ADC1_ConvMode_TypeDef ADC1_ConversionMode, ADC1_Channel_TypeDef ADC1_Channel, ADC1_Align_TypeDef ADC1_Align);
-void ADC1_ExternalTriggerConfig(ADC1_ExtTrig_TypeDef ADC1_ExtTrigger, FunctionalState NewState);
+void ADC1_ExternalTriggerConfig(ADC1_ExtTrig_TypeDef ADC1_ExtTrigger, FunctionalState ADC1_ExtTrigState);
 void ADC1_AWDChannelConfig(ADC1_Channel_TypeDef Channel, FunctionalState NewState);
 void ADC1_StartConversion(void);
 u16 ADC1_GetConversionValue(void);
@@ -303,4 +328,4 @@ void ADC1_ClearITPendingBit(ADC1_IT_TypeDef ITPendingBit);
 
 #endif /* __STM8S_ADC1_H */
 
-/******************* (C) COPYRIGHT 2009 STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
