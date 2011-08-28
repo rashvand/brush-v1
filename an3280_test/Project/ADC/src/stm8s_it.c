@@ -22,6 +22,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s_it.h"
 #include "parameter.h"
+
+#include "stm8s_adc1.h"
+#include "stm8s_tim1.h"
+#include "stm8s_gpio.h"
+
+
 /** @addtogroup Template_Project
   * @{
   */
@@ -221,11 +227,27 @@ INTERRUPT_HANDLER(SPI_IRQHandler, 10)
   * @param  None
   * @retval None
   */
+	
+	u16 tim1_step = 0;
+	
 INTERRUPT_HANDLER(TIM1_UPD_OVF_TRG_BRK_IRQHandler, 11)
 {
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
+	
+	if (tim1_step == 500)
+	{
+		GPIO_WriteReverse(GPIOD, GPIO_PIN_7);
+		GPIO_WriteReverse(GPIOD, GPIO_PIN_2);
+		GPIO_WriteReverse(GPIOD, GPIO_PIN_0);
+		GPIO_WriteReverse(GPIOE, GPIO_PIN_0);
+		tim1_step = 0;
+	}
+	else
+		tim1_step++;
+	
+	TIM1->SR1 = (u8)(~(u8)TIM1_IT_UPDATE);
 }
 
 /**
@@ -436,29 +458,29 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
    /* In order to detect unexpected events during development,
        it is recommended to set a breakpoint on the following instruction.
     */
-		
 	u8 restart = 0;
 	
 	if (ADInit == TRUE && ADSampRdy == FALSE) {
+		/*
 		temp_AD_H = ADC1->DRH;	    // read conversion result (MSB first!)
 		temp_AD_L = ADC1->DRL;	    // and store it to AD samples field
 		AD_sample[AD_samp] = ((u16)(temp_AD_H) << 2) | (temp_AD_L & 3);
+		*/
+		AD_sample[AD_samp] = ADC1_GetConversionValue();
 		if (++AD_samp >= NUMB_SAMP)	// AD_smaple field is full?
 			ADSampRdy = TRUE;		// YES - set field ready flag for main loop
 		else
 			restart = 1;
-	}
-	/*
-	else
-		ADInit = FALSE;				// NO - ignore sample, wait for next one
-	*/
-		
-	ADC1->CSR &= ~ADC1_CSR_EOC;		// clear end of conversion flag
-	//ADC1->CR1 &= ~ADC1_CR1_ADON;	// stop ADC
+	}		
+	//ADC1->CSR &= ~ADC1_CSR_EOC;		// clear end of conversion flag
+	ADC1_ClearFlag(ADC1_FLAG_EOC); // SW Clear the EOC flag to get the ADC ready for the next start conversion command
 	
 	if (restart)
-		ADC1->CR1 |=  ADC1_CR1_ADON;	// Wake-up/trigg the ADC 
-	return;
+	{
+		//ADC1->CR1 |=  ADC1_CR1_ADON;	// Wake-up/trigg the ADC 
+		ADC1_StartConversion();
+	}
+	return;	
  }
 #endif /*STM8S208 or STM8S207 or STM8AF52Ax or STM8AF62Ax */
 
