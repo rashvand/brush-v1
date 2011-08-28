@@ -22,6 +22,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s.h"                // file needed only for registers mask 
 #include "parameter.h"
+
+#include "stm8s_gpio.h"
+#include "stm8s_tim1.h"
+#include "stm8s_adc1.h"
+#include "stm8s_clk.h"
+
 /**
   * @addtogroup ADC1_Example1
   * @{
@@ -108,69 +114,200 @@ u8 signal_and_peak_level(u8 val) {
   * @retval void None
   */  
 void main(void) {
-	u8 leds;
-	u16 temp;
-// 								*** GPIO INIT ***
-	GPIOD->ODR &= ~ALL_LEDs; 				// LEDs - as push-pull outputs, all on
-	GPIOD->DDR |=  ALL_LEDs;				// 
-	
-	//GPIOD->CR1 |=  ALL_LEDs;
-	
-	/*
-	GPIOC->DDR|= 0x02;						// PC.1 as push-pull outputs
-	GPIOC->CR1|= 0x02;
-	*/
-	
-	GPIOB->CR1 = 0; // PB.0 .. PB.7 as a floating input, without int
-	GPIOB->CR2 = 0;
-	GPIOB->DDR = 0;
-	
-	GPIOE->CR1 &= ~0xC0; // PE.6 .. PE.7 as a floating input
-	GPIOE->DDR &= ~0xC0;
 		
-	switch_all_LEDs_off;
 		
-		/*
-	// *** ADC INITIALIZATION ***
-	TIM1->ARRH= (u8)(AUTORELOAD >> 8);		          // set autoreload register for trigger period
-	TIM1->ARRL= (u8)(AUTORELOAD);				            // 
-	TIM1->CCR1H= (u8)((AUTORELOAD-AD_STAB) >> 8);   // set compare register for trigger period
-	TIM1->CCR1L= (u8)(AUTORELOAD-AD_STAB);
-	TIM1->CR1|= TIM1_CR1_ARPE;					            // auto reload register is buferred
-	
-	TIM1->CR2= (4<<4) & TIM1_CR2_MMS;		            // CC1REF is used as TRGO
-	TIM1->CCMR1= (6<<4) & TIM1_CCMR_OCM;	          // CC1REF in PWM 1 mode
-	TIM1->IER|= TIM1_IER_CC1IE;				              // CC1 interrupt enable
-	TIM1->CCER1|= TIM1_CCER1_CC1P;			            // CC1 negative polarity
-	TIM1->CCER1|= TIM1_CCER1_CC1E;			            // CC1 output enable
-	TIM1->BKR|= TIM1_BKR_MOE;												
-	
-	TIM1->SMCR|=  TIM1_SMCR_MSM;				        // synchronization of TRGO with ADC
-	
-	TIM1->CR1 |= TIM1_CR1_CEN;					        // timer 1 enable
-			*/
+	#if 0
+			u8 leds;
+			u16 temp;
+					
+			// gpio
 			
-	ADC1->CSR = ADC1_CSR_EOCIE | (1 & ADC1_CSR_CH);  	// ADC EOC interrupt enable, channel xxx
-	ADC1->CR1 = 4<<4 & ADC1_CR1_SPSEL;			        // master clock/8, single conversion
-	ADC1->CR2 = 0; //ADC1_CR2_EXTTRIG; 						// external trigger on timer 1 TRGO, left alignment
-	ADC1->CR3 = 0;
-	ADC1->TDRH = 0x03;									    // disable Schmitt trigger on AD input xxx
-	ADC1->TDRL = 0xFF;                                  	//
+			GPIO_DeInit(GPIOA);
+			GPIO_DeInit(GPIOB);
+			GPIO_DeInit(GPIOC);
+			GPIO_DeInit(GPIOD);
+			GPIO_DeInit(GPIOE);
+					
+			//analgici
+			
+			GPIO_Init(GPIOB, GPIO_PIN_3, 	GPIO_MODE_IN_FL_NO_IT); 		//ain3
+			GPIO_Init(GPIOB, GPIO_PIN_4, 	GPIO_MODE_IN_FL_NO_IT); 		//ain4
+			GPIO_Init(GPIOB, GPIO_PIN_5, 	GPIO_MODE_IN_FL_NO_IT); 		//ain5
+			GPIO_Init(GPIOB, GPIO_PIN_6, 	GPIO_MODE_IN_FL_NO_IT); 		//ain6
+			GPIO_Init(GPIOB, GPIO_PIN_7, 	GPIO_MODE_IN_FL_NO_IT); 		//ain7
+			GPIO_Init(GPIOE, GPIO_PIN_7, 	GPIO_MODE_IN_FL_NO_IT);     //ain8
+			GPIO_Init(GPIOE, GPIO_PIN_6, 	GPIO_MODE_IN_FL_NO_IT);     //ain9
+			
+			//debug
+			
+			GPIO_Init(GPIOD, GPIO_PIN_7, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 1
+			GPIO_Init(GPIOD, GPIO_PIN_2, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 2
+			GPIO_Init(GPIOD, GPIO_PIN_0, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 3
+			GPIO_Init(GPIOE, GPIO_PIN_0, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 4
+			
+			GPIO_WriteLow(GPIOD, 	GPIO_PIN_7);
+			GPIO_WriteHigh(GPIOD, GPIO_PIN_2);
+			GPIO_WriteLow(GPIOD, 	GPIO_PIN_0);
+			GPIO_WriteHigh(GPIOE, GPIO_PIN_0);
 
-  // init ADC variables
-	AD_samp= 0;						                          // number of stored samples 0
-	
-	ADInit= TRUE;                                   // ADC initialized 
-	ADSampRdy= FALSE;                               // No sample 
-	
-	ADC1->CR1 |= ADC1_CR1_ADON;					            // ADC on
-	temp = 0x8000;
-	while (temp--);
+			//pwm low side
+			
+			GPIO_Init(GPIOB, GPIO_PIN_0, GPIO_MODE_OUT_PP_LOW_FAST); 
+			GPIO_Init(GPIOB, GPIO_PIN_1, GPIO_MODE_OUT_PP_LOW_FAST); 
+			GPIO_Init(GPIOB, GPIO_PIN_2, GPIO_MODE_OUT_PP_LOW_FAST); 
+			
+			GPIO_WriteLow(GPIOB, GPIO_PIN_0);
+			GPIO_WriteLow(GPIOB, GPIO_PIN_1);
+			GPIO_WriteLow(GPIOB, GPIO_PIN_2);
 
-	enableInterrupts();							                // enable all interrupts 
+			//pwm high side
+			
+			GPIO_Init(GPIOC, GPIO_PIN_1, GPIO_MODE_OUT_PP_LOW_FAST); 
+			GPIO_Init(GPIOC, GPIO_PIN_2, GPIO_MODE_OUT_PP_LOW_FAST); 
+			//GPIO_Init(GPIOC, GPIO_PIN_3, GPIO_MODE_OUT_PP_LOW_FAST); 
+			
+			GPIO_WriteLow(GPIOC, GPIO_PIN_1);
+			GPIO_WriteLow(GPIOC, GPIO_PIN_2);
+			//GPIO_WriteLow(GPIOC, GPIO_PIN_3);
+			
+			//bemf floater
+			
+			GPIO_Init(GPIOA, GPIO_PIN_4, GPIO_MODE_OUT_PP_LOW_FAST); 
+			GPIO_Init(GPIOA, GPIO_PIN_5, GPIO_MODE_OUT_PP_LOW_FAST); 
+			GPIO_Init(GPIOA, GPIO_PIN_6, GPIO_MODE_OUT_PP_LOW_FAST); 
+			
+			GPIO_WriteHigh(GPIOA, GPIO_PIN_4);
+			GPIO_WriteHigh(GPIOA, GPIO_PIN_5);
+			GPIO_WriteHigh(GPIOA, GPIO_PIN_6);
+
+
+
+
+
+
+
+			ADC1->CSR = ADC1_CSR_EOCIE | (3 & ADC1_CSR_CH);  	// ADC EOC interrupt enable, channel xxx
+			ADC1->CR1 = 4<<4 & ADC1_CR1_SPSEL;			        // master clock/8, single conversion
+			ADC1->CR2 = 0; //ADC1_CR2_EXTTRIG; 						// external trigger on timer 1 TRGO, left alignment
+			ADC1->CR3 = 0;
+			ADC1->TDRH = 0x03;									    // disable Schmitt trigger on AD input xxx
+			ADC1->TDRL = 0xFF;                                  	//
+		
+			// init ADC variables
+			AD_samp= 0;						                          // number of stored samples 0
+			
+			ADInit= TRUE;                                   // ADC initialized 
+			ADSampRdy= FALSE;                               // No sample 
+			
+			ADC1->CR1 |= ADC1_CR1_ADON;					            // ADC on
+			temp = 0x8000;
+			while (temp--);
+		
+			enableInterrupts();							                // enable all interrupts 
+			
+			ADC1->CR1 |= ADC1_CR1_ADON;					            // ADC on
+			
+			
+			
+	#else
 	
-	ADC1->CR1 |= ADC1_CR1_ADON;					            // ADC on
 	
+	
+			//CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
+			CLK_HSECmd(ENABLE);
+			
+			//tim1
+			
+			TIM1_DeInit();
+			TIM1_TimeBaseInit(10000, TIM1_COUNTERMODE_UP, 1, 0); // Configure a 10ms tick 
+			TIM1_ITConfig(TIM1_IT_UPDATE, ENABLE); // Generate an interrupt on timer count overflow 
+			TIM1_Cmd(ENABLE); // Enable TIM1 
+			
+			// gpio
+			
+			GPIO_DeInit(GPIOA);
+			GPIO_DeInit(GPIOB);
+			GPIO_DeInit(GPIOC);
+			GPIO_DeInit(GPIOD);
+			GPIO_DeInit(GPIOE);
+					
+			//analgici
+			
+			GPIO_Init(GPIOB, GPIO_PIN_3, 	GPIO_MODE_IN_FL_NO_IT); 		//ain3
+			GPIO_Init(GPIOB, GPIO_PIN_4, 	GPIO_MODE_IN_FL_NO_IT); 		//ain4
+			GPIO_Init(GPIOB, GPIO_PIN_5, 	GPIO_MODE_IN_FL_NO_IT); 		//ain5
+			GPIO_Init(GPIOB, GPIO_PIN_6, 	GPIO_MODE_IN_FL_NO_IT); 		//ain6
+			GPIO_Init(GPIOB, GPIO_PIN_7, 	GPIO_MODE_IN_FL_NO_IT); 		//ain7
+			GPIO_Init(GPIOE, GPIO_PIN_7, 	GPIO_MODE_IN_FL_NO_IT);     //ain8
+			GPIO_Init(GPIOE, GPIO_PIN_6, 	GPIO_MODE_IN_FL_NO_IT);     //ain9
+			
+			//debug
+			
+			GPIO_Init(GPIOD, GPIO_PIN_7, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 1
+			GPIO_Init(GPIOD, GPIO_PIN_2, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 2
+			GPIO_Init(GPIOD, GPIO_PIN_0, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 3
+			GPIO_Init(GPIOE, GPIO_PIN_0, GPIO_MODE_OUT_PP_LOW_FAST); //Debug 4
+			
+			GPIO_WriteLow(GPIOD, 	GPIO_PIN_7);
+			GPIO_WriteHigh(GPIOD, GPIO_PIN_2);
+			GPIO_WriteLow(GPIOD, 	GPIO_PIN_0);
+			GPIO_WriteHigh(GPIOE, GPIO_PIN_0);
+			
+			//pwm low side
+			
+			GPIO_Init(GPIOB, GPIO_PIN_0, GPIO_MODE_OUT_PP_LOW_FAST); 
+			GPIO_Init(GPIOB, GPIO_PIN_1, GPIO_MODE_OUT_PP_LOW_FAST); 
+			GPIO_Init(GPIOB, GPIO_PIN_2, GPIO_MODE_OUT_PP_LOW_FAST); 
+			
+			GPIO_WriteLow(GPIOB, GPIO_PIN_0);
+			GPIO_WriteLow(GPIOB, GPIO_PIN_1);
+			GPIO_WriteLow(GPIOB, GPIO_PIN_2);
+			
+			//pwm high side
+			
+			GPIO_Init(GPIOC, GPIO_PIN_1, GPIO_MODE_OUT_PP_LOW_FAST); 
+			GPIO_Init(GPIOC, GPIO_PIN_2, GPIO_MODE_OUT_PP_LOW_FAST); 
+			//GPIO_Init(GPIOC, GPIO_PIN_3, GPIO_MODE_OUT_PP_LOW_FAST);  // ATTENZIONE, AN3 IN CORTO CON PC3 !!!
+			
+			GPIO_WriteLow(GPIOC, GPIO_PIN_1);
+			GPIO_WriteLow(GPIOC, GPIO_PIN_2);
+			//GPIO_WriteLow(GPIOC, GPIO_PIN_3); // ATTENZIONE, AN3 IN CORTO CON PC3 !!!
+			
+			//bemf floater
+			
+			GPIO_Init(GPIOA, GPIO_PIN_4, GPIO_MODE_OUT_PP_LOW_FAST); 
+			GPIO_Init(GPIOA, GPIO_PIN_5, GPIO_MODE_OUT_PP_LOW_FAST); 
+			GPIO_Init(GPIOA, GPIO_PIN_6, GPIO_MODE_OUT_PP_LOW_FAST); 
+			
+			GPIO_WriteHigh(GPIOA, GPIO_PIN_4);
+			GPIO_WriteHigh(GPIOA, GPIO_PIN_5);
+			GPIO_WriteHigh(GPIOA, GPIO_PIN_6);
+			
+			// ***********
+			// *** ADC ***
+			// ***********
+			
+			ADC1_DeInit(); 
+			ADC1_Init(ADC1_CONVERSIONMODE_SINGLE, 
+								ADC1_CHANNEL_3, 
+								ADC1_PRESSEL_FCPU_D2, 
+								ADC1_EXTTRIG_TIM, 
+								DISABLE, 
+								ADC1_ALIGN_RIGHT, 
+								ADC1_SCHMITTTRIG_CHANNEL3, 
+								DISABLE); 
+			ADC1_ITConfig(ADC1_IT_EOCIE, ENABLE); // Enable EOC interrupt	
+			ADC1_Cmd(ENABLE); // ADON for the first time it just wakes the ADC up
+			ADC1_StartConversion();
+			
+			ADInit= TRUE;                                   // ADC initialized 
+			ADSampRdy= FALSE;                               // No sample 
+	
+			enableInterrupts();							                	
+						
+	#endif
+			
+			
 	// *** MAIN LOOP ***	
 	while (1) {
 		if (ADSampRdy) {				                    // field of ADC samples is ready?
@@ -178,16 +315,17 @@ void main(void) {
 			
 			if (AD_avg_value > 100)
 			{
-				switch_all_LEDs_off
+				//switch_all_LEDs_off
 			}
 			else
 			{
-				switch_all_LEDs_on
+				//switch_all_LEDs_on
 			}
 			
 			AD_samp = 0;								                         // reinitalize ADC variables
 			ADSampRdy = FALSE;
-			ADC1->CR1 |=  ADC1_CR1_ADON;	// Wake-up/trigg the ADC 
+			//ADC1->CR1 |=  ADC1_CR1_ADON;	// Wake-up/trigg the ADC 
+			ADC1_StartConversion();
 			
 			/*
 			leds = signal_and_peak_level((u8)((AD_avg_value + 128) / 256)); // setting LED status
