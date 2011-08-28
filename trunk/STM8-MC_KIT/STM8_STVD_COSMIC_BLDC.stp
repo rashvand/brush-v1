@@ -619,7 +619,12 @@ PathName=stm8_fwlib\inc\stm8s_wwdg.h
 [Root.STM8_FWLIB.STM8_FWLIB\Src]
 ElemType=Folder
 PathName=STM8_FWLIB\Src
-Child=Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart2.c
+Child=Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_adc1.c
+
+[Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_adc1.c]
+ElemType=File
+PathName=stm8_fwlib\src\stm8s_adc1.c
+Next=Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart2.c
 
 [Root.STM8_FWLIB.STM8_FWLIB\Src.stm8_fwlib\src\stm8s_uart2.c]
 ElemType=File

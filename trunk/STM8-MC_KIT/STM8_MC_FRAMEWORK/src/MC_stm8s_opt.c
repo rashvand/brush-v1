@@ -35,7 +35,9 @@ void dev_optInit(void)
 	Opt = 0;
 	
 	#ifdef TIM1_CHxN_REMAP
-		Opt |= 0x20;
+		//Opt |= 0x20; // 0010 0000 -> AFR5
+		Opt &= (u8)(~0x20); // questo lo metto a 0 in ogni caso in quando con i low side pilotati a GPIO
+												// il canale 3 dell'adc lo voglio funzionante
 	#else
 		Opt &= (u8)(~0x20);
 	#endif

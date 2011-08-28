@@ -31,7 +31,11 @@ typedef enum
 } speed_control_mode_t;
 
 typedef enum
-{FUNCTION_RUNNING,FUNCTION_ENDED,FUNCTION_ERROR} MC_FuncRetVal_t;
+{
+	FUNCTION_RUNNING,
+	FUNCTION_ENDED,
+	FUNCTION_ERROR
+} MC_FuncRetVal_t;
 
 typedef const struct
 {
